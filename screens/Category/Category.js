@@ -2,21 +2,16 @@ import React, {Component} from 'react';
 import {View,  Text, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
 
-// import Iphone from '../../Image/Iphone-11-pro-max.jpg';
-// import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
-// import Oppo from '../../Image/oppo-a11x_800x450.jpg';
+import Iphone from '../../Image/Iphone-11-pro-max.jpg';
+import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
+import Oppo from '../../Image/oppo-a11x_800x450.jpg';
 
-import Iphone from '../Image/Iphone-11-pro-max.jpg';
-import SamSung from '../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
-import Oppo from '../Image/oppo-a11x_800x450.jpg';
 
 const {width,height} = Dimensions.get("window");
 
 export default class Category extends Component{
     gotoListCategory(){
-        const {navigation} = this.props;
-        console.log(this.props);
-        // navigation.navigate("ListCategory");
+        this.props.navigation.navigate('ListCategory');
     }
     render(){
         return(
@@ -26,15 +21,15 @@ export default class Category extends Component{
                 </View>
                 <View style={{flex:6}}>
                     <Swiper showsPagination width={imageWidth} height={imageHeight}>
-                        <TouchableOpacity onPress={() => {console.log(this.props)}}>
+                        <TouchableOpacity onPress={() => this.gotoListCategory()}>
                             <Image style={styles.imageStyle}source={Iphone}>
                             </Image>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.gotoListProduct()}>
+                        <TouchableOpacity onPress={() => this.gotoListCategory()}>
                             <Image style={styles.imageStyle}source={SamSung}>
                             </Image>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.gotoListProduct()}>
+                        <TouchableOpacity onPress={() => this.gotoListCategory()}>
                             <Image style={styles.imageStyle}source={Oppo}/>
                         </TouchableOpacity>
                     </Swiper>

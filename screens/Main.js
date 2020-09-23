@@ -4,7 +4,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { TextInput } from 'react-native-paper';
 // import CollectionScreen from './Collection/Collection';
 import CollectionScreen from './Collection/Collection';
-import CategoryScreen from './Category';
+// import CategoryScreen from './Category/Category';
+import CategoryScreen from './Category/Category';
 import TopProductScreen from './Product/TopProduct';
 import Header from './Header';
 
@@ -21,7 +22,7 @@ export default class Main extends Component{
             <ScrollView style={styles.container}>
                 <Header navigation={this.props.navigation}/>                
                 <CollectionScreen navigation ={this.props.navigation}/>
-                <CategoryScreen />
+                <CategoryScreen navigation ={this.props.navigation}/>
                 <TopProductScreen navigation ={this.props.navigation}/>
             </ScrollView>
         );

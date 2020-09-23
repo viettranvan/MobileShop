@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {View,  Text, StyleSheet, Image, Dimensions} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
 
 
 export default class Test extends Component{
+
+    gotoListProduct(){
+        this.props.navigation.navigate('ListProduct');
+    }
     render(){
         return(
             <View style={styles.container}>
@@ -13,27 +18,27 @@ export default class Test extends Component{
                     <Text style={styles.title}>top Product</Text>
                 </View>
                 <View style={styles.body}>   
-                    <View style={styles.productContainer}>
+                    <TouchableOpacity style={styles.productContainer} onPress={()=>this.gotoListProduct()}>
                         <Image source={SamSung} style={styles.productImage}/>
                         <Text style={styles.productName} >Name kfsnksfn kfnskfn khfsiknf jnksfnsf k fksjkf ljfnskfnbjik ónkfb</Text>
                         <Text style={styles.productPrice} >Price</Text>
-                    </View>
-                    <View style={styles.productContainer}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.productContainer} onPress={()=>this.gotoListProduct()}>
                         <Image source={SamSung} style={styles.productImage}/>
                         <Text style={styles.productName} >Name</Text>
                         <Text style={styles.productPrice} >Price</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={{height: 10, width: width}}/>
-                    <View style={styles.productContainer}>
+                    <TouchableOpacity style={styles.productContainer} onPress={()=>this.gotoListProduct()}>
                         <Image source={SamSung} style={styles.productImage}/>
                         <Text style={styles.productName} >Name kfsnksfn kfnskfn khfsiknf jnksfnsf k fksjkf ljfnskfnbjik ónkfb</Text>
                         <Text style={styles.productPrice} >Price</Text>
-                    </View>
-                    <View style={styles.productContainer}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.productContainer} onPress={()=>this.gotoListProduct()}>
                         <Image source={SamSung} style={styles.productImage}/>
                         <Text style={styles.productName} >Name</Text>
                         <Text style={styles.productPrice} >Price nè =))</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={{height: 10, width: width}}/>
                 </View>
             </View>
