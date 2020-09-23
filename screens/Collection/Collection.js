@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
-import {View,  Text,StyleSheet, Dimensions, Image} from 'react-native';
-import mobileBanner from '../Image/bannerDienThoai.jpg'
+import {View,  Text,StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import mobileBanner from '../../Image/bannerDienThoai.jpg';
 
 const {width,height} = Dimensions.get("window");
 
+    
 
+export default class Collection extends Component{
 
-export default class Main extends Component{
     render(){
         return(
             <View style={styles.wrapper}>
@@ -14,7 +17,9 @@ export default class Main extends Component{
                     <Text style={styles.textStyle}>Collection</Text>
                 </View>
                 <View style={{flex:6}}>
-                    <Image style={styles.imageStyle}source={mobileBanner}/>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("ListCollection")}>
+                        <Image style={styles.imageStyle}source={mobileBanner}/>
+                    </TouchableOpacity>
                 </View>
             </View>
         );

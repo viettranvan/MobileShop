@@ -15,17 +15,38 @@ import * as Animatable from 'react-native-animatable';
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const SignInScreen = ({navigation}) => {
+const SignUp = ({navigation}) => {
 
     const [data, setData] = React.useState({
+        fullname: '',
         username: '',
         password: '',
         confirm_password: '',
+        check_textInputFullnameChange: false,
         check_textInputChange: false,
+        check_textInputPasswordChange: false,
+        check_textInputRepassChange: false,
         secureTextEntry: true,
         confirm_secureTextEntry: true,
     });
+
+    const textInputFullnameChange = (val) => {
+        if( val.length !== 0 ) {
+            setData({
+                ...data,
+                username: val,
+                check_textInputFullnameChange: true
+            });
+        } else {
+            setData({
+                ...data,
+                username: val,
+                check_textInputFullnameChange: false
+            });
+        }
+    }
 
     const textInputChange = (val) => {
         if( val.length !== 0 ) {
@@ -44,20 +65,40 @@ const SignInScreen = ({navigation}) => {
     }
 
     const handlePasswordChange = (val) => {
-        setData({
-            ...data,
-            password: val
-        });
+        if(val.length !== 0 ){
+            setData({
+                ...data,
+                password: val,
+                check_textInputPasswordChange:  true,
+            });
+        }
+        else{
+            setData({
+                ...data,
+                password: val,
+                check_textInputPasswordChange:  false,
+            });
+        }
     }
 
     const handleConfirmPasswordChange = (val) => {
-        setData({
-            ...data,
-            confirm_password: val
-        });
+        if(val.length !== 0 ){
+            setData({
+                ...data,
+                confirm_password: val,
+                check_textInputRepassChange:  true,
+            });
+        }
+        else{
+            setData({
+                ...data,
+                confirm_password: val,
+                check_textInputRepassChange:  false,
+            });
+        }
     }
 
-    const updateSecureTextEntry = () => {
+    const toggleSecureTextEntry = () => {
         setData({
             ...data,
             secureTextEntry: !data.secureTextEntry
@@ -71,6 +112,9 @@ const SignInScreen = ({navigation}) => {
         });
     }
 
+    const eye = <Feather name="eye" color="grey" size={25} />
+    const eye_off = <Feather name='eye-off' size={25} color='grey' />
+
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#009387' barStyle="light-content"/>
@@ -82,7 +126,8 @@ const SignInScreen = ({navigation}) => {
             style={styles.footer}
         >
             <ScrollView>
-            <Text style={styles.text_footer}>Tài khoản</Text>
+            {/* Tên đăng nhập - email */}
+            <Text style={styles.text_footer}>Họ và tên</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
@@ -90,10 +135,44 @@ const SignInScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
+                    placeholder="Vui lòng nhập họ tên của bạn"
+                    style={styles.textInput}
+                    autoCapitalize="done"
+                    onChangeText={(val) => textInputFullnameChange(val)}
+                    blurOnSubmit={false}
+                />
+                {data.check_textInputFullnameChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                >
+                    <Feather 
+                        name="check-circle"
+                        color="green"
+                        size={20}
+                    />
+                </Animatable.View>
+                : null}
+            </View>
+            {/* End Tên đăng nhập - email */}
+            
+            {/* Tên đăng nhập - email */}
+            <Text style={[styles.text_footer, {
+                marginTop: 35
+            }]}>Tên đăng nhập</Text>
+
+            <View style={styles.action}>
+                <MaterialCommunityIcons 
+                    name='account-outline'
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
                     placeholder="Vui lòng nhập tài khoản"
                     style={styles.textInput}
-                    autoCapitalize="none"
+                    autoCapitalize="done"
                     onChangeText={(val) => textInputChange(val)}
+                    blurOnSubmit={false}
+
                 />
                 {data.check_textInputChange ? 
                 <Animatable.View
@@ -107,10 +186,13 @@ const SignInScreen = ({navigation}) => {
                 </Animatable.View>
                 : null}
             </View>
+            {/* End Tên đăng nhập - email */}
 
+            {/* Mật khẩu */}
             <Text style={[styles.text_footer, {
                 marginTop: 35
             }]}>Mật khẩu</Text>
+
             <View style={styles.action}>
                 <Feather 
                     name="lock"
@@ -118,31 +200,22 @@ const SignInScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Vui lòng nhập mật khẩu"
+                    placeholder="Vui lòng nhập mật khẩu"            
                     secureTextEntry={data.secureTextEntry ? true : false}
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => handlePasswordChange(val)}
+                    blurOnSubmit={false}
+
                 />
-                <TouchableOpacity
-                    onPress={updateSecureTextEntry}
-                >
-                    {data.secureTextEntry ? 
-                    <Feather 
-                        name="eye-off"
-                        color="grey"
-                        size={20}
-                    />
-                    :
-                    <Feather 
-                        name="eye"
-                        color="grey"
-                        size={20}
-                    />
-                    }
+                <TouchableOpacity onPress={toggleSecureTextEntry}>
+                    {data.check_textInputPasswordChange ? 
+                    data.secureTextEntry ? eye : eye_off  : null}
                 </TouchableOpacity>
             </View>
+            {/*End Mật khẩu */}
 
+            {/* Nhập lại mật khẩu */}
             <Text style={[styles.text_footer, {
                 marginTop: 35
             }]}>Xác nhận mật khẩu</Text>
@@ -158,33 +231,19 @@ const SignInScreen = ({navigation}) => {
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => handleConfirmPasswordChange(val)}
+                    blurOnSubmit={false}
+                    
                 />
                 <TouchableOpacity
                     onPress={updateConfirmSecureTextEntry}
                 >
-                    {data.secureTextEntry ? 
-                    <Feather 
-                        name="eye-off"
-                        color="grey"
-                        size={20}
-                    />
-                    :
-                    <Feather 
-                        name="eye"
-                        color="grey"
-                        size={20}
-                    />
-                    }
+                    {data.check_textInputRepassChange ? 
+                    data.confirm_secureTextEntry ? eye : eye_off  : null}
                 </TouchableOpacity>
             </View>
-            <View style={styles.textPrivate}>
-                <Text style={styles.color_textPrivate}>
-                    By signing up you agree to our
-                </Text>
-                <Text style={[styles.color_textPrivate, {fontWeight: 'bold'}]}>{" "}Terms of service</Text>
-                <Text style={styles.color_textPrivate}>{" "}and</Text>
-                <Text style={[styles.color_textPrivate, {fontWeight: 'bold'}]}>{" "}Privacy policy</Text>
-            </View>
+            {/*End Nhập lại mật khẩu */}
+
+            {/* Button đăng ký - đăng nhập*/}
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
@@ -213,13 +272,14 @@ const SignInScreen = ({navigation}) => {
                     }]}>Đăng nhập</Text>
                 </TouchableOpacity>
             </View>
+            {/*End Button đăng ký - đăng nhập*/}
             </ScrollView>
         </Animatable.View>
       </View>
     );
 };
 
-export default SignInScreen;
+export default SignUp;
 
 const styles = StyleSheet.create({
     container: {
@@ -286,3 +346,14 @@ const styles = StyleSheet.create({
         color: 'grey'
     }
   });
+
+   {/* Điều khoản */}
+            {/* <View style={styles.textPrivate}>
+                <Text style={styles.color_textPrivate}>
+                    By signing up you agree to our
+                </Text>
+                <Text style={[styles.color_textPrivate, {fontWeight: 'bold'}]}>{" "}Terms of service</Text>
+                <Text style={styles.color_textPrivate}>{" "}and</Text>
+                <Text style={[styles.color_textPrivate, {fontWeight: 'bold'}]}>{" "}Privacy policy</Text>
+            </View> */}
+            {/*End Điều khoản */}

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {ScrollView, View, Text, TouchableOpacity,StyleSheet,Dimensions} from 'react-native';
+import {ScrollView, View, Text, TouchableOpacity,StyleSheet,Dimensions, Button} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from 'react-native-paper';
-import CollectionScreen from './Collection';
+// import CollectionScreen from './Collection/Collection';
+import CollectionScreen from './Collection/Collection';
 import CategoryScreen from './Category';
-import TopProductScreen from './TopProduct';
+import TopProductScreen from './Product/TopProduct';
 import Header from './Header';
 
 
@@ -18,29 +19,10 @@ export default class Main extends Component{
         return(
 
             <ScrollView style={styles.container}>
-                {/* Header */}
-                <View style={{backgroundColor: '#608cd6'}}>
-                    <View style={{height: height/9 }}>
-                        <View style={styles.headerTitle}>
-                            <TouchableOpacity onPress={ () => this.openMenu() }>
-                                <MaterialCommunityIcons name="menu-open" color='white' size={40} />
-                            </TouchableOpacity>
-                            <Text style={styles.title}>Mobile
-                                <Text style={{ fontWeight: 'bold', fontSize: 24, color: '#10e345' }}> Shop</Text>
-                            </Text>
-                            <Text>abc</Text>
-                        </View>
-                        <TextInput
-                            style={styles.textinp}
-                            placeholder='Bạn muốn mua điện thoại gì?'
-                        />
-                    </View>
-                </View>
-                {/* end Header */}
-                
-                <CollectionScreen />
+                <Header navigation={this.props.navigation}/>                
+                <CollectionScreen navigation ={this.props.navigation}/>
                 <CategoryScreen />
-                <TopProductScreen />
+                <TopProductScreen navigation ={this.props.navigation}/>
             </ScrollView>
         );
     }

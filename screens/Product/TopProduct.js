@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {View,  Text, StyleSheet, Image, Dimensions} from 'react-native';
 
-import Iphone from '../Image/Iphone-11-pro-max.jpg';
-import SamSung from '../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
-import Oppo from '../Image/oppo-a11x_800x450.jpg';
-import Realme from '../Image/realme3_800x450.jpg';
-import Iphone11 from '../Image/Iphone11resize.jpg';
+
+import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
+
 
 export default class Test extends Component{
     render(){

@@ -4,6 +4,7 @@ import {View,  Text, StyleSheet, Dimensions, TouchableOpacity, Platform, TextInp
 import * as Animatable from 'react-native-animatable';
 import {LinearGradient} from 'expo-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import SignUp from './SignUp';
 import { Button } from 'react-native-paper';
 
@@ -13,6 +14,7 @@ const SignIn = ( {navigation} ) =>{
         email: '',
         password: '',
         check_textInputChange: false,
+        check_textInputPasswordChange: false,
         secureTextEntry: true
     });
 
@@ -33,11 +35,21 @@ const SignIn = ( {navigation} ) =>{
         }
     }
 
-    const handelPasswordChange = (val) => {
-        setData({
-            ...data,
-            password: val
-        });
+    const handlePasswordChange = (val) => {
+        if(val.length !== 0 ){
+            setData({
+                ...data,
+                password: val,
+                check_textInputPasswordChange:  true,
+            });
+        }
+        else{
+            setData({
+                ...data,
+                password: val,
+                check_textInputPasswordChange:  false,
+            });
+        }
     }
 
     const toggleSecureTextEntry = () => {
@@ -46,7 +58,10 @@ const SignIn = ( {navigation} ) =>{
             secureTextEntry: !data.secureTextEntry
         });
     }
-    
+
+    const eye = <Feather name='eye' size={25} color='grey' />
+    const eye_off = <Feather name='eye-off' size={25} color='grey' />
+
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -68,6 +83,9 @@ const SignIn = ( {navigation} ) =>{
                         style={styles.textInput}
                         autoCapitalize='none'
                         onChangeText={(val) => textInputChange(val)}
+                        blurOnSubmit={false}
+                        returnKeyType='done'
+                        autoFocus={true}
                     />
 
                     {/* Kiểm tra textinput có rỗng hay ko */}
@@ -91,20 +109,13 @@ const SignIn = ( {navigation} ) =>{
                         style={styles.textInput}
                         autoCapitalize='none'
                         secureTextEntry={data.secureTextEntry ? true : false}
-                        onChangeText={(val) => handelPasswordChange(val)}
+                        onChangeText={(val) => handlePasswordChange(val)}
+                        blurOnSubmit={false}
+                        
                     />
                     <TouchableOpacity onPress={toggleSecureTextEntry}>
-                        { data.secureTextEntry ? 
-                        <MaterialCommunityIcons
-                            name='eye'
-                            size={30}
-                            color='grey'
-                        /> :
-                        <MaterialCommunityIcons
-                            name='eye-off'
-                            size={30}
-                            color='grey'
-                        /> }
+                        {data.check_textInputPasswordChange ? 
+                        data.secureTextEntry ? eye : eye_off  : null}
                     </TouchableOpacity>
                 </View>
 
