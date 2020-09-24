@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {ScrollView, View, Text, TouchableOpacity,StyleSheet,Dimensions, Button} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from 'react-native-paper';
-// import CollectionScreen from './Collection/Collection';
-import CollectionScreen from './Collection/Collection';
-// import CategoryScreen from './Category/Category';
-import CategoryScreen from './Category/Category';
+
+import CollectionScreen from './Product/Collection';
+import CategoryScreen from './Product/Category';
 import TopProductScreen from './Product/TopProduct';
+
 import Header from './Header';
 
 
@@ -18,13 +18,16 @@ export default class Main extends Component{
     }
     render(){
         return(
-
-            <ScrollView style={styles.container}>
+            <View style={{flex:1}}>
                 <Header navigation={this.props.navigation}/>                
-                <CollectionScreen navigation ={this.props.navigation}/>
-                <CategoryScreen navigation ={this.props.navigation}/>
-                <TopProductScreen navigation ={this.props.navigation}/>
-            </ScrollView>
+                <ScrollView style={styles.container}>
+                    <CollectionScreen navigation ={this.props.navigation}/>
+                    <CategoryScreen navigation ={this.props.navigation}/>
+                    <TopProductScreen navigation ={this.props.navigation}/>
+                </ScrollView>
+            </View>
+
+            
         );
     }
 }

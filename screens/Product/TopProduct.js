@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import {View,  Text, StyleSheet, Image, Dimensions} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-
 import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
 
 
 export default class Test extends Component{
 
     gotoListProduct(){
-        this.props.navigation.navigate('ListProduct');
+        this.props.navigation.navigate('Detail');
     }
     render(){
         return(

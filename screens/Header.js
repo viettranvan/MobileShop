@@ -9,15 +9,25 @@ export default class Header extends Component{
 
     render(){
         return(
-        <View style={{height: height/9, backgroundColor: '#608cd6'}}>
+        <View style={{height: height/8.5, backgroundColor: '#608cd6'}}>
             <View style={styles.container}>
-                <TouchableOpacity onPress={ () => this.props.navigation.openDrawer() }>
+                <TouchableOpacity 
+                    onPress={ () => this.props.navigation.openDrawer() }
+                    style={{paddingLeft:5}}
+                >
                     <MaterialCommunityIcons name="menu-open" color='white' size={40} />
                 </TouchableOpacity>
-                <Text style={styles.title}>Mobile
-                    <Text style={{ fontWeight: 'bold', fontSize: 24, color: '#10e345' }}> Shop</Text>
-                </Text>
-                <Text>abc</Text>
+                <TouchableOpacity  onPress={ () => this.props.navigation.navigate('Main') }>
+                    <Text style={styles.title}>Mobile
+                        <Text style={{ fontWeight: 'bold', fontSize: 26, color: '#10e345' }}> Shop</Text>
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    onPress={() => this.props.navigation.navigate('Cart')}
+                    style={{paddingRight:10, paddingTop: 3}}
+                >
+                    <MaterialCommunityIcons name="cart" color='white' size={30} />
+                </TouchableOpacity>
             </View>
             <TextInput
                 style={styles.textinp}
@@ -34,16 +44,17 @@ const styles = StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        fontSize: 24, 
+        fontSize: 26, 
         fontWeight: 'bold',
         fontStyle: 'italic',
         color: 'white',
+        paddingTop: 3
     },
     textinp: {
         height: 40,
-        marginRight: 40,
-        marginLeft: 40,
-        
+        marginRight: 30,
+        marginLeft: 30,
+        marginBottom: 10
     }
   });
   

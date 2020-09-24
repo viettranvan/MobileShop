@@ -1,21 +1,19 @@
 import React, {Component} from 'react';
 import {View,  Text, Button} from 'react-native';
 
-export default class ListCategory extends Component{
+export default class ListProduct extends Component{
     render(){
         return(
             <View style={{flex:1,justifyContent:'center',alignContent:'center',alignItems:'center'}}>
-              {/* <Text>List Category nè ahihi</Text>
+              <Text>Product Detail</Text>
               <Button
                 title="go back"
                 onPress={() => this.props.navigation.goBack()}
               />
               <Button
-                title="go to first"
+                title="go to first screen"
                 // onPress={() => this.props.navigation.navigate("Support")}
-              /> */}
-              <Text>List Category nè ahihi</Text>
-
+              />
             </View>
           );
     }

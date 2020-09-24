@@ -7,11 +7,12 @@ import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
 import Oppo from '../../Image/oppo-a11x_800x450.jpg';
 
 
+
 const {width,height} = Dimensions.get("window");
 
 export default class Category extends Component{
     gotoListCategory(){
-        this.props.navigation.navigate('ListCategory');
+        this.props.navigation.navigate('ListProduct');
     }
     render(){
         return(
