@@ -73,13 +73,13 @@ export default function DrawerContent(props){
                         <DrawerItem
                             icon={ ({color, size}) => (
                                 <Icon
-                                    name="bookmark-outline"
+                                    name="history"
                                     color = {color}
                                     size = {size}
                                 />
                             )}
-                            label="Bookmarks"
-                            onPress={() => {}}
+                            label="Lịch sử mua hàng"
+                            onPress={() => {props.navigation.navigate("OrderHistory")}}
                         />
                         <DrawerItem
                             icon={ ({color, size}) => (
@@ -100,16 +100,16 @@ export default function DrawerContent(props){
                                     size = {size}
                                 />
                             )}
-                            label="Support"
+                            label="Hỗ trợ"
                             onPress={() => {props.navigation.navigate("Support")}}
                         />
                     </Drawer.Section>
                     {/* end danh sách màn hình */}
                     
-                    <Drawer.Section title="Preferences">
+                    <Drawer.Section title="Theme">
                         <TouchableRipple onPress={ () =>  {toggleTheme()} } >
                             <View style={styles.preference}>
-                                <Text>Drak Theme</Text>
+                                <Text>Dark theme</Text>
                                 <View pointerEvents="none">
                                     <Switch value={isDarkTheme}/>
                                 </View>

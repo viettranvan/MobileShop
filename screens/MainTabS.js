@@ -53,7 +53,7 @@ const MainTab = () =>(
               name="OrderHistory" 
               component={OrderHistoryScreen} 
               options={{
-                tabBarLabel: 'Thông tin',
+                tabBarLabel: 'Lịch sử',
                 tabBarIcon: ({ color }) => (
                   <MaterialCommunityIcons name="history" color={color} size={26} />
                 ),
