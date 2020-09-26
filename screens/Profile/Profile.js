@@ -61,7 +61,7 @@ export default class Profile extends Component{
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangePassword')}>
                         <View style={styles.profile}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Text style={{ fontWeight: 'bold' }}>Thay đổi mật khẩu</Text>

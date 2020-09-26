@@ -2,12 +2,24 @@ import React, { Component } from "react";
 import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity, ScrollView, TextInput} from "react-native";
 import { Avatar } from 'react-native-paper'; 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import DatePicker from 'react-native-datepicker';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { color } from "react-native-reanimated";
 
+
+var genders = [
+    {label: "Nam", value: 0},
+    {label: "Nữ", value: 1},
+];
 
 
 export default class ChangeInfo extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            date:"01-01-1990"
+        }
+    }
     render(){
         const email = 'viettranvan2k@gmail.com';
         var hoten = 'Trần Văn Việt';
@@ -22,49 +34,74 @@ export default class ChangeInfo extends Component{
                     <View style={{paddingRight:15}}/>
                 </View>
 
-                <View style={{flex:10}}>
-                    <View style={{margin:5}}>
-                        <Text style={styles.text_footer}>Họ và tên</Text>
-                        <View style={styles.action}>
-                            <TextInput
-                                style={styles.textInput}
-                                value={hoten}
+                <View style={styles.body}>
+                    <View style={styles.changeInfoContainer}>
+                        <View style={{margin:5}}>
+                            <Text style={styles.text_footer}>Họ và tên</Text>
+                            <View style={styles.action}>
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={hoten}
+                                />
+                            </View>
+                        </View>
+
+                        <View style={{margin:5}}>
+                            <Text style={styles.text_footer}>Email</Text>
+                            <View style={styles.action}>
+                                <TextInput
+                                    style={[styles.textInput, {color:'#969696'}] }
+                                    editable = {false}
+                                    value = {email}
+                                />
+                            </View>
+                        </View>
+
+                        <View style={{margin:5}}>
+                            <Text style={styles.text_footer}>Ngày sinh</Text>
+                            <View style={styles.action}>
+                            <DatePicker
+                                style={{width: 200}}
+                                date={this.state.date} //initial date from state
+                                mode="date" //The enum of date, datetime and time
+                                placeholder="select date"
+                                format="DD-MM-YYYY"
+                                minDate="01-01-1900"
+                                maxDate="01-01-2020"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                customStyles={{
+                                    dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0
+                                    },
+                                    dateInput: {
+                                    marginLeft: 36
+                                    }
+                                }}
+                                onDateChange={(date) => {this.setState({date: date})}}
                             />
+                            </View>
+                        </View>
+
+                        <View style={{margin:5}}>
+                            <Text style={styles.text_footer}>Giới tính</Text>
+                            <View style={styles.action}>
+                                <RadioForm
+                                    radio_props={genders}
+                                    onPress={(value) => {}}
+                                />
+                            </View>
                         </View>
                     </View>
 
-                    <View style={{margin:5}}>
-                        <Text style={styles.text_footer}>Email</Text>
-                        <View style={styles.action}>
-                            <TextInput
-                                style={[styles.textInput, {color:'#969696'}] }
-                                editable = {false}
-                                value = {email}
-                            />
-                        </View>
-                    </View>
-
-                    <View style={{margin:5}}>
-                        <Text style={styles.text_footer}>Ngày sinh</Text>
-                        <View style={styles.action}>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Vui lòng nhập họ tên của bạn"
-                                editable = {false}
-                            />
-                        </View>
-                    </View>
-
-                    <View style={{margin:5}}>
-                        <Text style={styles.text_footer}>Giới tính</Text>
-                        <View style={styles.action}>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Vui lòng nhập họ tên của bạn"
-                                editable = {false}
-                            />
-                        </View>
-                    </View>
+                    <TouchableOpacity 
+                        onPress={() => {}}
+                        style={styles.upDate}>
+                            <Text style={styles.textUpdate}>Cập Nhật</Text>
+                    </TouchableOpacity>
                 </View>
 
                 
@@ -96,6 +133,11 @@ const styles = StyleSheet.create({
     body: {
         flex:10,
     },
+    changeInfoContainer:{
+        backgroundColor: '#fff',
+        marginTop: 10,
+        padding: 10
+    },  
     text_footer: {
         color: '#05375a',
         fontSize: 18,
@@ -114,5 +156,21 @@ const styles = StyleSheet.create({
         color: '#171716',
         height: 40,
         backgroundColor: '#deded7'
+    },
+    upDate: {
+        width: '100%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderColor: '#009387',
+        borderWidth: 1,
+        marginTop: 10, 
+        backgroundColor:'#5acc78'
+    },
+    textUpdate: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
     },
 });
