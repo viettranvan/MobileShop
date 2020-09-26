@@ -122,16 +122,3 @@ const styles = StyleSheet.create({
     },
 
 });
-
-// <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-//                             <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Thời gian đặt:</Text>
-//                             <Text style={{ color: '#C21C70' }}>2017-04-19 08:30:08</Text>
-//                         </View>
-//                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-//                             <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Trạng thái:</Text>
-//                             <Text style={{ color: '#2ABB9C' }}>Pending</Text>
-//                         </View>
-//                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-//                             <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Tổng:</Text>
-//                             <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>4.000.000 vnd</Text>
-//                         </View>

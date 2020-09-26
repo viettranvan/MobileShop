@@ -1,133 +1,160 @@
-import React, {Component} from 'react';
-import { render } from 'react-dom';
-import {View,  Text, Button} from 'react-native';
-import { TextInput } from 'react-native-paper';
+import React, { Component } from 'react';
+import { 
+    StyleSheet, Text, TouchableOpacity, ScrollView, View, Image, Dimensions 
+} from 'react-native';
 
-class Search extends Component{
+import sp1 from '../Image/Iphone11.jpg';
+import sp4 from  '../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
+import Header from './Header';
 
-    // chuyển đến textInput(trường) tiếp theo
-    _focusNextField(nextField) {
-        this.refs[nextField].focus()
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}
+
+class Search extends Component {
+    gotoDetail() {
+        const { navigator } = this.props;
+        navigator.push({ name: 'PRODUCT_DETAIL' });
     }
     render() {
-        const { navigation } = this.props;
-        return(
-            <View >
-                <Text>Search Screen</Text>
-                <Text>Search Screen</Text>
-                <Text>Search Screen</Text>
-                <Text>Search Screen</Text>
-                <Button
-                    title='go to profile'
-                    onPress={() => navigation.navigate('Profile')}
-                />
-
-                    <TextInput
-                       ref='1'
-                       placeholder='Normal'
-                       returnKeyType='next'
-                       blurOnSubmit={false}
-                       onSubmitEditing={() => this._focusNextField('2')}
-                       onSubmitEditing={() => this.refs}
-
-                   />
-                   <TextInput
-                       ref='2'
-                       keyboardType='email-address'
-                       placeholder='Email Address'
-                       returnKeyType='next'
-                       blurOnSubmit={false}
-                       onSubmitEditing={() => this._focusNextField('3')}
-                   />
-                   <TextInput
-                       ref='3'
-                       keyboardType='url'
-                       placeholder='URL'
-                       returnKeyType='next'
-                       blurOnSubmit={false}
-                       onSubmitEditing={() => this._focusNextField('4')}
-                   />
-                   <TextInput
-                       ref='4'
-                       keyboardType='numeric'
-                       placeholder='Numeric'
-                       blurOnSubmit={false}
-                       onSubmitEditing={() => this._focusNextField('5')}
-                   />
-                   <TextInput
-                       ref='5'
-                       keyboardType='numbers-and-punctuation'
-                       placeholder='Numbers & Punctuation'
-                       returnKeyType='done'
-                   />
+        const {
+            product, mainRight, txtMaterial, txtColor,
+            txtName, txtPrice, productImage,
+            txtShowDetail, showDetailContainer, wrapper
+        } = styles;
+        return (
+            <View style={{flex:1}}>
+                <Header navigation={this.props.navigation}/>
+                <ScrollView style={wrapper}>
+                    <View style={product}>
+                        <Image source={sp1} style={productImage} />
+                        <View style={mainRight}>
+                            <Text style={txtName}>{toTitleCase('black dress')}</Text>
+                            <Text style={txtPrice}>100$</Text>
+                            <Text style={txtMaterial}>Material Fur</Text>
+                            <View style={{ flexDirection: 'row' }} >
+                                <Text style={txtColor}>Color white</Text>
+                                <View
+                                    style={{
+                                        height: 15,
+                                        width: 15,
+                                        backgroundColor: 'white',
+                                        borderRadius: 15,
+                                        marginLeft: 10
+                                    }}
+                                />
+                            </View>
+                            <TouchableOpacity style={showDetailContainer}>
+                                <Text style={txtShowDetail}>SHOW DETAILS</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={product}>
+                        <Image source={sp4} style={productImage} />
+                        <View style={mainRight}>
+                            <Text style={txtName}>{toTitleCase('black dress')}</Text>
+                            <Text style={txtPrice}>100$</Text>
+                            <Text style={txtMaterial}>Material Fur</Text>
+                            <View style={{ flexDirection: 'row' }} >
+                                <Text style={txtColor}>Color white</Text>
+                                <View style={{ flexDirection: 'row' }} >
+                                    <Text style={txtColor}>Color white</Text>
+                                    <View
+                                        style={{
+                                            height: 15,
+                                            width: 15,
+                                            backgroundColor: 'white',
+                                            borderRadius: 15,
+                                            marginLeft: 10
+                                        }}
+                                    />
+                                </View>
+                            </View>
+                            <TouchableOpacity style={showDetailContainer}>
+                                <Text style={txtShowDetail}>SHOW DETAILS</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ScrollView>
             </View>
         );
     }
 }
-// const Search = ({navigation}) => {
-//     return(
-//         <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-//             <Button
-//                 title='go to profile'
-//                 onPress={() => navigation.navigate('Profile')}
-//             />
-            
-//         </View>
-//     );
-// }
+
 export default Search;
 
-// export default class Search extends Component{
-//     constructor(props) {
-//         super(props);
-//         this.passTextInput = null
-//     }
-//     // chuyển đến textInput(trường) tiếp theo
-//     _focusNextField(nextField) {
-//         this.refs[nextField].focus()
-//     }
+const { width } = Dimensions.get('window');
+const imageWidth = width / 4;
+const imageHeight = (imageWidth * 452) / 361;
 
-//     render(){
-        
-//         return(
-//             <View>
-//             <TextInput
-//                     ref='1'
-//                     placeholder='Normal'
-//                     returnKeyType='next'
-//                     blurOnSubmit={false}
-//                     onSubmitEditing={() => this._focusNextField('2')}
-//                 />
-//                 <TextInput
-//                     ref='2'
-//                     keyboardType='email-address'
-//                     placeholder='Email Address'
-//                     returnKeyType='next'
-//                     blurOnSubmit={false}
-//                     onSubmitEditing={() => this._focusNextField('3')}
-//                 />
-//                 <TextInput
-//                     ref='3'
-//                     keyboardType='url'
-//                     placeholder='URL'
-//                     returnKeyType='next'
-//                     blurOnSubmit={false}
-//                     onSubmitEditing={() => this._focusNextField('4')}
-//                 />
-//                 <TextInput
-//                     ref='4'
-//                     keyboardType='numeric'
-//                     placeholder='Numeric'
-//                     blurOnSubmit={false}
-//                     onSubmitEditing={() => this._focusNextField('5')}
-//                 />
-//                 <TextInput
-//                     ref='5'
-//                     keyboardType='numbers-and-punctuation'
-//                     placeholder='Numbers & Punctuation'
-//                     returnKeyType='done'
-//                 />
-//         </View>
-//         );
-//     }
-// }
+const styles = StyleSheet.create({
+    wrapper: {
+        backgroundColor: '#F6F6F6',
+        flex: 1
+    },
+    product: {
+        flexDirection: 'row',
+        margin: 10,
+        padding: 10,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 2,
+        shadowColor: '#3B5458',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2
+    },
+    productImage: {
+        width: imageWidth,
+        height: imageHeight,
+        flex: 1,
+        resizeMode: 'center'
+    },
+    mainRight: {
+        flex: 3,
+        justifyContent: 'space-between'
+    },
+    productController: {
+        flexDirection: 'row'
+    },
+    numberOfProduct: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    txtName: {
+        paddingLeft: 20,
+        color: '#A7A7A7',
+        fontSize: 20,
+        fontWeight: '400',
+    },
+    txtPrice: {
+        paddingLeft: 20,
+        color: '#C21C70',
+        fontSize: 15,
+        fontWeight: '400',
+    },
+    txtColor: {
+        paddingLeft: 20,
+        color: 'black',
+        fontSize: 15,
+        fontWeight: '400',
+    },
+    txtMaterial: {
+        paddingLeft: 20,
+        color: 'black',
+        fontSize: 15,
+        fontWeight: '400',
+    },
+    txtShowDetail: {
+        color: '#C21C70',
+        fontSize: 10,
+        fontWeight: '400',
+        textAlign: 'right',
+    },
+    showDetailContainer: {
+        flexDirection: 'row',
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        marginTop: 100
+    }
+});
+
