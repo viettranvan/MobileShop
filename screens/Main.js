@@ -34,7 +34,8 @@ export default class Main extends Component{
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#dcdedd',
+    //   backgroundColor: '#dcdedd',
+    //   backgroundColor: 'red',
     },
     headerTitle: {
         flexDirection: 'row',

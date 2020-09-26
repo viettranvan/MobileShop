@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTab = () =>(
-        <Tab.Navigator>
+        <Tab.Navigator activeColor="#f0edf6" inactiveColor="#3e2465" barStyle={{backgroundColor:'#195ad1'}}>
             <Tab.Screen 
               name="Main" 
               component={MainScreen} 
