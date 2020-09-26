@@ -71,7 +71,7 @@ export default function DrawerContent(props){
                                     size = {size}
                                 />
                             )}
-                            label="profile"
+                            label="Thông tin cá nhân"
                             onPress={() => {props.navigation.navigate("Profile")}}
                         />
                         <DrawerItem

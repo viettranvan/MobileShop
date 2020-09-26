@@ -24,6 +24,7 @@ import DrawerContent from './screens/DrawerContent';
 import ListCollectionScreen from './screens/Product/ListProduct';
 import ProductDetailScreen from './screens/Product/ProductDetail';
 import ListProductScreen from './screens/Product/ListProduct';
+import ChangeInfoScreen from './screens/Profile/ChangeInfo';
 
 import Header from './screens/Header';
 import SupportScreen from './screens/Support';
@@ -108,6 +109,8 @@ const App = () => {
                 <Drawer.Screen name='ListProduct' component={ListProducttStackScreen}/>
                 <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
                 <Drawer.Screen name='Support' component={SupportScreen} />
+                <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen} />
+                
                 
 
 
