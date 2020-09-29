@@ -9,21 +9,44 @@ import TopProductScreen from './Product/TopProduct';
 
 import Header from './Header';
 
-
+// localhost
+const URL = 'http://192.168.2.105:8888/api/';
 const {height} = Dimensions.get("window");
 
 export default class Main extends Component{
-    openMenu(){
-        this.props.navigation.openDrawer();
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            types: [], // dữ liệu đổ vào category
+            topProduct: [] // dữ liệu đổ vào topProduct 
+        }
     }
+    
+    componentDidMount(){
+        fetch(URL)
+        .then(res => res.json())
+        .then(data => {
+            const {type, product} = data; // type: tên biến mà server trả về
+            this.setState({
+                types: type,
+                topProduct:product
+            }) 
+        });
+    }
+
+    
+
     render(){
+        const {types, topProduct} = this.state;
+        
         return(
             <View style={{flex:1}}>
                 <Header navigation={this.props.navigation}/>                
                 <ScrollView style={styles.container}>
                     <CollectionScreen navigation ={this.props.navigation}/>
-                    <CategoryScreen navigation ={this.props.navigation}/>
-                    <TopProductScreen navigation ={this.props.navigation}/>
+                    <CategoryScreen navigation ={this.props.navigation} types={types}/>
+                    <TopProductScreen navigation ={this.props.navigation} topProduct={topProduct}/>
                 </ScrollView>
             </View>
 

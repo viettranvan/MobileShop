@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
-import {View,  Text, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
+import {View,  Text, StyleSheet, Dimensions, Image, TouchableOpacity, Button} from 'react-native';
 import Swiper from 'react-native-swiper';
-
-import Iphone from '../../Image/Iphone-11-pro-max.jpg';
-import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
-import Oppo from '../../Image/oppo-a11x_800x450.jpg';
-
 
 
 const {width,height} = Dimensions.get("window");
+const url = 'http://192.168.2.105:8888/api/images/type/';
 
 export default class Category extends Component{
-    gotoListCategory(){
+    gotoListProduct(){
         this.props.navigation.navigate('ListProduct');
     }
+
     render(){
+        const {types} = this.props;
         return(
             <View style={styles.wrapper}>
                 <View style={{flex: 1,justifyContent: 'center'}}>
@@ -22,17 +20,14 @@ export default class Category extends Component{
                 </View>
                 <View style={{flex:6}}>
                     <Swiper showsPagination width={imageWidth} height={imageHeight}>
-                        <TouchableOpacity onPress={() => this.gotoListCategory()}>
-                            <Image style={styles.imageStyle}source={Iphone}>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.gotoListCategory()}>
-                            <Image style={styles.imageStyle}source={SamSung}>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.gotoListCategory()}>
-                            <Image style={styles.imageStyle}source={Oppo}/>
-                        </TouchableOpacity>
+                        {types.map( e => (
+                            <TouchableOpacity onPress={() => this.gotoListProduct()} key={e.id_type}>
+                                <Image 
+                                    style={styles.imageStyle}
+                                    source={{uri: url + e.image}} // đổ dữ liệu trả về từ server vào swiper
+                                />
+                            </TouchableOpacity>
+                        ))}
                     </Swiper>
                 </View>
             </View>
@@ -41,7 +36,7 @@ export default class Category extends Component{
 }
 
 const imageWidth = width - 40;
-const imageHeight = (imageWidth/800)*450;
+const imageHeight = (imageWidth/800)*400;
 const styles = StyleSheet.create({
     wrapper: {
         height : height*0.3 ,
@@ -57,7 +52,10 @@ const styles = StyleSheet.create({
     },
     imageStyle: {
         width: imageWidth,
-        height: imageHeight
-    }
+        height: imageHeight,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
 });
   
