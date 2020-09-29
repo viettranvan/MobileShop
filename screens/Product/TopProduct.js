@@ -22,8 +22,8 @@ export default class Test extends Component{
                 </View>
                 <View style={styles.body}>
                     {topProduct.map( e => (
-                        <View>
-                            <TouchableOpacity style={styles.productContainer} onPress={()=> console.log(topProduct)} key={e.id_product}>
+                        <View key={e.id_product}>
+                            <TouchableOpacity style={styles.productContainer} onPress={()=> this.props.navigation.navigate('Detail')} key={e.id_product}>
                                 
                                 <Image 
                                     style={styles.productImage}

@@ -54,7 +54,7 @@ const ListCollectionStackScreen = ({navigation}) => (
   </ListCollectionStack.Navigator>
 );
 const ProductDetailStackScreen = ({navigation}) => (
-  <ListProductStack.Navigator >
+  <ListProductStack.Navigator headerMode='none'>
     <ListProductStack.Screen name="Detail Product Screen" component={ProductDetailScreen} />
   </ListProductStack.Navigator>
 );
@@ -63,10 +63,10 @@ const ListProducttStackScreen = ({navigation}) => (
     <ListCategoryStack.Screen 
       name="List Product Screen" 
       component={ListProductScreen}
-      
     />
   </ListCategoryStack.Navigator>
 );
+
 
 const App = () => {
   const  [isDarkTheme, setIsDarkTheme] = React.useState(false);
