@@ -123,7 +123,9 @@ const App = () => {
 
 
               </Drawer.Navigator> */}
+
               <RootStackScreen/>
+
             </NavigationContainer>
           </View>
         </AuthContext.Provider>

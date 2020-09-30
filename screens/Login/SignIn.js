@@ -22,7 +22,6 @@ const SignIn = ( {navigation} ) =>{
     
     
     const textInputChange = (val) => {
-        
         if(val.length >= 6 ){
             setData({
                 ...data,
@@ -40,7 +39,6 @@ const SignIn = ( {navigation} ) =>{
                 usernameLength: val.length,
             });
         }
-       
     }
 
     const handlePasswordChange = (val) => {
@@ -217,8 +215,8 @@ const SignIn = ( {navigation} ) =>{
                         style={[styles.signIn,{backgroundColor:'#01ab9d'}]}
                         onPress={checkData}
                     >
-                            <Text style={styles.textSign}>Đăng Nhập</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.textSign}>Đăng Nhập</Text>
+                    </TouchableOpacity>
 
                     <TouchableOpacity 
                         onPress={() => navigation.navigate('SignUpScreen')}
