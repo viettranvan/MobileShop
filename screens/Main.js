@@ -11,6 +11,7 @@ import Header from './Header';
 
 // localhost
 const URL = 'http://192.168.2.105:8888/api/';
+const product_detail_URL = 'http://192.168.2.105:8888/api/product_detail.php';
 const {height} = Dimensions.get("window");
 
 export default class Main extends Component{
@@ -19,7 +20,7 @@ export default class Main extends Component{
         super(props);
         this.state = {
             types: [], // dữ liệu đổ vào category
-            topProduct: [] // dữ liệu đổ vào topProduct 
+            topProduct: [], // dữ liệu đổ vào topProduct 
         }
     }
     
@@ -35,30 +36,23 @@ export default class Main extends Component{
         });
     }
 
-    
-
     render(){
         const {types, topProduct} = this.state;
-        
         return(
             <View style={{flex:1}}>
                 <Header navigation={this.props.navigation}/>                
                 <ScrollView style={styles.container}>
-                    <CollectionScreen navigation ={this.props.navigation}/>
+                    <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>
                     <CategoryScreen navigation ={this.props.navigation} types={types}/>
-                    <TopProductScreen navigation ={this.props.navigation} topProduct={topProduct}/>
+                    <TopProductScreen navigation ={this.props.navigation} topProduct={topProduct} />
                 </ScrollView>
             </View>
-
-            
         );
     }
 }
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-    //   backgroundColor: '#dcdedd',
-    //   backgroundColor: 'red',
     },
     headerTitle: {
         flexDirection: 'row',

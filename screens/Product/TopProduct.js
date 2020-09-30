@@ -2,17 +2,30 @@ import React, {Component} from 'react';
 import {View,  Text, StyleSheet, Image, Dimensions} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import SamSung from '../../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
-
 const URL_topProduct = 'http://192.168.2.105:8888/api/images/product/';
+const product_detail_URL = 'http://192.168.2.105:8888/api/';
 
 // format giá theo định dạng có dấu phẩy
 function formatPrice(price){
     return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
-
 export default class Test extends Component{
-    
+    constructor(){
+        super();
+        this.state = {
+            productDetail:[]
+        }
+    }
+    gotoDetail(id){
+        fetch(product_detail_URL+"product_detail.php?id="+id)
+        .then(res => res.json())
+        .then(data => {
+            const {product_detail} = data;
+            this.props.navigation.navigate('Detail',{ 
+                product_detail: product_detail
+            })
+        })
+    }
     render(){
         const {topProduct} = this.props;
         return(
@@ -23,8 +36,11 @@ export default class Test extends Component{
                 <View style={styles.body}>
                     {topProduct.map( e => (
                         <View key={e.id_product}>
-                            <TouchableOpacity style={styles.productContainer} onPress={()=> this.props.navigation.navigate('Detail')} key={e.id_product}>
-                                
+                            <TouchableOpacity 
+                                style={styles.productContainer} 
+                                onPress={()=> this.gotoDetail(e.id_product)} 
+                                key={e.id_product}
+                            >
                                 <Image 
                                     style={styles.productImage}
                                     source={{uri: URL_topProduct + e.productImage[0]}} 
@@ -34,12 +50,10 @@ export default class Test extends Component{
                                 <Text style={styles.productPrice} > {formatPrice(e.price)} 
                                     <Text style={{fontSize:14}}> vnd</Text>
                                 </Text>
-                                
                             </TouchableOpacity>
                             <View style={{height:10,backgroundColor:'#fff'}}/>
                         </View>
                     ))}
-                    
                     <View style={{height: 10, width: width}}/>
                 </View>
             </View>
@@ -50,8 +64,6 @@ export default class Test extends Component{
 const {width,height} = Dimensions.get('window');
 const productWidth = (width - 50) / 2;
 const productHeight = (productWidth /500)*500;
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -99,21 +111,3 @@ const styles = StyleSheet.create({
         color: 'red'
     }
 });
-  
-
-{/* <TouchableOpacity style={styles.productContainer} onPress={()=>this.gotoListProduct()}>
-                        <Image source={SamSung} style={styles.productImage}/>
-                        <Text style={styles.productName} >Name</Text>
-                        <Text style={styles.productPrice} >Price</Text>
-                    </TouchableOpacity>
-                    <View style={{height: 10, width: width}}/>
-                    <TouchableOpacity style={styles.productContainer} onPress={()=>this.gotoListProduct()}>
-                        <Image source={SamSung} style={styles.productImage}/>
-                        <Text style={styles.productName} >Name kfsnksfn kfnskfn khfsiknf jnksfnsf k fksjkf ljfnskfnbjik ónkfb</Text>
-                        <Text style={styles.productPrice} >Price</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.productContainer} onPress={()=>this.gotoListProduct()}>
-                        <Image source={SamSung} style={styles.productImage}/>
-                        <Text style={styles.productName} >Name</Text>
-                        <Text style={styles.productPrice} >Price nè =))</Text>
-                    </TouchableOpacity> */}

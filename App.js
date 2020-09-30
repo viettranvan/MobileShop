@@ -48,16 +48,24 @@ const ListCategoryStack = createStackNavigator();
 
 
 
-const ListCollectionStackScreen = ({navigation}) => (
+const ListCollectionStackScreen = ({navigation,route}) => (
   <ListCollectionStack.Navigator >
     <ListCollectionStack.Screen name="List Collection Screen" component={ListCollectionScreen} />
   </ListCollectionStack.Navigator>
 );
-const ProductDetailStackScreen = ({navigation}) => (
-  <ListProductStack.Navigator headerMode='none'>
-    <ListProductStack.Screen name="Detail Product Screen" component={ProductDetailScreen} />
-  </ListProductStack.Navigator>
-);
+// const ProductDetailStackScreen = (navigation) => (
+//   <ListProductStack.Navigator headerMode='none'>
+//     <ListProductStack.Screen name="Detail Product Screen" component={ProductDetailScreen} />
+//   </ListProductStack.Navigator>
+// );
+
+const ProductDetailStackScreen = ({navigation,route}) => {
+  return(
+    <ProductDetailScreen navigation={navigation} route={route}/>
+  );
+}
+
+
 const ListProducttStackScreen = ({navigation}) => (
   <ListCategoryStack.Navigator headerMode='none'>
     <ListCategoryStack.Screen 
@@ -112,9 +120,6 @@ const App = () => {
                 <Drawer.Screen name='Support' component={SupportScreen} />
                 <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen} />
                 <Drawer.Screen name='ChangePassword' component={ChangePasswordScreen} />
-
-                
-                
 
 
               </Drawer.Navigator>
