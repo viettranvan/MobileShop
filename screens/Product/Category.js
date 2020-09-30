@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {View,  Text, StyleSheet, Dimensions, Image, TouchableOpacity, Button} from 'react-native';
 import Swiper from 'react-native-swiper';
-
+import urls from '../../urls';
 
 const {width,height} = Dimensions.get("window");
-const url = 'http://192.168.2.105:8888/api/images/type/';
+// const url = 'http://192.168.2.105:8888/MobileShop/api/images/type/';
+const images_type_URL = urls[1].url;
 
 export default class Category extends Component{
     gotoListProduct(){
@@ -24,7 +25,7 @@ export default class Category extends Component{
                             <TouchableOpacity onPress={() => this.gotoListProduct()} key={e.id_type}>
                                 <Image 
                                     style={styles.imageStyle}
-                                    source={{uri: url + e.image}} // đổ dữ liệu trả về từ server vào swiper
+                                    source={{uri: images_type_URL + e.image}} // đổ dữ liệu trả về từ server vào swiper
                                 />
                             </TouchableOpacity>
                         ))}

@@ -8,12 +8,10 @@ import CategoryScreen from './Product/Category';
 import TopProductScreen from './Product/TopProduct';
 
 import Header from './Header';
+import urls from '../urls';
 
 // localhost
-const URL = 'http://192.168.2.105:8888/api/';
-const product_detail_URL = 'http://192.168.2.105:8888/api/product_detail.php';
-const {height} = Dimensions.get("window");
-
+const URL = urls[0].url;
 export default class Main extends Component{
     
     constructor(props){
@@ -40,7 +38,7 @@ export default class Main extends Component{
         const {types, topProduct} = this.state;
         return(
             <View style={{flex:1}}>
-                <Header navigation={this.props.navigation}/>                
+                <Header navigation={this.props.navigation}/>    
                 <ScrollView style={styles.container}>
                     <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>
                     <CategoryScreen navigation ={this.props.navigation} types={types}/>
@@ -50,6 +48,7 @@ export default class Main extends Component{
         );
     }
 }
+const {height} = Dimensions.get("window");
 const styles = StyleSheet.create({
     container: {
       flex: 1,

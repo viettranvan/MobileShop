@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import {View,  Text, StyleSheet, Image, Dimensions} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import urls from '../../urls';
 
-const URL_topProduct = 'http://192.168.2.105:8888/api/images/product/';
-const product_detail_URL = 'http://192.168.2.105:8888/api/';
+// const URL_topProduct = 'http://192.168.2.105:8888/MobileShop/api/images/product/';
+// const product_detail_URL = 'http://192.168.2.105:8888/MobileShop/api/';
+const URL_imagesProduct = urls[2].url;
+const product_detail_URL = urls[3].url;
 
 // format giá theo định dạng có dấu phẩy
 function formatPrice(price){
@@ -17,7 +20,7 @@ export default class Test extends Component{
         }
     }
     gotoDetail(id){
-        fetch(product_detail_URL+"product_detail.php?id="+id)
+        fetch(product_detail_URL+"?id="+id)
         .then(res => res.json())
         .then(data => {
             const {product_detail} = data;
@@ -43,7 +46,7 @@ export default class Test extends Component{
                             >
                                 <Image 
                                     style={styles.productImage}
-                                    source={{uri: URL_topProduct + e.productImage[0]}} 
+                                    source={{uri: URL_imagesProduct + e.productImage[0]}} 
                                 />
                                 <Text style={styles.productName} > {e.name} </Text>
                                 <Text style={styles.productDescription} > {e.small_description} </Text>

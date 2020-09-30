@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View,  Text, Button, Dimensions, StyleSheet, Image,TouchableOpacity, ScrollView, Picker} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
+import urls from '../../urls';
 
 import sp1 from '../../Image/iphone-8-1.jpg';
 import sp2 from '../../Image/xiaomi-banner-resize.jpg';
@@ -10,7 +11,8 @@ import sp4 from '../../Image/oppo-banner-resize.jpg';
 import { color } from 'react-native-reanimated';
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 
-const URL_productDetail = 'http://192.168.2.105:8888/api/images/product/';
+// const URL_productDetail = 'http://192.168.2.105:8888/MobileShop/api/images/product/';
+const images_product_URL = urls[2].url;
 
 // format giá theo định dạng có dấu phẩy
 function formatPrice(price){
@@ -56,23 +58,23 @@ export default class ProductDetail extends Component{
               <Swiper showsPagination width={imageWidth} height={imageHeight}>
                 <Image 
                   style={styles.productImageStyle} 
-                  source={{uri: URL_productDetail + e.productImage[0]}} 
+                  source={{uri: images_product_URL + e.productImage[0]}} 
                 />
                 <Image 
                   style={styles.productImageStyle} 
-                  source={{uri: URL_productDetail + e.productImage[1]}} 
+                  source={{uri: images_product_URL + e.productImage[1]}} 
                 />
                 <Image 
                   style={styles.productImageStyle} 
-                  source={{uri: URL_productDetail + e.productImage[2]}} 
+                  source={{uri: images_product_URL + e.productImage[2]}} 
                 />
                 <Image 
                   style={styles.productImageStyle} 
-                  source={{uri: URL_productDetail + e.productImage[3]}} 
+                  source={{uri: images_product_URL + e.productImage[3]}} 
                 />
                 <Image 
                   style={styles.productImageStyle} 
-                  source={{uri: URL_productDetail + e.productImage[4]}} 
+                  source={{uri: images_product_URL + e.productImage[4]}} 
                 />
               </Swiper>
             </View>
