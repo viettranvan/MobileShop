@@ -3,8 +3,6 @@ import {View,  Text, StyleSheet, Image, Dimensions} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import urls from '../../urls';
 
-// const URL_topProduct = 'http://192.168.2.105:8888/MobileShop/api/images/product/';
-// const product_detail_URL = 'http://192.168.2.105:8888/MobileShop/api/';
 const URL_imagesProduct = urls[2].url;
 const product_detail_URL = urls[3].url;
 

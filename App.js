@@ -112,7 +112,7 @@ const App = () => {
             <StatusBar barStyle='light-content' hidden={false} />
             {/* <Header /> */}
             <NavigationContainer theme={theme}>
-              <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
+              {/* <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
                 <Drawer.Screen name='MainDrawer' component={MainTabScreen} />
                 <Drawer.Screen name='ListCollection' component={ListCollectionStackScreen}/>
                 <Drawer.Screen name='ListProduct' component={ListProducttStackScreen}/>
@@ -122,8 +122,8 @@ const App = () => {
                 <Drawer.Screen name='ChangePassword' component={ChangePasswordScreen} />
 
 
-              </Drawer.Navigator>
-              {/* <RootStackScreen/> */}
+              </Drawer.Navigator> */}
+              <RootStackScreen/>
             </NavigationContainer>
           </View>
         </AuthContext.Provider>

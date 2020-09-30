@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {View,  Text, StyleSheet, Dimensions, Image, TouchableOpacity, Button} from 'react-native';
+import {View,  Text, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
 import urls from '../../urls';
 
 const {width,height} = Dimensions.get("window");
-// const url = 'http://192.168.2.105:8888/MobileShop/api/images/type/';
 const images_type_URL = urls[1].url;
 
 export default class Category extends Component{

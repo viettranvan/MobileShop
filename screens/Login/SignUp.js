@@ -1,17 +1,5 @@
 import React from 'react';
-import { 
-    View, 
-    Text, 
-    Button, 
-    TouchableOpacity, 
-    Dimensions,
-    TextInput,
-    Platform,
-    StyleSheet,
-    ScrollView,
-    StatusBar
-} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet, ScrollView, StatusBar } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -121,10 +109,7 @@ const SignUp = ({navigation}) => {
         <View style={styles.header}>
             <Text style={styles.text_header}>Đăng ký ngay!</Text>
         </View>
-        <Animatable.View 
-            animation="fadeInUpBig"
-            style={styles.footer}
-        >
+        <View style={styles.footer}>
             <ScrollView>
             {/* Tên đăng nhập - email */}
             <Text style={styles.text_footer}>Họ và tên</Text>
@@ -137,20 +122,17 @@ const SignUp = ({navigation}) => {
                 <TextInput 
                     placeholder="Vui lòng nhập họ tên của bạn"
                     style={styles.textInput}
-                    autoCapitalize="done"
                     onChangeText={(val) => textInputFullnameChange(val)}
                     blurOnSubmit={false}
                 />
                 {data.check_textInputFullnameChange ? 
-                <Animatable.View
-                    animation="bounceIn"
-                >
+                <View>
                     <Feather 
                         name="check-circle"
                         color="green"
                         size={20}
                     />
-                </Animatable.View>
+                </View>
                 : null}
             </View>
             {/* End Tên đăng nhập - email */}
@@ -169,21 +151,18 @@ const SignUp = ({navigation}) => {
                 <TextInput 
                     placeholder="Vui lòng nhập tài khoản"
                     style={styles.textInput}
-                    autoCapitalize="done"
                     onChangeText={(val) => textInputChange(val)}
                     blurOnSubmit={false}
 
                 />
                 {data.check_textInputChange ? 
-                <Animatable.View
-                    animation="bounceIn"
-                >
+                <View>
                     <Feather 
                         name="check-circle"
                         color="green"
                         size={20}
                     />
-                </Animatable.View>
+                </View>
                 : null}
             </View>
             {/* End Tên đăng nhập - email */}
@@ -203,7 +182,6 @@ const SignUp = ({navigation}) => {
                     placeholder="Vui lòng nhập mật khẩu"            
                     secureTextEntry={data.secureTextEntry ? true : false}
                     style={styles.textInput}
-                    autoCapitalize="none"
                     onChangeText={(val) => handlePasswordChange(val)}
                     blurOnSubmit={false}
 
@@ -229,7 +207,6 @@ const SignUp = ({navigation}) => {
                     placeholder="Xác nhận mật khẩu của bạn"
                     secureTextEntry={data.confirm_secureTextEntry ? true : false}
                     style={styles.textInput}
-                    autoCapitalize="none"
                     onChangeText={(val) => handleConfirmPasswordChange(val)}
                     blurOnSubmit={false}
                     
@@ -242,6 +219,48 @@ const SignUp = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             {/*End Nhập lại mật khẩu */}
+
+            {/* Địa chỉ */}
+            <Text style={[styles.text_footer, {
+                marginTop: 35
+            }]}>Địa chỉ</Text>
+
+            <View style={styles.action}>
+                <MaterialCommunityIcons 
+                    name='account-outline'
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Vui lòng nhập địa chỉ"
+                    numberOfLines={2}
+                    style={styles.textInput}
+                    onChangeText={(val) => textInputChange(val)}
+                    blurOnSubmit={false}
+                />
+            </View>
+            {/* end địa chỉ */}
+
+            {/* số đt */}
+            <Text style={[styles.text_footer, {
+                marginTop: 35
+            }]}>Số điện thoại</Text>
+
+            <View style={styles.action}>
+                <MaterialCommunityIcons 
+                    name='account-outline'
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Vui lòng nhập số điện thoại"
+                    style={styles.textInput}
+                    keyboardType='numeric'
+                    onChangeText={(val) => textInputChange(val)}
+                    blurOnSubmit={false}
+                />
+            </View>
+            {/* end số đt */}
 
             {/* Button đăng ký - đăng nhập*/}
             <View style={styles.button}>
@@ -274,7 +293,7 @@ const SignUp = ({navigation}) => {
             </View>
             {/*End Button đăng ký - đăng nhập*/}
             </ScrollView>
-        </Animatable.View>
+        </View>
       </View>
     );
 };
@@ -346,14 +365,3 @@ const styles = StyleSheet.create({
         color: 'grey'
     }
   });
-
-   {/* Điều khoản */}
-            {/* <View style={styles.textPrivate}>
-                <Text style={styles.color_textPrivate}>
-                    By signing up you agree to our
-                </Text>
-                <Text style={[styles.color_textPrivate, {fontWeight: 'bold'}]}>{" "}Terms of service</Text>
-                <Text style={styles.color_textPrivate}>{" "}and</Text>
-                <Text style={[styles.color_textPrivate, {fontWeight: 'bold'}]}>{" "}Privacy policy</Text>
-            </View> */}
-            {/*End Điều khoản */}

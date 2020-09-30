@@ -1,54 +1,74 @@
 import React, {Component} from 'react';
-import {View,  Text, StyleSheet, Dimensions, TouchableOpacity, Platform, TextInput} from 'react-native';
+import {View,  Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
-import * as Animatable from 'react-native-animatable';
-import {LinearGradient} from 'expo-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import SignUp from './SignUp';
-import { Button } from 'react-native-paper';
+import { set } from 'react-native-reanimated';
+
 
 const SignIn = ( {navigation} ) =>{
     
     const [data, setData] = React.useState({
-        email: '',
+        username: '',
         password: '',
         check_textInputChange: false,
         check_textInputPasswordChange: false,
-        secureTextEntry: true
+        secureTextEntry: true,
+        isValidUser: true,
+        isValidPassword: true,
+        usernameLength: 0,
+        passwordLength: 0
     });
-
+    
+    
     const textInputChange = (val) => {
-        if(val.length !== 0 ){
+        
+        if(val.length >= 6 ){
             setData({
                 ...data,
-                email: val,
+                username: val,
                 check_textInputChange:  true,
+                isValidUser:true,
+                usernameLength: val.length,
             });
         }
         else{
             setData({
                 ...data,
-                email: val,
+                username: val,
                 check_textInputChange:  false,
+                usernameLength: val.length,
             });
         }
+       
     }
 
     const handlePasswordChange = (val) => {
-        if(val.length !== 0 ){
+        
+        if(val.length >= 8 ){
             setData({
                 ...data,
                 password: val,
                 check_textInputPasswordChange:  true,
+                isValidPassword: true,
+                passwordLength: val.length
             });
         }
-        else{
+        else if(val.length < 8 && val.length > 0){
+            setData({
+                ...data,
+                password: val,
+                check_textInputPasswordChange:  true,
+                passwordLength: val.length
+            });
+        }
+        else if(val.length == 0){
             setData({
                 ...data,
                 password: val,
                 check_textInputPasswordChange:  false,
-            });
+                passwordLength: val.length
+            })
         }
     }
 
@@ -57,6 +77,77 @@ const SignIn = ( {navigation} ) =>{
             ...data,
             secureTextEntry: !data.secureTextEntry
         });
+    }
+
+    const handleValidUser = (val) => {
+        if(val.trim().length >= 6){
+            setData({
+                ...data,
+                isValidUser: true
+            })
+        }
+        else{
+            setData({
+                ...data,
+                isValidUser: false
+            })
+        }
+    }
+
+    const handleValidPassword = (val) => {
+        if(val.trim().length >= 8){
+            setData({
+                ...data,
+                isValidPassword: true
+            })
+        }
+        else{
+            setData({
+                ...data,
+                isValidPassword: false
+            })
+        }
+    }
+
+    const checkData = () => {
+        var userLen = data.usernameLength;
+        var passwordLen = data.passwordLength;
+        console.log( userLen + ' ' + passwordLen);
+        if(userLen < 6 && passwordLen < 8){
+            setData({
+                ...data,
+                isValidUser: false,
+                isValidPassword: false
+            })
+        }
+        else if(userLen < 6 && passwordLen >= 8){
+            setData({
+                ...data,
+                isValidUser: false,
+                isValidPassword: true
+            })
+        }
+        else if(userLen >= 6 && passwordLen  < 8){
+            setData({
+                ...data,
+                isValidUser: true,
+                isValidPassword: false
+            })
+        }
+        else {
+            setData({
+                ...data,
+                isValidUser: true,
+                isValidPassword: true
+            })
+            checkLogin();
+        }
+    }
+    
+    function checkLogin(){
+        const {username} = data;
+        const {password} = data;
+        console.log(username + ' ' + password);
     }
 
     const eye = <Feather name='eye' size={25} color='grey' />
@@ -68,27 +159,21 @@ const SignIn = ( {navigation} ) =>{
                 <Text style={styles.text_header}>Welcome!</Text>
             </View>
 
-            <Animatable.View 
-                animation='flipInX'
-                style={styles.footer}
-            >
-                <Text style={styles.text_footer}>Email</Text>
+            <View style={styles.footer} >
+                <Text style={styles.text_footer}>Tên đăng nhập</Text>
                 <View style={styles.action}>
                     <MaterialCommunityIcons
                         name="account-outline"
                         size={30}
                     />
                     <TextInput 
-                        placeholder="Vui lòng nhập Email"
+                        placeholder="Vui lòng nhập tên tài khoản"
                         style={styles.textInput}
-                        autoCapitalize='none'
                         onChangeText={(val) => textInputChange(val)}
                         blurOnSubmit={false}
-                        returnKeyType='done'
-                        autoFocus={true}
+                        onEndEditing={e => handleValidUser(e.nativeEvent.text)}
                     />
 
-                    {/* Kiểm tra textinput có rỗng hay ko */}
                     { data.check_textInputChange ? 
                     <MaterialCommunityIcons
                         name='check-circle'
@@ -96,8 +181,11 @@ const SignIn = ( {navigation} ) =>{
                         color='green'
                     />
                     : null }
+                    
                 </View>
-
+                {data.isValidUser ? null : 
+                    <Text style={styles.errorMsg}>Tên đăng nhập phải chứa ít nhất 6 ký tự</Text>
+                }
                 <Text style={[styles.text_footer,{marginTop: 30}]}>Mật khẩu</Text>
                 <View style={styles.action}>
                     <MaterialCommunityIcons
@@ -107,10 +195,11 @@ const SignIn = ( {navigation} ) =>{
                     <TextInput 
                         placeholder="Vui lòng nhập mật khẩu"
                         style={styles.textInput}
-                        autoCapitalize='none'
                         secureTextEntry={data.secureTextEntry ? true : false}
                         onChangeText={(val) => handlePasswordChange(val)}
                         blurOnSubmit={false}
+                        returnKeyType='done'
+                        onEndEditing={e => handleValidPassword(e.nativeEvent.text)}
                         
                     />
                     <TouchableOpacity onPress={toggleSecureTextEntry}>
@@ -118,32 +207,33 @@ const SignIn = ( {navigation} ) =>{
                         data.secureTextEntry ? eye : eye_off  : null}
                     </TouchableOpacity>
                 </View>
+                {data.isValidPassword ? null : 
+                    <Text style={styles.errorMsg}>Mật khẩu phải chứa ít nhất 8 ký tự</Text>
+                }
 
                 <View style={styles.button}>
-                    <LinearGradient
-                        colors={['#08d4c4','#01ab9d']}
-                        style={styles.signIn}
+                    
+                    <TouchableOpacity 
+                        style={[styles.signIn,{backgroundColor:'#01ab9d'}]}
+                        onPress={checkData}
                     >
-                        <TouchableOpacity>
                             <Text style={styles.textSign}>Đăng Nhập</Text>
                         </TouchableOpacity>
-                    </LinearGradient>
-                    
+
                     <TouchableOpacity 
                         onPress={() => navigation.navigate('SignUpScreen')}
                         style={[styles.signIn,{
                             borderColor: '#009387',
                             borderWidth: 1,
-                            marginTop: 10
+                            marginTop: 10,
                         }]}    
                     >
-                            <Text style={[styles.textSign,{color:'green'}]}>Đăng Ký Ngay</Text>
+                            <Text style={[styles.textSign,{color:'#01ab9d'}]}>Đăng Ký Ngay</Text>
                     </TouchableOpacity>
                 </View>
-            </Animatable.View>
+            </View>
         </View>
     );
-    
 }
 export default SignIn;
 const styles = StyleSheet.create({
