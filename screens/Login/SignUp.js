@@ -4,7 +4,7 @@ import DatePicker from 'react-native-datepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 import urls from '../../urls';
 
 var genders = [
@@ -212,7 +212,6 @@ const SignUp = ({navigation}) => {
         });
     }
 
-
     const eye = <Feather name="eye" color="grey" size={25} />
     const eye_off = <Feather name='eye-off' size={25} color='grey' />
 
@@ -227,11 +226,7 @@ const SignUp = ({navigation}) => {
             {/* Họ Và tên */}
             <Text style={styles.text_footer}>Họ và tên</Text>
             <View style={styles.action}>
-                <FontAwesome 
-                    name="user-o"
-                    color="#05375a"
-                    size={20}
-                />
+                <FontAwesome name="user-o" color="#05375a" size={20}/>
                 <TextInput 
                     placeholder="Vui lòng nhập họ tên của bạn"
                     style={styles.textInput}
@@ -240,28 +235,16 @@ const SignUp = ({navigation}) => {
                 />
                 {data.check_textInputFullnameChange ? 
                 <View>
-                    <Feather 
-                        name="check-circle"
-                        color="green"
-                        size={20}
-                    />
+                    <Feather name="check-circle" color="green" size={20} />
                 </View>
                 : null}
             </View>
-            
             {/* End Họ và tên */}
             
             {/* Tên đăng nhập - email */}
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Tên đăng nhập</Text>
-
+            <Text style={[styles.text_footer, {marginTop: 35}]}>Tên đăng nhập</Text>
             <View style={styles.action}>
-                <MaterialCommunityIcons 
-                    name='account-outline'
-                    color="#05375a"
-                    size={20}
-                />
+                <MaterialCommunityIcons name='account-outline' color="#05375a" size={20}/>
                 <TextInput 
                     placeholder="Vui lòng nhập tài khoản"
                     style={styles.textInput}
@@ -273,11 +256,7 @@ const SignUp = ({navigation}) => {
                 />
                 {data.check_textInputChange ? 
                 <View>
-                    <Feather 
-                        name="check-circle"
-                        color="green"
-                        size={20}
-                    />
+                    <Feather name="check-circle" color="green" size={20}/>
                 </View>
                 : null}
             </View>
@@ -287,16 +266,9 @@ const SignUp = ({navigation}) => {
             {/* End Tên đăng nhập - email */}
 
             {/* Mật khẩu */}
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Mật khẩu</Text>
-
+            <Text style={[styles.text_footer, {marginTop: 35}]}>Mật khẩu</Text>
             <View style={styles.action}>
-                <Feather 
-                    name="lock"
-                    color="#05375a"
-                    size={20}
-                />
+                <Feather name="lock" color="#05375a" size={20} />
                 <TextInput 
                     placeholder="Vui lòng nhập mật khẩu"            
                     secureTextEntry={data.secureTextEntry ? true : false}
@@ -305,7 +277,6 @@ const SignUp = ({navigation}) => {
                     blurOnSubmit={false}
                     autoCapitalize='none'
                     onEndEditing={e => handleValidPassword(e.nativeEvent.text)}
-
                 />
                 <TouchableOpacity onPress={toggleSecureTextEntry}>
                     {data.check_textInputPasswordChange ? 
@@ -318,15 +289,9 @@ const SignUp = ({navigation}) => {
             {/*End Mật khẩu */}
 
             {/* Nhập lại mật khẩu */}
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Xác nhận mật khẩu</Text>
+            <Text style={[styles.text_footer, { marginTop: 35}]}>Xác nhận mật khẩu</Text>
             <View style={styles.action}>
-                <Feather 
-                    name="lock"
-                    color="#05375a"
-                    size={20}
-                />
+                <Feather name="lock" color="#05375a" size={20}/>
                 <TextInput 
                     placeholder="Xác nhận mật khẩu của bạn"
                     autoCapitalize='none'
@@ -334,11 +299,8 @@ const SignUp = ({navigation}) => {
                     style={styles.textInput}
                     onChangeText={(val) => handleConfirmPasswordChange(val)}
                     blurOnSubmit={false}
-                    
                 />
-                <TouchableOpacity
-                    onPress={updateConfirmSecureTextEntry}
-                >
+                <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
                     {data.check_textInputRepassChange ? 
                     data.confirm_secureTextEntry ? eye : eye_off  : null}
                 </TouchableOpacity>
@@ -380,16 +342,9 @@ const SignUp = ({navigation}) => {
             {/* End Ngày sinh */}
 
             {/* số đt */}
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Số điện thoại</Text>
-
+            <Text style={[styles.text_footer, {marginTop: 35}]}>Số điện thoại</Text>
             <View style={styles.action}>
-                <MaterialCommunityIcons 
-                    name='phone-in-talk'
-                    color="#05375a"
-                    size={20}
-                />
+                <MaterialCommunityIcons name='phone-in-talk' color="#05375a" size={20} />
                 <TextInput 
                     placeholder="Vui lòng nhập số điện thoại"
                     style={styles.textInput}
@@ -401,16 +356,9 @@ const SignUp = ({navigation}) => {
             {/* end số đt */}
 
             {/* Địa chỉ */}
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Địa chỉ</Text>
-
+            <Text style={[styles.text_footer, { marginTop: 35}]}>Địa chỉ</Text>
             <View style={styles.action}>
-                <MaterialCommunityIcons 
-                    name='map-marker-radius'
-                    color="#05375a"
-                    size={20}
-                />
+                <MaterialCommunityIcons name='map-marker-radius' color="#05375a" size={20}/>
                 <TextInput 
                     placeholder="Vui lòng nhập địa chỉ"
                     numberOfLines={2}
@@ -421,12 +369,8 @@ const SignUp = ({navigation}) => {
             </View>
             {/* end địa chỉ */}
 
-            
-
             {/* giới tính */}
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Giới tính</Text>
+            <Text style={[styles.text_footer, { marginTop: 35}]}>Giới tính</Text>
             <View style={styles.action}>
                 <RadioForm
                     radio_props={genders}
@@ -538,36 +482,4 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
   });
-    // const textInputChange = (val) => {
-    //     if( val.length !== 0 ) {
-    //         setData({
-    //             ...data,
-    //             username: val,
-    //             check_textInputChange: true
-    //         });
-    //     } else {
-    //         setData({
-    //             ...data,
-    //             username: val,
-    //             check_textInputChange: false
-    //         });
-    //     }
-    // }
-        
-
-    // const handlePasswordChange = (val) => {
-    //     if(val.length !== 0 ){
-    //         setData({
-    //             ...data,
-    //             password: val,
-    //             check_textInputPasswordChange:  true,
-    //         });
-    //     }
-    //     else{
-    //         setData({
-    //             ...data,
-    //             password: val,
-    //             check_textInputPasswordChange:  false,
-    //         });
-    //     }
-    // }
+  

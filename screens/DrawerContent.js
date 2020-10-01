@@ -4,6 +4,7 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switch, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import avatar from '../Image/avartar.jpg';
+import global from '../global';
 
 import{ AuthContext } from '../components/context';
 
@@ -14,7 +15,10 @@ export default function DrawerContent(props){
     //     setIsDarkTheme(!isDarkTheme);
     // } 
     const { signOut,toggleTheme } = React.useContext(AuthContext);
-
+    function onSignOut(){
+        global.onSignIn = null; 
+        signOut();
+    }
     return(
 
         <View style={{flex: 1}}>
@@ -138,7 +142,7 @@ export default function DrawerContent(props){
                         />
                     )}
                     label="Đăng xuất"
-                    onPress={() => {signOut()}}
+                    onPress={() => {onSignOut() }}
                 />
             </Drawer.Section>
             {/* end đăng xuất */}

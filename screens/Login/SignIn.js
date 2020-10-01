@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {View,  Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import {View,  Text, StyleSheet, TouchableOpacity, TextInput ,ToastAndroid} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import{ AuthContext } from '../../components/context';
+import urls from '../../urls';
+import global from '../../global';
 
-
+const login_URL = urls[5].url;
 
 
 const SignIn = ( {navigation} ) =>{
@@ -112,7 +114,6 @@ const SignIn = ( {navigation} ) =>{
     const checkData = () => {
         var userLen = data.usernameLength;
         var passwordLen = data.passwordLength;
-        console.log( userLen + ' ' + passwordLen);
         if(userLen < 6 && passwordLen < 8){
             setData({
                 ...data,
@@ -140,16 +141,40 @@ const SignIn = ( {navigation} ) =>{
                 isValidUser: true,
                 isValidPassword: true
             })
-            checkLogin();
+            onSignIn();
         }
     }
     
-    function checkLogin(){
+    function onSignIn(){
         const {username} = data;
         const {password} = data;
-        console.log(username + ' ' + password);
-    }
+        console.log(username,password);
+        console.log(login_URL);
+        fetch(login_URL,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({username,password})
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const {user,fail} = data;
+            if(fail == 'LOGIN_FAIL'){
+                ToastAndroid.show("Tên đăng nhập hoặc mật khẩu không chính xác!",ToastAndroid.SHORT);
+            }
+            else{
+                global.onSignIn = user;
+                console.log(user);
+                return signIn();
+            }
 
+        })
+        .catch(err => console.log(err))
+
+    }
 
     const eye = <Feather name='eye' size={25} color='grey' />
     const eye_off = <Feather name='eye-off' size={25} color='grey' />
@@ -173,6 +198,7 @@ const SignIn = ( {navigation} ) =>{
                         onChangeText={(val) => textInputChange(val)}
                         blurOnSubmit={false}
                         onEndEditing={e => handleValidUser(e.nativeEvent.text)}
+                        autoCapitalize='none'
                     />
 
                     { data.check_textInputChange ? 
@@ -200,6 +226,7 @@ const SignIn = ( {navigation} ) =>{
                         onChangeText={(val) => handlePasswordChange(val)}
                         blurOnSubmit={false}
                         returnKeyType='done'
+                        autoCapitalize='none'
                         onEndEditing={e => handleValidPassword(e.nativeEvent.text)}
                     />
                     <TouchableOpacity onPress={toggleSecureTextEntry}>
@@ -214,7 +241,7 @@ const SignIn = ( {navigation} ) =>{
                 <View style={styles.button}>
                     <TouchableOpacity 
                         style={[styles.signIn,{backgroundColor:'#01ab9d'}]}
-                        onPress={()=>{signIn()}}
+                        onPress={()=>{checkData()}}
                     >
                         <Text style={styles.textSign}>Đăng Nhập</Text>
                     </TouchableOpacity>

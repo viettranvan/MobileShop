@@ -9,6 +9,7 @@ import TopProductScreen from './Product/TopProduct';
 
 import Header from './Header';
 import urls from '../urls';
+import global from '../global';
 
 // localhost
 const URL = urls[0].url;
@@ -18,10 +19,11 @@ export default class Main extends Component{
         super(props);
         this.state = {
             types: [], // dữ liệu đổ vào category
-            topProduct: [], // dữ liệu đổ vào topProduct 
+            topProduct: [], // dữ liệu đổ vào topProduct
+            user: global.onSignIn,
         }
     }
-    
+
     componentDidMount(){
         fetch(URL)
         .then(res => res.json())
@@ -35,10 +37,14 @@ export default class Main extends Component{
     }
 
     render(){
-        const {types, topProduct} = this.state;
+        const {types, topProduct, user} = this.state;
         return(
             <View style={{flex:1}}>
-                <Header navigation={this.props.navigation}/>    
+                <Header navigation={this.props.navigation}/>   
+                <Button
+                    title='log'
+                    onPress={() => console.log(user)}
+                /> 
                 <ScrollView style={styles.container}>
                     <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>
                     <CategoryScreen navigation ={this.props.navigation} types={types}/>
