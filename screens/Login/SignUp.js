@@ -1,15 +1,18 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet, ScrollView, StatusBar } from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
+import { View, Text, TouchableOpacity, TextInput, ToastAndroid, StyleSheet, ScrollView, StatusBar,Alert } from 'react-native';
+import DatePicker from 'react-native-datepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import urls from '../../urls';
 
 var genders = [
     {label: "Nam", value: 0},
     {label: "Nữ", value: 1},
 ];
+
+const register_URL = urls[4].url;
 
 const SignUp = ({navigation}) => {
 
@@ -30,30 +33,16 @@ const SignUp = ({navigation}) => {
         isValidUser: true,
         isValidPassword: true,
         usernameLength: 0,
-        passwordLength: 0
+        passwordLength: 0,
+        birthday:"01-01-1990"
     });
 
     const textInputFullnameChange = (val) => {
-        // if( val.length !== 0 ) {
-        //     setData({
-        //         ...data,
-        //         fullname: val,
-        //         check_textInputFullnameChange: true
-        //     });
-        // } else {
-        //     setData({
-        //         ...data,
-        //         fullname: val,
-        //         check_textInputFullnameChange: false
-        //     });
-        // }
         setData({
             ...data,
             fullname: val
         })
     }
-
-
 
     const textInputChange = (val) => {
         if(val.length >= 6 ){
@@ -74,7 +63,6 @@ const SignUp = ({navigation}) => {
             });
         }
     }
-
 
     const handlePasswordChange = (val) => {
         
@@ -180,26 +168,50 @@ const SignUp = ({navigation}) => {
         })
     }
 
-    
-
-    const checkData = () => {
-        var {fullname} = data;
+    function SignUpNow(){
         var {username} = data;
         var {password} = data;
         var {confirm_password} = data;
+        var {fullname} = data;
+        var {birthday} = data;
         var {address} = data;
         var {phoneNumber} = data;
         var {gender} = data;
 
-        console.log(fullname + '\n');
-        console.log(username + '\n');
-        console.log(password + '\n');
-        console.log(confirm_password + '\n');
-        console.log(address + '\n');
-        console.log(phoneNumber + '\n');
-        console.log(gender + '\n');
-
+        fetch(register_URL,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({username,password,confirm_password,fullname,birthday,address,phoneNumber,gender})
+        })
+        .then(res => res.text())
+        .then(data => {
+            console.log(data)
+            if(data == 'FAIL'){
+                ToastAndroid.show("Vui lòng điền đầy đủ thông tin",ToastAndroid.SHORT);
+            }
+            else if(data == 'CONFIRM_PASSWORD_FAIL'){
+                ToastAndroid.show("Mật khẩu không trùng khớp",ToastAndroid.SHORT);
+            }
+            else if(data == 'SUCCESS'){
+                ToastAndroid.show("Đăng ký tài khoản thành công",ToastAndroid.SHORT);
+                Alert.alert(
+                    'Thông báo',
+                    'Đăng Nhập Ngay ?',
+                    [
+                        { text: 'Không', style: 'cancel' },
+                        { text: 'Có', onPress: () => navigation.navigate('SignInScreen') }
+                    ]
+                );
+            }
+            else if(data == 'ACCOUNT_ALREADY_EXISTS'){
+                ToastAndroid.show("Tài khoản đã tồn tại",ToastAndroid.SHORT);
+            }
+        });
     }
+
 
     const eye = <Feather name="eye" color="grey" size={25} />
     const eye_off = <Feather name='eye-off' size={25} color='grey' />
@@ -333,26 +345,39 @@ const SignUp = ({navigation}) => {
             </View>
             {/*End Nhập lại mật khẩu */}
 
-            {/* Địa chỉ */}
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Địa chỉ</Text>
-
-            <View style={styles.action}>
-                <MaterialCommunityIcons 
-                    name='map-marker-radius'
-                    color="#05375a"
-                    size={20}
+            {/* Ngày sinh */}
+            <View style={{margin:5}}>
+            <Text style={[styles.text_footer, {marginTop: 35}]}>Ngày sinh</Text>
+                <View style={styles.action}>
+                <DatePicker
+                    style={{width: 200}}
+                    date={data.birthday} //initial date from state
+                    mode="date" //The enum of date, datetime and time
+                    placeholder="select date"
+                    format="DD-MM-YYYY"
+                    minDate="01-01-1900"
+                    maxDate="01-01-2020"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                        dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                        },
+                        dateInput: {
+                        marginLeft: 36
+                        }
+                    }}
+                    onDateChange={(birthday) => {setData({
+                        ...data,
+                        birthday: birthday
+                    })}}
                 />
-                <TextInput 
-                    placeholder="Vui lòng nhập địa chỉ"
-                    numberOfLines={2}
-                    style={styles.textInput}
-                    onChangeText={(val) => textInputAddressChange(val)}
-                    blurOnSubmit={false}
-                />
+                </View>
             </View>
-            {/* end địa chỉ */}
+            {/* End Ngày sinh */}
 
             {/* số đt */}
             <Text style={[styles.text_footer, {
@@ -375,6 +400,29 @@ const SignUp = ({navigation}) => {
             </View>
             {/* end số đt */}
 
+            {/* Địa chỉ */}
+            <Text style={[styles.text_footer, {
+                marginTop: 35
+            }]}>Địa chỉ</Text>
+
+            <View style={styles.action}>
+                <MaterialCommunityIcons 
+                    name='map-marker-radius'
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Vui lòng nhập địa chỉ"
+                    numberOfLines={2}
+                    style={styles.textInput}
+                    onChangeText={(val) => textInputAddressChange(val)}
+                    blurOnSubmit={false}
+                />
+            </View>
+            {/* end địa chỉ */}
+
+            
+
             {/* giới tính */}
             <Text style={[styles.text_footer, {
                 marginTop: 35
@@ -394,7 +442,7 @@ const SignUp = ({navigation}) => {
             <View style={styles.button}>
                 <TouchableOpacity 
                     style={[styles.signIn,{backgroundColor:'#01ab9d'}]}
-                    onPress={checkData}
+                    onPress={() => SignUpNow()}
                 >
                     <Text style={[styles.textSign, {color:'#fff'}]}>Đăng ký</Text>
                 </TouchableOpacity>

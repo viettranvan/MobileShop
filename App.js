@@ -79,58 +79,77 @@ const ListProducttStackScreen = ({navigation}) => (
 const App = () => {
   const  [isDarkTheme, setIsDarkTheme] = React.useState(false);
 
-    const CustomDefaultTheme = {
-      ...NavigationDefaultTheme,
-      ...PaperDefaultTheme,
-      colors: {
-        ...NavigationDefaultTheme.colors,
-        ...PaperDefaultTheme.colors
-      }
+  const initialLoginState = {
+    username: null,
+    userToken: null
+  };
+
+  const CustomDefaultTheme = {
+    ...NavigationDefaultTheme,
+    ...PaperDefaultTheme,
+    colors: {
+      ...NavigationDefaultTheme.colors,
+      ...PaperDefaultTheme.colors
     }
+  }
 
-    const CustomDarkTheme = {
-      ...NavigationDarkTheme,
-      ...PaperDarkTheme,
-      colors: {
-        ...NavigationDarkTheme.colors,
-        ...PaperDarkTheme.colors
-      }
+  const CustomDarkTheme = {
+    ...NavigationDarkTheme,
+    ...PaperDarkTheme,
+    colors: {
+      ...NavigationDarkTheme.colors,
+      ...PaperDarkTheme.colors
     }
+  }
 
-    const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
+  const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
+  const [userToken, setUserToken] = React.useState(null);
 
-    const authContext = React.useMemo(() => ({
-      toggleTheme: () => {
-        setIsDarkTheme( isDarkTheme => !isDarkTheme );
-      }
-    }), []);
-
-    return (
-      <PaperProvider theme={theme}>
-        <AuthContext.Provider value={authContext}>
-          <View style={{flex:1, backgroundColor: '#78aae3'}}>
-            <StatusBar barStyle='light-content' hidden={false} />
-            {/* <Header /> */}
-            <NavigationContainer theme={theme}>
-              {/* <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
-                <Drawer.Screen name='MainDrawer' component={MainTabScreen} />
-                <Drawer.Screen name='ListCollection' component={ListCollectionStackScreen}/>
-                <Drawer.Screen name='ListProduct' component={ListProducttStackScreen}/>
-                <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
-                <Drawer.Screen name='Support' component={SupportScreen} />
-                <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen} />
-                <Drawer.Screen name='ChangePassword' component={ChangePasswordScreen} />
+  const authContext = React.useMemo(() => ({
+    signIn: ()=> {
+      setUserToken('abcabcabc')
+    },
+    signOut: ()=> {
+      setUserToken(null)
+    },
+    signUp: ()=> {
+      setUserToken('abcabcabc')
+    },
+    toggleTheme: () => {
+      setIsDarkTheme( isDarkTheme => !isDarkTheme );
+    }
+  }), []);
 
 
-              </Drawer.Navigator> */}
+  return (
+    <PaperProvider theme={theme}>
+      <AuthContext.Provider value={authContext}>
+        <View style={{flex:1, backgroundColor: '#78aae3'}}>
+          <StatusBar barStyle='light-content' hidden={false} />
+          {/* <Header /> */}
+          <NavigationContainer theme={theme}>
 
-              <RootStackScreen/>
+            {userToken != null ?(
+            <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
+              <Drawer.Screen name='MainDrawer' component={MainTabScreen} />
+              <Drawer.Screen name='ListCollection' component={ListCollectionStackScreen}/>
+              <Drawer.Screen name='ListProduct' component={ListProducttStackScreen}/>
+              <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
+              <Drawer.Screen name='Support' component={SupportScreen} />
+              <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen} />
+              <Drawer.Screen name='ChangePassword' component={ChangePasswordScreen} />
 
-            </NavigationContainer>
-          </View>
-        </AuthContext.Provider>
-      </PaperProvider>
-    );
+
+            </Drawer.Navigator>
+            ):
+            <RootStackScreen/>
+            }
+            
+          </NavigationContainer>
+        </View>
+      </AuthContext.Provider>
+    </PaperProvider>
+  );
 }
 
 export default App;
@@ -143,36 +162,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-{/* <Stack.Navigator>
-            <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen name="OrderHistory" component={OrderHistoryScreen} />
-          </Stack.Navigator> */}
-
-          // export default class App extends Component { 
-//   render(){
-    
-
-//     return (
-//       <PaperProvider theme={theme}>
-//       <View style={{flex:1, backgroundColor: '#78aae3'}}>
-//         <StatusBar barStyle='light-content' hidden={false} />
-//         {/* <Header /> */}
-//         <NavigationContainer theme={theme}>
-//           <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
-//             <Drawer.Screen name='MainDrawer' component={MainTabScreen} />
-//             <Drawer.Screen name='ListCollection' component={ListCollectionStackScreen}/>
-//             <Drawer.Screen name='ListProduct' component={ListProducttStackScreen}/>
-//             <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
-//             <Drawer.Screen name='Support' component={SupportScreen} />
-            
-
-
-//           </Drawer.Navigator>
-//           {/* <RootStackScreen/> */}
-//         </NavigationContainer>
-//       </View>
-//       </PaperProvider>
-//     );
-//   }
-  
-// }

@@ -13,7 +13,7 @@ export default function DrawerContent(props){
     // const toggleTheme = () => {
     //     setIsDarkTheme(!isDarkTheme);
     // } 
-    const { toggleTheme } = React.useContext(AuthContext);
+    const { signOut,toggleTheme } = React.useContext(AuthContext);
 
     return(
 
@@ -138,7 +138,7 @@ export default function DrawerContent(props){
                         />
                     )}
                     label="Đăng xuất"
-                    onPress={() => {}}
+                    onPress={() => {signOut()}}
                 />
             </Drawer.Section>
             {/* end đăng xuất */}

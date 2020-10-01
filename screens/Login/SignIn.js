@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {View,  Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import { set } from 'react-native-reanimated';
+import{ AuthContext } from '../../components/context';
+
+
 
 
 const SignIn = ( {navigation} ) =>{
     
+    const { signIn } = React.useContext(AuthContext);
+
     const [data, setData] = React.useState({
         username: '',
         password: '',
@@ -17,9 +20,8 @@ const SignIn = ( {navigation} ) =>{
         isValidUser: true,
         isValidPassword: true,
         usernameLength: 0,
-        passwordLength: 0
+        passwordLength: 0,
     });
-    
     
     const textInputChange = (val) => {
         if(val.length >= 6 ){
@@ -148,6 +150,7 @@ const SignIn = ( {navigation} ) =>{
         console.log(username + ' ' + password);
     }
 
+
     const eye = <Feather name='eye' size={25} color='grey' />
     const eye_off = <Feather name='eye-off' size={25} color='grey' />
 
@@ -198,7 +201,6 @@ const SignIn = ( {navigation} ) =>{
                         blurOnSubmit={false}
                         returnKeyType='done'
                         onEndEditing={e => handleValidPassword(e.nativeEvent.text)}
-                        
                     />
                     <TouchableOpacity onPress={toggleSecureTextEntry}>
                         {data.check_textInputPasswordChange ? 
@@ -210,10 +212,9 @@ const SignIn = ( {navigation} ) =>{
                 }
 
                 <View style={styles.button}>
-                    
                     <TouchableOpacity 
                         style={[styles.signIn,{backgroundColor:'#01ab9d'}]}
-                        onPress={checkData}
+                        onPress={()=>{signIn()}}
                     >
                         <Text style={styles.textSign}>Đăng Nhập</Text>
                     </TouchableOpacity>

@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {LinearGradient} from 'expo-linear-gradient';
-import { createAnimatableComponent } from 'react-native-animatable';
-
 
 const Splash = ({ navigation }) =>{
     return(
@@ -17,15 +14,15 @@ const Splash = ({ navigation }) =>{
                 />
             </View>
             <View style={styles.footer}>
-                <Text style={styles.title}>Stay connect with everyone</Text>
-                <Text style={styles.text}>Sign with accout</Text>
+                <Text style={styles.title}>Thỏa sức mua sắm kết nối với mọi người</Text>
+                <Text style={styles.text}>Đăng nhập với tài khoản</Text>
                 <View style={styles.button}>
                     <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
                         <LinearGradient
                             colors={['#08d4c4', '#01ab9d']}
                             style={styles.SignIn}
                         >
-                            <Text>Get started!!!</Text>
+                            <Text>Bắt đầu ngay!!!</Text>
                         </LinearGradient>
                     </TouchableOpacity>
                 </View>
@@ -84,8 +81,4 @@ const styles =  StyleSheet.create({
         borderRadius: 50,
         flexDirection: 'row'
     },
-    textSign: {
-        color: 'white',
-        fontWeight: 'bold'
-    }
 }); 

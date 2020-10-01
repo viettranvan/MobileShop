@@ -20,6 +20,11 @@ const urls = [
         index: 3,
         name: 'product_detail_URL',
         url: localhost + 'MobileShop/api/product_detail.php'
+    },
+    {
+        index: 4,
+        name: 'register_URL',
+        url: localhost + 'MobileShop/api/register.php'
     }
 ]
 
