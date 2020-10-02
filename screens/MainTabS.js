@@ -11,9 +11,6 @@ import SearchScreen from './Search';
 import OrderHistoryScreen from './OrderHistory';
 import ProfileScreen from './Profile/Profile';
 
-
-
-
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 

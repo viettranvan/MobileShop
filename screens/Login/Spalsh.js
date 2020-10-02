@@ -1,19 +1,8 @@
 import React, {Component, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
-// import checkLogin from '../../api/js/checkLogin';
-// import getToken from '../../api/js/getToken';
 
-
-
-// const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImJvY2FwcXV5ZW4iLCJpYXQiOjE2MDE2MTUyMjksImV4cGlyZSI6MTYwMTc4ODAyOX0.VbigF2RrxaXSMV7gAWxR8uFAnXx3bXULYKgcL5Elh8I';
 const Splash = ({ navigation }) =>{
-
-    // useEffect(() =>{
-    //     console.log('splash');
-    //     checkLogin()
-    //     .then(a => console.log(a));
-    // })
     return(
         <View style={styles.container}>
             <View style={styles.header} >
@@ -41,7 +30,6 @@ const Splash = ({ navigation }) =>{
             
         </View>
     );
-    
 }
 
 export default Splash;

@@ -44,7 +44,7 @@ export default class Main extends Component{
                 <Header navigation={this.props.navigation}/>   
                 <Button
                     title='log'
-                    onPress={() => console.log(user)}
+                    onPress={() => console.log(global.onSignIn)}
                 /> 
                 <ScrollView style={styles.container}>
                     <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>

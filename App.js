@@ -63,6 +63,12 @@ const ProductDetailStackScreen = ({navigation,route}) => {
   );
 }
 
+const ChangeInfoScreen1 = ({navigation,route}) => {
+  return(
+    <ChangeInfoScreen navigation={navigation} route={route}/>
+  );
+}
+
 
 const ListProducttStackScreen = ({navigation}) => (
   <ListCategoryStack.Navigator headerMode='none'>
@@ -148,9 +154,8 @@ const App = () => {
               <Drawer.Screen name='ListProduct' component={ListProducttStackScreen}/>
               <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
               <Drawer.Screen name='Support' component={SupportScreen} />
-              <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen} />
+              <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen1} />
               <Drawer.Screen name='ChangePassword' component={ChangePasswordScreen} />
-
 
             </Drawer.Navigator>
             ):

@@ -151,8 +151,6 @@ const SignIn = ( {navigation} ) =>{
     function onSignIn(){
         const {username} = data;
         const {password} = data;
-        console.log(username,password);
-        console.log(login_URL);
         fetch(login_URL,{
             method: 'POST',
             headers: {
@@ -172,8 +170,6 @@ const SignIn = ( {navigation} ) =>{
                 global.onSignIn = user;
                 global.token = token;
                 saveToken(token);
-                console.log(user);
-                console.log(token);
                 return signIn();
             }
 

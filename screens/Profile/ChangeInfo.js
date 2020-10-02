@@ -1,19 +1,20 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity, ScrollView, TextInput} from "react-native";
-import { Avatar } from 'react-native-paper'; 
+import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity, ScrollView, TextInput,Alert, ToastAndroid} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import global from '../../global';
-
+import getToken from '../../api/js/getToken';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import global from "../../global";
+import urls from '../../urls';
 
 var genders = [
     {label: "Nam", value: 0},
     {label: "Nữ", value: 1},
 ];
 
-
+// YYYY-MM-DD -> DD-MM-YYYY
 function formatBirthday(birthday){
     var year = birthday.slice(0,4);
     var month = birthday.slice(5,7);
@@ -21,36 +22,77 @@ function formatBirthday(birthday){
     var result = day + '-' + month + '-' + year;
     return result;
 }
+
+// DD-MM-YYYY -> YYYY-MM-DD 
+function formatBirthday2(birthday){
+    var year = birthday.slice(6,10);
+    var month = birthday.slice(3,5);
+    var day = birthday.slice(0,2);
+    var result = year + '-' + month + '-' + day;
+    return result;
+}
+const change_infoURL = urls[9].url;
+
 export default class ChangeInfo extends Component{
 
     constructor(props){
         super(props);
+        const {user} =this.props.route.params;
+
+        const fullname = user.fullname;
+        const birthday = user.birthday;
+        const address = user.address;
+        const phone_number = user.phone_number;
+        const gender = user.gender == 'Nam' ? 0 : 1;
         this.state = {
-            user: global.onSignIn,
-            fullname: '',
-            birthday: '',
-            address: '',
-            phone_number: '',
-            gender: ''
+            fullname: fullname,
+            birthday: birthday,
+            address: address,
+            phone_number: phone_number,
+            gender: gender
         }
     }
+
+    changeInfo(){
+        console.log('click');
+        const fullname = this.state.fullname;
+        const birthday = formatBirthday(this.state.birthday);
+        const address = this.state.address;
+        const phone_number = this.state.phone_number;
+        const gender = this.state.gender;
+        getToken()
+        .then(token => {
+            fetch(change_infoURL,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({ token, fullname, birthday, phone_number, address, gender })
+            })
+            .then(res => res.json())
+            .then(user => {
+                global.onSignIn = user;
+                this.props.navigation.navigate('Profile', {user: user});
+                ToastAndroid.show('Cập nhật thành công',ToastAndroid.SHORT);
+            })
+            .catch(err => console.log(err));    
+        })
+    }
+    
     render(){
-        const {user} = this.state;
+        const {fullname,birthday,address,phone_number,gender} = this.state;
         return(
             <View style={styles.wrapper}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={ () => this.props.navigation.goBack() }>
+                    <TouchableOpacity onPress={ () =>  this.props.navigation.goBack()}>
                         <MaterialCommunityIcons name="arrow-left" color='white' size={40} />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Chỉnh sửa thông tin</Text>
                     <View style={{paddingRight:15}}/>
                 </View>
-                <Button
-                    title='Log'
-                    onPress={() => console.log(this.state)}
-                />
-                <View style={styles.body}>
                     
+                <View style={styles.body}>
                     <View style={styles.footer}>
                         <ScrollView>
                             {/* Họ Và tên */}
@@ -60,7 +102,7 @@ export default class ChangeInfo extends Component{
                                 <TextInput 
                                     style={styles.textInput}
                                     blurOnSubmit={false}
-                                    defaultValue={user ? user.fullname : ''}
+                                    defaultValue={fullname}
                                     onChangeText={val => {this.setState({fullname : val})}}
                                 />
                             </View>
@@ -72,7 +114,7 @@ export default class ChangeInfo extends Component{
                                 <View style={styles.action}>
                                     <DatePicker
                                         style={{width: 200}}
-                                        date={user ? formatBirthday(user.birthday) : ''} //initial date from state
+                                        date={formatBirthday(birthday)} //initial date from state
                                         mode="date" //The enum of date, datetime and time
                                         placeholder="select date"
                                         format="DD-MM-YYYY"
@@ -91,7 +133,7 @@ export default class ChangeInfo extends Component{
                                             marginLeft: 36
                                             }
                                         }}
-                                        onDateChange={(birthday) => {this.setState({birthday: birthday})}}
+                                        onDateChange={(birthday) => {this.setState({birthday: formatBirthday2(birthday)})}}
                                     />
                                 </View>
                             </View>
@@ -106,7 +148,7 @@ export default class ChangeInfo extends Component{
                                     keyboardType='numeric'
                                     onChangeText={(val) => {this.setState({phone_number: val})}}
                                     blurOnSubmit={false}
-                                    defaultValue={ user ? user.phone_number : ''}
+                                    defaultValue={ phone_number}
                                 />
                             </View>
                             {/* end số đt */}
@@ -120,18 +162,18 @@ export default class ChangeInfo extends Component{
                                     style={styles.textInput}
                                     onChangeText={(val) => {this.setState({address: val})}}
                                     blurOnSubmit={false}
-                                    defaultValue={user ? user.address : ''}
+                                    defaultValue={address}
                                 />
                             </View>
                             {/* end địa chỉ */}
 
                             {/* giới tính */}
                             <Text style={[styles.text_footer, {marginTop: 35}]}>Giới tính</Text>
-                            <View style={styles.action} value={1}>
+                            <View style={styles.action} >
                                 <RadioForm
                                     radio_props={genders}
-                                    // initial={this.state.gender}
-                                    // onPress={(value) =>{this.setState({gender:value})}}
+                                    initial={this.state.gender}
+                                    onPress={(val) => this.setState({gender : val})}
                                 />
                             </View>
                             {/* end giới tính */}
@@ -139,26 +181,20 @@ export default class ChangeInfo extends Component{
                     </View>
                     <View style={{margin:10}}>
                         <TouchableOpacity 
-                            onPress={() => {}}
+                            onPress={() => {this.changeInfo()}}
                             style={styles.upDate}>
                                 <Text style={styles.textUpdate}>Cập Nhật</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                
             </View>
         );
     }
 }
 
-
-const { width } = Dimensions.get("window");
-
 const styles = StyleSheet.create({
     wrapper: { 
         flex: 1, 
-        // backgroundColor: "#fff" 
     },
     header: {
     flex: 1,
@@ -218,8 +254,6 @@ const styles = StyleSheet.create({
     footer: {
         flex: 6,
         backgroundColor: '#fff',
-        // borderTopLeftRadius: 30,
-        // borderTopRightRadius: 30,
         paddingHorizontal: 20,
         paddingVertical: 30,
         margin:5,
@@ -231,66 +265,4 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         color: '#05375a',
     },
-
 });
-{/* <View style={styles.changeInfoContainer}>
-                        <View style={{margin:5}}>
-                            <Text style={styles.text_footer}>Họ và tên</Text>
-                            <View style={styles.action}>
-                                <TextInput
-                                    style={styles.textInput}
-                                    value={hoten}
-                                />
-                            </View>
-                        </View>
-
-                        <View style={{margin:5}}>
-                            <Text style={styles.text_footer}>Email</Text>
-                            <View style={styles.action}>
-                                <TextInput
-                                    style={[styles.textInput, {color:'#969696'}] }
-                                    editable = {false}
-                                    value = {email}
-                                />
-                            </View>
-                        </View>
-
-                        <View style={{margin:5}}>
-                            <Text style={styles.text_footer}>Ngày sinh</Text>
-                            <View style={styles.action}>
-                            <DatePicker
-                                style={{width: 200}}
-                                date={this.state.date} //initial date from state
-                                mode="date" //The enum of date, datetime and time
-                                placeholder="select date"
-                                format="DD-MM-YYYY"
-                                minDate="01-01-1900"
-                                maxDate="01-01-2020"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                customStyles={{
-                                    dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0
-                                    },
-                                    dateInput: {
-                                    marginLeft: 36
-                                    }
-                                }}
-                                onDateChange={(date) => {this.setState({date: date})}}
-                            />
-                            </View>
-                        </View>
-
-                        <View style={{margin:5}}>
-                            <Text style={styles.text_footer}>Giới tính</Text>
-                            <View style={styles.action}>
-                                <RadioForm
-                                    radio_props={genders}
-                                    onPress={(value) => {}}
-                                />
-                            </View>
-                        </View>
-                    </View> */}
