@@ -50,6 +50,11 @@ const urls = [
         index: 9,
         name: 'change_infoURL',
         url: localhost + 'MobileShop/api/change_info.php'
+    },
+    {
+        index: 10,
+        name: 'change_passwordURL',
+        url: localhost + 'MobileShop/api/change_password.php'
     }
 ]
 

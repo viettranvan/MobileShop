@@ -69,6 +69,11 @@ const ChangeInfoScreen1 = ({navigation,route}) => {
   );
 }
 
+const ChangePasswordScreen1 = ({navigation,route}) => {
+  return(
+    <ChangePasswordScreen navigation={navigation} route={route}/>
+  );
+}
 
 const ListProducttStackScreen = ({navigation}) => (
   <ListCategoryStack.Navigator headerMode='none'>
@@ -155,7 +160,7 @@ const App = () => {
               <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
               <Drawer.Screen name='Support' component={SupportScreen} />
               <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen1} />
-              <Drawer.Screen name='ChangePassword' component={ChangePasswordScreen} />
+              <Drawer.Screen name='ChangePassword' component={ChangePasswordScreen1} />
 
             </Drawer.Navigator>
             ):

@@ -54,7 +54,6 @@ export default class ChangeInfo extends Component{
     }
 
     changeInfo(){
-        console.log('click');
         const fullname = this.state.fullname;
         const birthday = formatBirthday(this.state.birthday);
         const address = this.state.address;

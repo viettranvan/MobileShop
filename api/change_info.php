@@ -1,30 +1,4 @@
 <?php  
-	// use \Firebase\JWT\JWT;
-	// require __DIR__ . '/vendor/autoload.php';
-	// include('function.php');
-	// include('connect/connect.php');
-
-	// $key = "example_key";
-	// $json = file_get_contents('php://input');
-	// $obj = json_decode($json, true);
-	// // $token = $obj['token'];
-
-	// $id 			= $obj['id_user'];
-	// $fullname 		= $obj['fullname'];
-	// $birthday 		= $obj['birthday'];
-	// $phone_number 	= $obj['phone_number'];
-	// $address 		= $obj['address'];
-	// $gender 		= $obj['gender'];
-
-	// echo $id.' ';
-	// echo $fullname.' ';
-	// echo $birthday.' ';
-	// echo $phone_number.' ';
-	// echo $address.' ';
-	// echo $gender.' ';
-
-	//thay đổi thông tin user
-
 	function formatBirthday($birthday){
 		$result = "";
 		$day = substr($birthday,-4);
@@ -56,9 +30,7 @@
 			$address = $obj['address'];
 			$gender = $obj['gender'] == 0 ? "Nam" : "Nữ";
 			$birthday = formatBirthday($obj['birthday']);
-			
 
-			
 			$sql = "UPDATE users 
 				SET fullname='$fullname', phone_number='$phone_number', address='$address', gender='$gender', birthday='$birthday'
 				WHERE username ='$username'";
@@ -71,12 +43,6 @@
 			else{
 				echo 'KHONG_THANH_CONG';
 			}
-
-			// echo $username.' ';
-			// echo $fullname.' ';
-			// echo $phone_number.' ';
-			// echo $birthday.' ';
-			// echo $gender.' ';
 
 
 		}
