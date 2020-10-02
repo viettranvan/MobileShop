@@ -24,7 +24,10 @@ export default class Profile extends Component{
                     <Text style={styles.headerTitle}>Thông tin cá nhân</Text>
                     <View style={{paddingRight:15}}/>
                 </View>
-
+                <Button
+                    title='log'
+                    onPress={()=> console.log(user)}
+                />
                 <View style={styles.body}>
                     <Avatar.Image
                         source={avatar}

@@ -21,6 +21,7 @@ export default class Main extends Component{
             types: [], // dữ liệu đổ vào category
             topProduct: [], // dữ liệu đổ vào topProduct
             user: global.onSignIn,
+            token: global.token
         }
     }
 
@@ -37,7 +38,7 @@ export default class Main extends Component{
     }
 
     render(){
-        const {types, topProduct, user} = this.state;
+        const {types, topProduct, user, token} = this.state;
         return(
             <View style={{flex:1}}>
                 <Header navigation={this.props.navigation}/>   

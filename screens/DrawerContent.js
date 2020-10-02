@@ -5,22 +5,19 @@ import { Avatar, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switc
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import avatar from '../Image/avartar.jpg';
 import global from '../global';
+import saveToken from '../api/js/saveToken';
 
 import{ AuthContext } from '../components/context';
 
 export default function DrawerContent(props){
-
     const PaperTheme = useTheme();
-    // const toggleTheme = () => {
-    //     setIsDarkTheme(!isDarkTheme);
-    // } 
     const { signOut,toggleTheme } = React.useContext(AuthContext);
     function onSignOut(){
         global.onSignIn = null; 
+        saveToken('');
         signOut();
     }
     return(
-
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
@@ -58,55 +55,35 @@ export default function DrawerContent(props){
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem
                             icon={ ({color, size}) => (
-                                <Icon
-                                    name="home-outline"
-                                    color = {color}
-                                    size = {size}
-                                />
+                                <Icon name="home-outline" color = {color} size = {size} />
                             )}
                             label="Trang chính"
                             onPress={() => {props.navigation.navigate("Main")}}
                         />
                         <DrawerItem
                             icon={ ({color, size}) => (
-                                <Icon
-                                    name="account-outline"
-                                    color = {color}
-                                    size = {size}
-                                />
+                                <Icon name="account-outline" color = {color} size = {size} />
                             )}
                             label="Thông tin cá nhân"
                             onPress={() => {props.navigation.navigate("Profile")}}
                         />
                         <DrawerItem
                             icon={ ({color, size}) => (
-                                <Icon
-                                    name="history"
-                                    color = {color}
-                                    size = {size}
-                                />
+                                <Icon name="history" color = {color} size = {size} />
                             )}
                             label="Lịch sử mua hàng"
                             onPress={() => {props.navigation.navigate("OrderHistory")}}
                         />
                         <DrawerItem
                             icon={ ({color, size}) => (
-                                <Icon
-                                    name="settings-outline"
-                                    color = {color}
-                                    size = {size}
-                                />
+                                <Icon name="settings-outline" color = {color} size = {size} />
                             )}
                             label="Setting"
                             onPress={() => {}}
                         />
                         <DrawerItem
                             icon={ ({color, size}) => (
-                                <Icon
-                                    name="account-check-outline"
-                                    color = {color}
-                                    size = {size}
-                                />
+                                <Icon name="account-check-outline" color = {color} size = {size} />
                             )}
                             label="Hỗ trợ"
                             onPress={() => {props.navigation.navigate("Support")}}
@@ -124,22 +101,14 @@ export default function DrawerContent(props){
                             </View>
                         </TouchableRipple>
                     </Drawer.Section>
-                    
-
                 </View>
             </DrawerContentScrollView>
-
-            
 
             {/* Dăng xuất */}
             <Drawer.Section style={styles.bottomDraerSection}>
                 <DrawerItem
                     icon={ ({color, size}) => (
-                        <Icon
-                            name="exit-to-app"
-                            color = {color}
-                            size = {size}
-                        />
+                        <Icon name="exit-to-app" color = {color} size = {size} />
                     )}
                     label="Đăng xuất"
                     onPress={() => {onSignOut() }}
@@ -193,5 +162,4 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16
     }
-
 });

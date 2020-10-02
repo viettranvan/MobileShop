@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component,useEffect} from 'react';
 import {View,  Text, StyleSheet, TouchableOpacity, TextInput ,ToastAndroid} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -6,10 +6,13 @@ import{ AuthContext } from '../../components/context';
 import urls from '../../urls';
 import global from '../../global';
 
+import saveToken from '../../api/js/saveToken';
+
 const login_URL = urls[5].url;
 
 
 const SignIn = ( {navigation} ) =>{
+
     
     const { signIn } = React.useContext(AuthContext);
 
@@ -161,13 +164,16 @@ const SignIn = ( {navigation} ) =>{
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            const {user,fail} = data;
+            const {user,fail,token} = data;
             if(fail == 'LOGIN_FAIL'){
                 ToastAndroid.show("Tên đăng nhập hoặc mật khẩu không chính xác!",ToastAndroid.SHORT);
             }
             else{
                 global.onSignIn = user;
+                global.token = token;
+                saveToken(token);
                 console.log(user);
+                console.log(token);
                 return signIn();
             }
 
@@ -175,6 +181,7 @@ const SignIn = ( {navigation} ) =>{
         .catch(err => console.log(err))
 
     }
+    
 
     const eye = <Feather name='eye' size={25} color='grey' />
     const eye_off = <Feather name='eye-off' size={25} color='grey' />

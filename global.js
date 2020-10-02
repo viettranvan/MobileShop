@@ -1,3 +1,4 @@
 export default global = {
-    onSignIn: null
+    onSignIn: null,
+    token: null
 };

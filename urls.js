@@ -30,6 +30,16 @@ const urls = [
         index: 5,
         name: 'login_URL',
         url: localhost + 'MobileShop/api/login.php'
+    },
+    {
+        index: 6,
+        name: 'changeInfo_URL',
+        url: localhost + 'MobileShop/api/changeInfo.php'
+    },
+    {
+        index: 7,
+        name: 'check_loginURL',
+        url: localhost + 'MobileShop/api/check_login.php'
     }
 ]
 

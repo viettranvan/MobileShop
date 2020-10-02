@@ -7,12 +7,12 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import global from '../../global';
 
-const user = global.onSignIn;
 
 var genders = [
     {label: "Nam", value: 0},
     {label: "Nữ", value: 1},
 ];
+
 
 function formatBirthday(birthday){
     var year = birthday.slice(0,4);
@@ -22,18 +22,20 @@ function formatBirthday(birthday){
     return result;
 }
 export default class ChangeInfo extends Component{
+
     constructor(props){
         super(props);
         this.state = {
-            fullname: user.fullname,
-            birthday: formatBirthday(user.birthday),
-            phone_number: user.phone_number,
-            address: user.address,
-            gender: user.gender == 'Nam' ? 0 : 1,
-
+            user: global.onSignIn,
+            fullname: '',
+            birthday: '',
+            address: '',
+            phone_number: '',
+            gender: ''
         }
     }
     render(){
+        const {user} = this.state;
         return(
             <View style={styles.wrapper}>
                 <View style={styles.header}>
@@ -43,7 +45,10 @@ export default class ChangeInfo extends Component{
                     <Text style={styles.headerTitle}>Chỉnh sửa thông tin</Text>
                     <View style={{paddingRight:15}}/>
                 </View>
-
+                <Button
+                    title='Log'
+                    onPress={() => console.log(this.state)}
+                />
                 <View style={styles.body}>
                     
                     <View style={styles.footer}>
@@ -54,9 +59,9 @@ export default class ChangeInfo extends Component{
                                 <FontAwesome name="user-o" color="#05375a" size={20} />
                                 <TextInput 
                                     style={styles.textInput}
-                                    onChangeText={(val) => textInputFullnameChange(val)}
                                     blurOnSubmit={false}
-                                    value={this.state.fullname}
+                                    defaultValue={user ? user.fullname : ''}
+                                    onChangeText={val => {this.setState({fullname : val})}}
                                 />
                             </View>
                             {/* End Họ và tên */}
@@ -67,7 +72,7 @@ export default class ChangeInfo extends Component{
                                 <View style={styles.action}>
                                     <DatePicker
                                         style={{width: 200}}
-                                        date={this.state.birthday} //initial date from state
+                                        date={user ? formatBirthday(user.birthday) : ''} //initial date from state
                                         mode="date" //The enum of date, datetime and time
                                         placeholder="select date"
                                         format="DD-MM-YYYY"
@@ -101,7 +106,7 @@ export default class ChangeInfo extends Component{
                                     keyboardType='numeric'
                                     onChangeText={(val) => {this.setState({phone_number: val})}}
                                     blurOnSubmit={false}
-                                    value={this.state.phone_number}
+                                    defaultValue={ user ? user.phone_number : ''}
                                 />
                             </View>
                             {/* end số đt */}
@@ -115,7 +120,7 @@ export default class ChangeInfo extends Component{
                                     style={styles.textInput}
                                     onChangeText={(val) => {this.setState({address: val})}}
                                     blurOnSubmit={false}
-                                    value={this.state.address}
+                                    defaultValue={user ? user.address : ''}
                                 />
                             </View>
                             {/* end địa chỉ */}
@@ -125,8 +130,8 @@ export default class ChangeInfo extends Component{
                             <View style={styles.action} value={1}>
                                 <RadioForm
                                     radio_props={genders}
-                                    initial={this.state.gender}
-                                    onPress={(value) =>{this.setState({gender:value})}}
+                                    // initial={this.state.gender}
+                                    // onPress={(value) =>{this.setState({gender:value})}}
                                 />
                             </View>
                             {/* end giới tính */}
