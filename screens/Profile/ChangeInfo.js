@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity, ScrollView, TextInput,Alert, ToastAndroid} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, ToastAndroid} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DatePicker from 'react-native-datepicker';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import getToken from '../../api/js/getToken';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import global from "../../global";
 import urls from '../../urls';
 

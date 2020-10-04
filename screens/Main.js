@@ -47,8 +47,8 @@ export default class Main extends Component{
                     onPress={() => console.log(global.onSignIn)}
                 /> 
                 <ScrollView style={styles.container}>
-                    <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>
                     <CategoryScreen navigation ={this.props.navigation} types={types}/>
+                    <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>
                     <TopProductScreen navigation ={this.props.navigation} topProduct={topProduct} />
                 </ScrollView>
             </View>

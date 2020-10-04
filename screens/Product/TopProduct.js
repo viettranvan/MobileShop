@@ -32,7 +32,7 @@ export default class Test extends Component{
         return(
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>top Product</Text>
+                    <Text style={styles.title}>Sản phẩm thịnh hành</Text>
                 </View>
                 <View style={styles.body}>
                     {topProduct.map( e => (

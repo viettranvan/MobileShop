@@ -75,14 +75,20 @@ const ChangePasswordScreen1 = ({navigation,route}) => {
   );
 }
 
-const ListProducttStackScreen = ({navigation}) => (
-  <ListCategoryStack.Navigator headerMode='none'>
-    <ListCategoryStack.Screen 
-      name="List Product Screen" 
-      component={ListProductScreen}
-    />
-  </ListCategoryStack.Navigator>
-);
+const ListProductkScreen1 = ({navigation,route}) => {
+  return(
+    <ListProductScreen navigation={navigation} route={route}/>
+  );
+}
+
+// const ListProducttStackScreen = ({navigation}) => (
+//   <ListCategoryStack.Navigator headerMode='none'>
+//     <ListCategoryStack.Screen 
+//       name="List Product Screen" 
+//       component={ListProductScreen}
+//     />
+//   </ListCategoryStack.Navigator>
+// );
 
 
 const App = () => {
@@ -156,7 +162,7 @@ const App = () => {
             <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
               <Drawer.Screen name='MainDrawer' component={MainTabScreen} />
               <Drawer.Screen name='ListCollection' component={ListCollectionStackScreen}/>
-              <Drawer.Screen name='ListProduct' component={ListProducttStackScreen}/>
+              <Drawer.Screen name='ListProduct' component={ListProductkScreen1}/>
               <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
               <Drawer.Screen name='Support' component={SupportScreen} />
               <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreen1} />

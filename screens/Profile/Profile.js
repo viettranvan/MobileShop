@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import { Avatar } from 'react-native-paper'; 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import avatar from '../../Image/avartar.jpg';
 import global from '../../global';
-
 
 function formatBirthday(birthday){
     var year = birthday.slice(0,4);
@@ -13,7 +12,6 @@ function formatBirthday(birthday){
     var result = day + '-' + month + '-' + year;
     return result;
 }
-
 export default class Profile extends Component{
 
     constructor(props){
@@ -42,17 +40,13 @@ export default class Profile extends Component{
                     <Text style={styles.headerTitle}>Thông tin cá nhân</Text>
                     <View style={{paddingRight:15}}/>
                 </View>
-                <Button
-                    title='log nè'
-                    onPress={()=> console.log(users)}
-                />
+
                 <View style={styles.body}>
                     <Avatar.Image
                         source={avatar}
                         size= {80}
                         style={styles.avatar}
                     />
-
                     <View style={styles.profileContainer}> 
                         
                         <View style={styles.profile}>
@@ -119,12 +113,9 @@ export default class Profile extends Component{
     }
 }
 
-const { width } = Dimensions.get("window");
-
 const styles = StyleSheet.create({
     wrapper: { 
         flex: 1, 
-        // backgroundColor: "#fff" 
     },
     avatar: {
         alignSelf:'center',
@@ -132,12 +123,12 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     header: {
-    flex: 1,
-    backgroundColor: "#2ABB9C",
-    alignItems: "center",
-    justifyContent: 'space-between',
-    flexDirection: "row",
-    paddingHorizontal: 10,
+        flex: 1,
+        backgroundColor: "#2ABB9C",
+        alignItems: "center",
+        justifyContent: 'space-between',
+        flexDirection: "row",
+        paddingHorizontal: 10,
     },
     headerTitle: { 
         color: "#fff", 
@@ -152,17 +143,15 @@ const styles = StyleSheet.create({
     },
     profile: {
         backgroundColor: "#FFF",
-        // margin: 3,
         shadowOpacity: 0.2,
         padding: 10,
         borderRadius: 2,
         borderBottomWidth: 1,
         borderColor: '#b8bfbd',
     },
-    changeInfo: {
+        changeInfo: {
         borderRadius: 2,
         padding: 10,
         alignItems: 'center'
     },
-
 });

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity, ScrollView, TextInput, ToastAndroid} from "react-native";
+import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView, TextInput, ToastAndroid} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import {LinearGradient} from 'expo-linear-gradient';
 import getToken from '../../api/js/getToken';
@@ -98,10 +97,6 @@ export default class ChangeInfo extends Component{
                 </View>
 
                 <View style={styles.body}>
-                    <Button
-                        title='log'
-                        // onPress={() => console.log(user)}
-                    />
                     <ScrollView style={styles.changePassContainer}>
                         {/* Tên đăng nhập - email */}
                         <Text style={[styles.text_footer, { marginTop: 35 }]}>Tên đăng nhập</Text>

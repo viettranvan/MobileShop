@@ -5,10 +5,17 @@ import urls from '../../urls';
 
 const {width,height} = Dimensions.get("window");
 const images_type_URL = urls[1].url;
+const list_productURL = urls[11].url;
 
 export default class Category extends Component{
     gotoListProduct(){
-        this.props.navigation.navigate('ListProduct');
+        fetch(list_productURL)
+        .then(res => res.json())
+        .then(data => {
+            const {product} = data;
+            this.props.navigation.navigate('ListProduct',{product: product});
+        })
+        
     }
 
     render(){
@@ -16,7 +23,7 @@ export default class Category extends Component{
         return(
             <View style={styles.wrapper}>
                 <View style={{flex: 1,justifyContent: 'center'}}>
-                    <Text style={styles.textStyle}>Category</Text>
+                    <Text style={styles.textStyle}>Danh mục sản phẩm</Text>
                 </View>
                 <View style={{flex:6}}>
                     <Swiper showsPagination width={imageWidth} height={imageHeight}>

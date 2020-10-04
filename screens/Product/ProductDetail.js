@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,  Text, Dimensions, StyleSheet, Image,TouchableOpacity, ScrollView, Picker} from 'react-native';
+import {View,  Text, Dimensions, StyleSheet,Button, Image,TouchableOpacity, ScrollView, Picker} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 import urls from '../../urls';
@@ -42,83 +42,83 @@ export default class ProductDetail extends Component{
           </TouchableOpacity>
         </View>
         {/* End Header */}
-
         {/* Body */}
         <View style={styles.body}>
-          {product_detail.map( e => ( 
-          <ScrollView style={styles.wrapper} key={e.id_product}>
-            <View style={styles.swiperContainer}>
-              <Swiper showsPagination width={imageWidth} height={imageHeight}>
-                <Image 
-                  style={styles.productImageStyle} 
-                  source={{uri: images_product_URL + e.productImage[0]}} 
-                />
-                <Image 
-                  style={styles.productImageStyle} 
-                  source={{uri: images_product_URL + e.productImage[1]}} 
-                />
-                <Image 
-                  style={styles.productImageStyle} 
-                  source={{uri: images_product_URL + e.productImage[2]}} 
-                />
-                <Image 
-                  style={styles.productImageStyle} 
-                  source={{uri: images_product_URL + e.productImage[3]}} 
-                />
-                <Image 
-                  style={styles.productImageStyle} 
-                  source={{uri: images_product_URL + e.productImage[4]}} 
-                />
-              </Swiper>
-            </View>
-            
-            <View style={{marginBottom:10}}>
-              <Text style={styles.productName}>{e.name}</Text>
-              <Text style={{fontStyle:'italic',fontSize:16}}>Chọn màu</Text>
-              <View style={{backgroundColor:'#fff', borderRadius:10 }}>
-                <Picker style={styles.test}
-                  selectedValue={this.state.selectedColor}
-                  onValueChange={this.showColor}
-                  >
-                  {e.color.map((e,index) => (
-                    <Picker.Item label={e} value={index}/>
-                  ))}
-                </Picker>
-              </View>
-              <View style={{flexDirection:'row'}}>
-                <Text style={styles.smallDescription}>RAM / ROM: </Text>
-                <Text style={styles.smallDescription}>{e.small_description}</Text>
-              </View>
-              <View style={{flexDirection:'row'}}>
-                <Text style={{fontSize:20}}>Giá Bán: </Text>
-                <Text style={styles.productPrice}>{formatPrice(e.price)} vnd</Text>
-              </View>
-            </View>
-
-            <View style={styles.descriptionContainer}>
-              <View style={{backgroundColor:'#f5e462'}}>
-                <Text style={styles.descriptionTitle}>Thông số kỹ thuật</Text>
-              </View>
-              <View style={styles.textDescriptionContainer}>
-                {e.full_description.map((e,index) => (
-                    <View style={{backgroundColor: index%2 == 1 ? '#fff' : '#e2e3e1'}}>
-                      <Text style={styles.textDescription}>{e} </Text>
-                    </View>
-                  ))}
-              </View>
-            </View>
-          </ScrollView>
-          ))}
-
-          {/* Button thêm vào giỏ hàng */}
-          <View style={styles.addToCartContainer}>
-          <TouchableOpacity style={styles.addToCartButton}>
-              <Text style={styles.addTitle}>THÊM VÀO GIỎ HÀNG </Text>
-          </TouchableOpacity>
+        {product_detail.map( e => ( 
+        <ScrollView style={styles.wrapper} key={e.id_product}>
+          <View style={styles.swiperContainer}>
+            <Swiper showsPagination width={imageWidth} height={imageHeight}>
+              <Image 
+                style={styles.productImageStyle} 
+                source={{uri: images_product_URL + e.productImage[0]}} 
+              />
+              <Image 
+                style={styles.productImageStyle} 
+                source={{uri: images_product_URL + e.productImage[1]}} 
+              />
+              <Image 
+                style={styles.productImageStyle} 
+                source={{uri: images_product_URL + e.productImage[2]}} 
+              />
+              <Image 
+                style={styles.productImageStyle} 
+                source={{uri: images_product_URL + e.productImage[3]}} 
+              />
+              <Image 
+                style={styles.productImageStyle} 
+                source={{uri: images_product_URL + e.productImage[4]}} 
+              />
+            </Swiper>
           </View>
-          {/*End Button thêm vào giỏ hàng */}
+          
+          <View style={{marginBottom:10}}>
+            <Text style={styles.productName}>{e.name}</Text>
+            <Text style={{fontStyle:'italic',fontSize:16}}>Chọn màu</Text>
+            <View style={{backgroundColor:'#fff', borderRadius:10 }}>
+              <Picker style={styles.test}
+                selectedValue={this.state.selectedColor}
+                onValueChange={this.showColor}
+                >
+                {e.color.map((e,index) => (
+                  <Picker.Item label={e} value={index}/>
+                ))}
+              </Picker>
+            </View>
+            <View style={{flexDirection:'row'}}>
+              <Text style={styles.smallDescription}>RAM / ROM: </Text>
+              <Text style={styles.smallDescription}>{e.small_description}</Text>
+            </View>
+            <View style={{flexDirection:'row'}}>
+              <Text style={{fontSize:20}}>Giá Bán: </Text>
+              <Text style={styles.productPrice}>{formatPrice(e.price)} vnd</Text>
+            </View>
+          </View>
+
+          <View style={styles.descriptionContainer}>
+            <View style={{backgroundColor:'#f5e462'}}>
+              <Text style={styles.descriptionTitle}>Thông số kỹ thuật</Text>
+            </View>
+            <View style={styles.textDescriptionContainer}>
+              {e.full_description.map((e,index) => (
+                  <View style={{backgroundColor: index%2 == 1 ? '#fff' : '#e2e3e1'}}>
+                    <Text style={styles.textDescription}>{e} </Text>
+                  </View>
+                ))}
+            </View>
+          </View>
+        </ScrollView>
+        ))}
+
+        {/* Button thêm vào giỏ hàng */}
+        <View style={styles.addToCartContainer}>
+        <TouchableOpacity style={styles.addToCartButton}>
+            <Text style={styles.addTitle}>THÊM VÀO GIỎ HÀNG </Text>
+        </TouchableOpacity>
+        </View>
+        {/*End Button thêm vào giỏ hàng */}
         </View>
         {/* End Body */}
+        
       </View>
     );
   }
@@ -225,3 +225,4 @@ addTitle:{
   color:'white'
 },
 });
+

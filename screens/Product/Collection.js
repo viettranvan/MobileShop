@@ -14,7 +14,7 @@ export default class Collection extends Component{
         return(
             <View style={styles.wrapper}>
                 <View style={{flex: 1,justifyContent: 'center'}}>
-                    <Text style={styles.textStyle}>Collection</Text>
+                    <Text style={styles.textStyle}>Bộ sưu tập</Text>
                 </View>
                 <View style={{flex:6}}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("ListCollection")}>
