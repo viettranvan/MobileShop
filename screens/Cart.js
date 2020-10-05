@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { 
-    View, Text, TouchableOpacity, ScrollView, 
-    Dimensions, StyleSheet, Image 
-} from 'react-native';
-
+import { View, Text, TouchableOpacity, ScrollView, Dimensions, StyleSheet, Image,Button } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import global from '../global';
 
 import sp1 from '../Image/oppo-a11x_800x450.jpg';
 
@@ -28,12 +25,9 @@ class Cart extends Component{
 
     increaseProduct(){
         this.setState({numOfProduct: this.state.numOfProduct + 1})
-
     }
     render(){
-
         return (
-
             <View style={styles.wrapper}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={ () => this.props.navigation.openDrawer() }>
@@ -42,6 +36,11 @@ class Cart extends Component{
                     <Text style={styles.headerTitle}>Giỏ hàng</Text>
                     <View style={{paddingRight:15}}/>
                 </View>
+
+                <Button
+                    title='log'
+                    onPress={()=> { console.log(global.cart) } }
+                />
 
                 <View style={{flex:10}}>
                     <ScrollView >
@@ -205,7 +204,6 @@ const imageHeight = (imageWidth * 452) / 361;
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        // backgroundColor: '#DFDFDF'
     },
     header: {
         flex: 1,

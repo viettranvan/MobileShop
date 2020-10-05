@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet,ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet,Dimensions,FlatList } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Header from "../Header";
 import urls from '../../urls';
 
-const images_product_URL = urls[2].url;
+const URL_imagesProduct = urls[2].url;
 const product_detail_URL = urls[3].url;
 
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {  TouchableOpacity } from "react-native-gesture-handler";
 
 // format giá theo định dạng có dấu phẩy
 function formatPrice(price){
@@ -17,90 +17,106 @@ function formatPrice(price){
 export default class ListProduct extends Component {
   gotoDetail(id){
     fetch(product_detail_URL+"?id="+id)
-        .then(res => res.json())
-        .then(data => {
-            const {product_detail} = data;
-            this.props.navigation.navigate('Detail',{ 
-                product_detail: product_detail
-            })
+    .then(res => res.json())
+    .then(data => {
+        const {product_detail} = data;
+        this.props.navigation.navigate('Detail',{ 
+            product_detail: product_detail
         })
+    })
+  }
+  renderListProduct(product, index){
+    return(
+      
+      <View style={styles.body}>
+        <View >
+          <TouchableOpacity 
+            style={styles.productContainer} 
+            onPress={()=> this.gotoDetail(product.id_product)} 
+          >
+            <Image 
+              style={styles.productImage}
+              source={{uri: URL_imagesProduct + product.productImage[0]}} 
+            />
+            <Text style={styles.productName} > {product.name} </Text>
+            <Text style={styles.productDescription} > {product.small_description} </Text>
+            <Text style={styles.productPrice} > {formatPrice(product.price)} 
+              <Text style={{fontSize:14}}> vnd</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      <View style={{height: 10, width: width}}/>
+    </View>
+    );
   }
   render() {
     const {product} = this.props.route.params;
     return (
-      <View style={{flex:1}}>
+      <View style={styles.container}>
         <Header navigation={this.props.navigation} />
-        <ScrollView >
-          <View style={styles.goBack}>
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-              <MaterialCommunityIcons name='backburger'size={35}/>
-            </TouchableOpacity>
-            <Text style={{fontSize: 20, marginLeft: 20}}>Danh mục sản phẩm</Text>
-          </View>
-          {product.map(e => (
-          <View style={styles.productContainer} key={e.id_product + 'a'}>
-            <Image 
-              source={{uri: images_product_URL + e.productImage[0]}} 
-              style={styles.productImage}
-            />
-            <View style={{justifyContent: 'space-between',flex:1}}>
-              <Text style={styles.productName}>{e.name}</Text>
-              <Text style={styles.productDescription}>{e.small_description}</Text>
-              <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
-                <Text style={styles.productPrice}>{formatPrice(e.price)} vnd</Text>
-                <TouchableOpacity style={styles.buttonDetail} onPress={()=> this.gotoDetail(e.id_product)}>
-                  <Text style={styles.textDetail}>Chi tiết</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          ))}
-          
-          
-          
-        </ScrollView>
+        <View style={styles.goBack}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <MaterialCommunityIcons name='backburger'size={35}/>
+          </TouchableOpacity>
+          <Text style={{fontSize: 20, marginLeft: 20}}>Danh mục sản phẩm</Text>
+        </View>
 
+        <FlatList
+          horizontal={false}
+          numColumns={2}
+          data={product} // array muốn render
+          renderItem={({ item,index }) => this.renderListProduct(item,index)}
+          keyExtractor={(item) => item.id_product}
+        />
       </View>
     );
   }
 }
 
+const {width,height} = Dimensions.get('window');
+const productWidth = (width -20) / 2;
+const productHeight = (productWidth /500)*500;
+
 const styles = StyleSheet.create({
+  container:{
+    marginBottom: 80
+  },
+  body: {
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+    flex:1
+  },
   goBack: {
     padding: 5,
     flexDirection: 'row',
-    backgroundColor: '#d7d9d2'
+    backgroundColor: '#b5b4b1',
+    marginBottom: 10
   },
   productContainer:{
-    flexDirection: 'row',
-    margin: 10,
-    marginBottom: 0,
-    borderColor: '#aab3af',
-    borderBottomWidth: 1.5,
-    borderTopWidth : 1.5,
-    backgroundColor: '#e9eddf',
-    borderRadius: 10
+    width: productWidth,
+    backgroundColor: '#e3e1e1',
+    padding: 5,
+    paddingBottom: 10,
+    paddingTop: 10,
+    borderRadius: 5
   },
   productImage:{
-    width: 100,
-    height: 100,
-    marginRight: 10,
-    margin: 10,
-    borderRadius: 10
+    width: productWidth -20,
+    height: productWidth -20,
+    marginLeft:5,
   },
   productName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    
+    fontSize: 12,
+    fontWeight: 'bold'
   },
-  productDescription:{
-    fontStyle: 'italic'
+  productDescription: {
+    fontStyle:'italic',
+    fontSize: 10
   },
   productPrice: {
-    fontSize: 21,
+    fontSize: 20,
     fontWeight: 'bold',
-    fontStyle: 'italic',
-    color: 'red'
+    color: '#C21C70'
   },
   buttonDetail: {
     marginTop:5,
@@ -108,75 +124,6 @@ const styles = StyleSheet.create({
   },
   textDetail: {
     fontStyle: 'italic',
-    color: 'blue'
+    color: 'blue',
   }
-
 });
-
-
-// <View style={styles.productContainer}>
-//             <Image source={Realme} style={styles.productImage}/>
-//             <View style={{justifyContent: 'space-between',flex:1}}>
-//               <Text numberOfLines={2} style={styles.productName}>điện thoại realme 3 pro phiên bản 4gb ram - 64gb rom</Text>
-              
-//               <Text numberOfLines={2} style={styles.productDescription}>bản 4 -64gb bản 4 -64gb bản 4 -64gb bản 4 -64gb bản 4 -64gb bản 4 -64gb </Text>
-//               <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
-//                 <Text style={styles.productPrice}>24.000.000 vnd</Text>
-//                 <TouchableOpacity style={styles.buttonDetail} onPress={()=>this.props.navigation.navigate('Detail')}>
-//                   <Text style={styles.textDetail}>Chi tiết</Text>
-//                 </TouchableOpacity>
-//               </View>
-//             </View>
-//           </View>
-//           <View style={styles.productContainer}>
-//             <Image source={Realme} style={styles.productImage}/>
-//             <View style={{justifyContent: 'space-between',flex:1}}>
-//               <Text style={styles.productName}>Name</Text>
-//               <Text style={styles.productDescription}>Decription</Text>
-//               <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
-//                 <Text style={styles.productPrice}>Price</Text>
-//                 <TouchableOpacity style={styles.buttonDetail} onPress={()=>this.props.navigation.navigate('Detail')}>
-//                   <Text style={styles.textDetail}>Chi tiết</Text>
-//                 </TouchableOpacity>
-//               </View>
-//             </View>
-//           </View>
-//           <View style={styles.productContainer}>
-//             <Image source={Realme} style={styles.productImage}/>
-//             <View style={{justifyContent: 'space-between',flex:1}}>
-//               <Text style={styles.productName}>Name</Text>
-//               <Text style={styles.productDescription}>Decription</Text>
-//               <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
-//                 <Text style={styles.productPrice}>Price</Text>
-//                 <TouchableOpacity style={styles.buttonDetail} onPress={()=>this.props.navigation.navigate('Detail')}>
-//                   <Text style={styles.textDetail}>Chi tiết</Text>
-//                 </TouchableOpacity>
-//               </View>
-//             </View>
-//           </View>
-//           <View style={styles.productContainer}>
-//             <Image source={Realme} style={styles.productImage}/>
-//             <View style={{justifyContent: 'space-between',flex:1}}>
-//               <Text style={styles.productName}>Name</Text>
-//               <Text style={styles.productDescription}>Decription</Text>
-//               <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
-//                 <Text style={styles.productPrice}>Price</Text>
-//                 <TouchableOpacity style={styles.buttonDetail} onPress={()=>this.props.navigation.navigate('Detail')}>
-//                   <Text style={styles.textDetail}>Chi tiết</Text>
-//                 </TouchableOpacity>
-//               </View>
-//             </View>
-//           </View>
-//           <View style={styles.productContainer}>
-//             <Image source={Realme} style={styles.productImage} />
-//             <View style={{justifyContent: 'space-between',flex:1}}>
-//               <Text style={styles.productName}>Name</Text>
-//               <Text style={styles.productDescription}>Decription</Text>
-//               <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
-//                 <Text style={styles.productPrice}>Price</Text>
-//                 <TouchableOpacity style={styles.buttonDetail} onPress={()=>this.props.navigation.navigate('Detail')}>
-//                   <Text style={styles.textDetail}>Chi tiết</Text>
-//                 </TouchableOpacity>
-//               </View>
-//             </View>
-//           </View>

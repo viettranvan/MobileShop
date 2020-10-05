@@ -1,81 +1,125 @@
 import React, { Component } from 'react';
-import { 
-    StyleSheet, Text, TouchableOpacity, ScrollView, View, Image, Dimensions 
-} from 'react-native';
-
-import sp1 from '../Image/Iphone11.jpg';
-import sp4 from  '../Image/Samsung-Galaxy-S20-color-render-leak.jpg';
+import { StyleSheet, Text, TouchableOpacity, ScrollView, View, Image, Dimensions, Button, FlatList } from 'react-native';
 import Header from './Header';
+import urls from '../urls';
+import { TextInput } from 'react-native-paper';
+
+const list_productURL = urls[11].url;
+const images_product_URL = urls[2].url;
+
+// format giá theo định dạng có dấu phẩy
+function formatPrice(price){
+    return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
 
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
+const product_detail_URL = urls[3].url;
+const searchURL = urls[12].url;
+
 class Search extends Component {
-    gotoDetail() {
-        const { navigator } = this.props;
-        navigator.push({ name: 'PRODUCT_DETAIL' });
+
+    gotoDetail(id){
+        fetch(product_detail_URL+"?id="+id)
+        .then(res => res.json())
+        .then(data => {
+            const {product_detail} = data;
+            this.props.navigation.navigate('Detail',{ 
+                product_detail: product_detail
+            })
+        })
     }
-    render() {
+
+    constructor(props){
+        
+        super(props);
+        this.state = {
+            data: [],
+            laoding: false,
+            text: ''
+        }
+    }
+
+    componentDidMount(){
+        this.requestAPI();
+    }
+    requestAPI = () => {
+        this.setState({laoding : false});
+        fetch(list_productURL)
+        .then(res => res.json())
+        .then(data => {
+            const {product} = data;
+            this.setState({data: product})
+        })
+        .catch(err => console.log(err))
+    }
+
+    // gotoDetail(){
+    //     console.log("abc");
+    // }
+
+    _renderItem = ({ item, index}) => {
         const {
-            product, mainRight, txtMaterial, txtColor,
+            product, mainRight, txtsmall_description,
             txtName, txtPrice, productImage,
-            txtShowDetail, showDetailContainer, wrapper
+            txtShowDetail, showDetailContainer
         } = styles;
+        return(
+            <View style={product} >
+                <Image source={{uri: images_product_URL + item.productImage[0]}} style={productImage} />
+                <View style={mainRight}>
+                    <Text style={txtName}>{toTitleCase(item.name)}</Text>
+                    <Text style={txtsmall_description}>{item.small_description}</Text>
+                    <Text style={txtPrice}>{formatPrice(item.price)} vnd</Text>
+                    <View/>
+                    <TouchableOpacity style={showDetailContainer} onPress={()=>this.gotoDetail(item.id_product)}>
+                        <Text style={txtShowDetail}>Chi tiết</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
+
+    _onChangeText(val){
+        if(val == ''){
+            this.requestAPI();
+        }
+        else{
+            this.setState({text : val})
+        }
+    }
+
+    onSearch(){
+        const {text} = this.state;
+        fetch(searchURL+'?key=' + text )
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            this.setState({data: data.product})
+        })
+        .catch(err => console.log(err))
+    }
+
+    render() {
         return (
             <View style={{flex:1}}>
                 <Header navigation={this.props.navigation}/>
-                <ScrollView style={wrapper}>
-                    <View style={product}>
-                        <Image source={sp1} style={productImage} />
-                        <View style={mainRight}>
-                            <Text style={txtName}>{toTitleCase('black dress')}</Text>
-                            <Text style={txtPrice}>100$</Text>
-                            <Text style={txtMaterial}>Material Fur</Text>
-                            <View style={{ flexDirection: 'row' }} >
-                                <Text style={txtColor}>Color white</Text>
-                                <View
-                                    style={{
-                                        height: 15,
-                                        width: 15,
-                                        backgroundColor: 'white',
-                                        borderRadius: 15,
-                                        marginLeft: 10
-                                    }}
-                                />
-                            </View>
-                            <TouchableOpacity style={showDetailContainer}>
-                                <Text style={txtShowDetail}>SHOW DETAILS</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={product}>
-                        <Image source={sp4} style={productImage} />
-                        <View style={mainRight}>
-                            <Text style={txtName}>{toTitleCase('black dress')}</Text>
-                            <Text style={txtPrice}>100$</Text>
-                            <Text style={txtMaterial}>Material Fur</Text>
-                            <View style={{ flexDirection: 'row' }} >
-                                <Text style={txtColor}>Color white</Text>
-                                <View style={{ flexDirection: 'row' }} >
-                                    <Text style={txtColor}>Color white</Text>
-                                    <View
-                                        style={{
-                                            height: 15,
-                                            width: 15,
-                                            backgroundColor: 'white',
-                                            borderRadius: 15,
-                                            marginLeft: 10
-                                        }}
-                                    />
-                                </View>
-                            </View>
-                            <TouchableOpacity style={showDetailContainer}>
-                                <Text style={txtShowDetail}>SHOW DETAILS</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </ScrollView>
+                <View style={{backgroundColor:'#608cd6'}}>
+                    <TextInput
+                        style={styles.inputSearch}
+                        placeholder='Bạn muốn mua điện thoại gì?'
+                        onChangeText={val => this._onChangeText(val)}
+                        onSubmitEditing={()=>this.onSearch()}
+                    />
+                </View>
+
+                <FlatList
+                    data={this.state.data} // array muốn render
+                    renderItem={this._renderItem}
+                    keyExtractor={(item,index) => index.toString()}
+                />
             </View>
         );
     }
@@ -88,9 +132,11 @@ const imageWidth = width / 4;
 const imageHeight = (imageWidth * 452) / 361;
 
 const styles = StyleSheet.create({
-    wrapper: {
-        backgroundColor: '#F6F6F6',
-        flex: 1
+    inputSearch:{
+        margin: 5,
+        marginLeft: 30,
+        marginRight: 30,
+        height: 40
     },
     product: {
         flexDirection: 'row',
@@ -112,41 +158,28 @@ const styles = StyleSheet.create({
         flex: 3,
         justifyContent: 'space-between'
     },
-    productController: {
-        flexDirection: 'row'
-    },
-    numberOfProduct: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
     txtName: {
         paddingLeft: 20,
         color: '#A7A7A7',
         fontSize: 20,
-        fontWeight: '400',
+        fontWeight: 'bold',
     },
     txtPrice: {
         paddingLeft: 20,
         color: '#C21C70',
-        fontSize: 15,
-        fontWeight: '400',
+        fontSize: 20,
+        fontWeight: 'bold',
     },
-    txtColor: {
+    txtsmall_description: {
         paddingLeft: 20,
         color: 'black',
-        fontSize: 15,
+        fontSize: 12,
         fontWeight: '400',
-    },
-    txtMaterial: {
-        paddingLeft: 20,
-        color: 'black',
-        fontSize: 15,
-        fontWeight: '400',
+        fontStyle: "italic"
     },
     txtShowDetail: {
-        color: '#C21C70',
-        fontSize: 10,
+        color: 'blue',
+        fontSize: 14,
         fontWeight: '400',
         textAlign: 'right',
     },
@@ -157,4 +190,3 @@ const styles = StyleSheet.create({
         marginTop: 100
     }
 });
-

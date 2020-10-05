@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,  Text, StyleSheet, Image, Dimensions} from 'react-native';
+import {View,  Text, StyleSheet, Image, Dimensions, FlatList } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import urls from '../../urls';
 
@@ -16,6 +16,29 @@ export default class Test extends Component{
         this.state = {
             productDetail:[]
         }
+    }
+    renderProduct(product){
+        return(
+            <View style={styles.body}>
+                <View >
+                    <TouchableOpacity 
+                        style={styles.productContainer} 
+                        onPress={()=> this.gotoDetail(product.id_product)} 
+                    >
+                        <Image 
+                            style={styles.productImage}
+                            source={{uri: URL_imagesProduct + product.productImage[0]}} 
+                        />
+                        <Text style={styles.productName} > {product.name} </Text>
+                        <Text style={styles.productDescription} > {product.small_description} </Text>
+                        <Text style={styles.productPrice} > {formatPrice(product.price)} 
+                            <Text style={{fontSize:14}}> vnd</Text>
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{height: 10, width: width}}/>
+            </View>
+        );
     }
     gotoDetail(id){
         fetch(product_detail_URL+"?id="+id)
@@ -34,29 +57,14 @@ export default class Test extends Component{
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>Sản phẩm thịnh hành</Text>
                 </View>
-                <View style={styles.body}>
-                    {topProduct.map( e => (
-                        <View key={e.id_product}>
-                            <TouchableOpacity 
-                                style={styles.productContainer} 
-                                onPress={()=> this.gotoDetail(e.id_product)} 
-                                key={e.id_product}
-                            >
-                                <Image 
-                                    style={styles.productImage}
-                                    source={{uri: URL_imagesProduct + e.productImage[0]}} 
-                                />
-                                <Text style={styles.productName} > {e.name} </Text>
-                                <Text style={styles.productDescription} > {e.small_description} </Text>
-                                <Text style={styles.productPrice} > {formatPrice(e.price)} 
-                                    <Text style={{fontSize:14}}> vnd</Text>
-                                </Text>
-                            </TouchableOpacity>
-                            <View style={{height:10,backgroundColor:'#fff'}}/>
-                        </View>
-                    ))}
-                    <View style={{height: 10, width: width}}/>
-                </View>
+
+                <FlatList
+                    horizontal={false}
+                    numColumns={2}
+                    data={topProduct} // array muốn render
+                    renderItem={({ item }) => this.renderProduct(item)}
+                    keyExtractor={(item) => item.id_product}
+                />
             </View>
         );
     }
@@ -83,10 +91,9 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     body: {
-        flexDirection: 'row',
         justifyContent: 'space-around',
         flexWrap: 'wrap',
-
+        flex:1
     },
     productContainer: {
         width: productWidth,
@@ -110,5 +117,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: 'red'
-    }
+    },
+    droidSafeArea: {
+        flex: 1,
+        backgroundColor: 'blue',
+        paddingTop: Platform.OS === 'android' ? 25 : 0
+    },
 });

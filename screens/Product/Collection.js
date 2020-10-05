@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import {View,  Text,StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import mobileBanner from '../../Image/bannerDienThoai.jpg';
 
 const {width,height} = Dimensions.get("window");
-
-    
 
 export default class Collection extends Component{
 
@@ -17,7 +13,7 @@ export default class Collection extends Component{
                     <Text style={styles.textStyle}>Bộ sưu tập</Text>
                 </View>
                 <View style={{flex:6}}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("ListCollection")}>
+                    <TouchableOpacity onPress={() => {}}>
                         <Image style={styles.imageStyle}source={mobileBanner}/>
                     </TouchableOpacity>
                 </View>

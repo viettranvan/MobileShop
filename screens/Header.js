@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import {View,Text,TouchableOpacity, Dimensions, StyleSheet,Button} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from 'react-native-paper';
+import urls from '../urls';
+import global from '../global';
+
+const searchURL = urls[12].url;
 
 
 const {height} = Dimensions.get("window");
@@ -9,7 +13,7 @@ export default class Header extends Component{
 
     render(){
         return(
-        <View style={{height: height/8.5, backgroundColor: '#608cd6'}}>
+        <View style={{height: height/14, backgroundColor: '#608cd6'}}>
             <View style={styles.container}>
                 <TouchableOpacity 
                     onPress={ () => this.props.navigation.openDrawer() }
@@ -29,10 +33,6 @@ export default class Header extends Component{
                     <MaterialCommunityIcons name="cart" color='white' size={30} />
                 </TouchableOpacity>
             </View>
-            <TextInput
-                style={styles.textinp}
-                placeholder='Bạn muốn mua điện thoại gì?'
-            />
         </View>
         );
     }
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingTop: 6
     },
     title: {
         textAlign: 'center',
@@ -50,11 +51,5 @@ const styles = StyleSheet.create({
         color: 'white',
         paddingTop: 3
     },
-    textinp: {
-        height: 40,
-        marginRight: 30,
-        marginLeft: 30,
-        marginBottom: 10
-    }
   });
   

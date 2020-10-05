@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {View,  Text, Dimensions, StyleSheet,Button, Image,TouchableOpacity, ScrollView, Picker} from 'react-native';
+import {View,  Text, Dimensions, StyleSheet, Image,TouchableOpacity, Picker, FlatList} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 import urls from '../../urls';
-
+import global from '../../global';
 
 const images_product_URL = urls[2].url;
 
@@ -11,11 +11,10 @@ const images_product_URL = urls[2].url;
 function formatPrice(price){
   return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
-var i = 0;
 export default class ProductDetail extends Component{
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       selectedColor : ''
     }
@@ -26,6 +25,87 @@ export default class ProductDetail extends Component{
     this.setState({
       selectedColor: value
     });
+  }
+  addToCart(){
+    const {product_detail} = this.props.route.params;
+    console.log(product_detail);
+    global.cart.push({data: product_detail});
+  }
+  renderProductDetail(product){
+    return(
+      <View style={styles.wrapper}>
+        {/* Swiper hiển thị ảnh sản phẩm */}
+        <View style={styles.swiperContainer}>
+          <Swiper showsPagination width={imageWidth} height={imageHeight}>
+            <Image 
+              style={styles.productImageStyle} 
+              source={{uri: images_product_URL + product.productImage[0]}} 
+            />
+            <Image 
+              style={styles.productImageStyle} 
+              source={{uri: images_product_URL + product.productImage[1]}} 
+            />
+            <Image 
+              style={styles.productImageStyle} 
+              source={{uri: images_product_URL + product.productImage[2]}} 
+            />
+            <Image 
+              style={styles.productImageStyle} 
+              source={{uri: images_product_URL + product.productImage[3]}} 
+            />
+            <Image 
+              style={styles.productImageStyle} 
+              source={{uri: images_product_URL + product.productImage[4]}} 
+            />
+          </Swiper>
+        </View>
+        {/* End Swiper hiển thị ảnh sản phẩm */}
+
+        {/* Thông tin sản phẩm */}
+        <View style={{marginBottom:10}} >
+          <Text style={styles.productName}>{product.name}</Text>
+          <Text style={{fontStyle:'italic',fontSize:16}}>Chọn màu</Text>
+        </View>
+        <View style={{backgroundColor:'#fff', borderRadius:10 }}>
+            <Picker style={styles.test}
+              selectedValue={this.state.selectedColor}
+              onValueChange={this.showColor}
+              >
+             {product.color.map((e,index) => (   
+            <Picker.Item label={e} value={index} key={e+''+index} />
+            ))}
+          </Picker>
+        </View>
+
+        <View style={{flexDirection:'row'}}>
+          <Text style={styles.smallDescription}>RAM / ROM: </Text>
+          <Text style={styles.smallDescription}>{product.small_description}</Text>
+        </View>
+        <View style={{flexDirection:'row'}}>
+          <Text style={{fontSize:20}}>Giá Bán: </Text>
+          <Text style={styles.productPrice}>{formatPrice(product.price)} vnd</Text>
+        </View>
+
+        {/* thông số kỹ thuật */}
+        <View style={styles.descriptionContainer}>
+          <View style={{backgroundColor:'#f5e462'}}>
+            <Text style={styles.descriptionTitle}>Thông số kỹ thuật</Text>
+          </View>
+          <View style={styles.textDescriptionContainer}>
+            <FlatList
+              data={product.full_description} // array muốn render
+              renderItem={({ item,index }) => (
+                <View style={{backgroundColor: index%2 == 1 ? '#fff' : '#e2e3e1'}}>
+                  <Text style={styles.textDescription}>{item} </Text>
+                </View>
+              )}
+              keyExtractor={(item) => item}
+            />
+          </View>
+        </View>
+        {/* End thông số kỹ thuật */}
+      </View>
+    );
   }
   render(){
     const {product_detail} = this.props.route.params;
@@ -44,74 +124,19 @@ export default class ProductDetail extends Component{
         {/* End Header */}
         {/* Body */}
         <View style={styles.body}>
-        {product_detail.map( e => ( 
-        <ScrollView style={styles.wrapper} key={e.id_product}>
-          <View style={styles.swiperContainer}>
-            <Swiper showsPagination width={imageWidth} height={imageHeight}>
-              <Image 
-                style={styles.productImageStyle} 
-                source={{uri: images_product_URL + e.productImage[0]}} 
-              />
-              <Image 
-                style={styles.productImageStyle} 
-                source={{uri: images_product_URL + e.productImage[1]}} 
-              />
-              <Image 
-                style={styles.productImageStyle} 
-                source={{uri: images_product_URL + e.productImage[2]}} 
-              />
-              <Image 
-                style={styles.productImageStyle} 
-                source={{uri: images_product_URL + e.productImage[3]}} 
-              />
-              <Image 
-                style={styles.productImageStyle} 
-                source={{uri: images_product_URL + e.productImage[4]}} 
-              />
-            </Swiper>
-          </View>
-          
-          <View style={{marginBottom:10}}>
-            <Text style={styles.productName}>{e.name}</Text>
-            <Text style={{fontStyle:'italic',fontSize:16}}>Chọn màu</Text>
-            <View style={{backgroundColor:'#fff', borderRadius:10 }}>
-              <Picker style={styles.test}
-                selectedValue={this.state.selectedColor}
-                onValueChange={this.showColor}
-                >
-                {e.color.map((e,index) => (
-                  <Picker.Item label={e} value={index}/>
-                ))}
-              </Picker>
-            </View>
-            <View style={{flexDirection:'row'}}>
-              <Text style={styles.smallDescription}>RAM / ROM: </Text>
-              <Text style={styles.smallDescription}>{e.small_description}</Text>
-            </View>
-            <View style={{flexDirection:'row'}}>
-              <Text style={{fontSize:20}}>Giá Bán: </Text>
-              <Text style={styles.productPrice}>{formatPrice(e.price)} vnd</Text>
-            </View>
-          </View>
+        
 
-          <View style={styles.descriptionContainer}>
-            <View style={{backgroundColor:'#f5e462'}}>
-              <Text style={styles.descriptionTitle}>Thông số kỹ thuật</Text>
-            </View>
-            <View style={styles.textDescriptionContainer}>
-              {e.full_description.map((e,index) => (
-                  <View style={{backgroundColor: index%2 == 1 ? '#fff' : '#e2e3e1'}}>
-                    <Text style={styles.textDescription}>{e} </Text>
-                  </View>
-                ))}
-            </View>
-          </View>
-        </ScrollView>
-        ))}
+        <FlatList
+            data={product_detail} // array muốn render
+            renderItem={({ item }) => this.renderProductDetail(item)}
+            keyExtractor={(item) => item.id_product}
+            key='Detail'
+        />
+        
 
         {/* Button thêm vào giỏ hàng */}
         <View style={styles.addToCartContainer}>
-        <TouchableOpacity style={styles.addToCartButton}>
+        <TouchableOpacity style={styles.addToCartButton} onPress={()=>this.addToCart()}>
             <Text style={styles.addTitle}>THÊM VÀO GIỎ HÀNG </Text>
         </TouchableOpacity>
         </View>
@@ -195,7 +220,6 @@ descriptionTitle:{
 },
 textDescriptionContainer:{
   flex:1,
-  // alignItems: 'center',
   justifyContent:'center',
   alignContent:'center',
 },
@@ -225,4 +249,3 @@ addTitle:{
   color:'white'
 },
 });
-

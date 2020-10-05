@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, View, Text, TouchableOpacity,StyleSheet,Dimensions, Button} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TextInput } from 'react-native-paper';
+import {ScrollView, View,StyleSheet,Dimensions, Button, FlatList} from 'react-native';
 
 import CollectionScreen from './Product/Collection';
 import CategoryScreen from './Product/Category';
@@ -21,7 +19,7 @@ export default class Main extends Component{
             types: [], // dữ liệu đổ vào category
             topProduct: [], // dữ liệu đổ vào topProduct
             user: global.onSignIn,
-            token: global.token
+            token: global.token,
         }
     }
 
@@ -39,18 +37,33 @@ export default class Main extends Component{
 
     render(){
         const {types, topProduct, user, token} = this.state;
+        const screens = [
+            {
+                key: '0',
+                screen: <CategoryScreen navigation ={this.props.navigation} types={types}/>
+            },
+            {
+                key: '1',
+                screen: <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>
+            },
+            {
+                key: '2',
+                screen: <TopProductScreen navigation ={this.props.navigation} topProduct={topProduct} />
+            },
+        ];
         return(
             <View style={{flex:1}}>
                 <Header navigation={this.props.navigation}/>   
-                <Button
+                {/* <Button
                     title='log'
                     onPress={() => console.log(global.onSignIn)}
-                /> 
-                <ScrollView style={styles.container}>
-                    <CategoryScreen navigation ={this.props.navigation} types={types}/>
-                    <CollectionScreen navigation ={this.props.navigation} route={this.props.route}/>
-                    <TopProductScreen navigation ={this.props.navigation} topProduct={topProduct} />
-                </ScrollView>
+                />  */}
+
+                <FlatList
+                    data={screens} // array muốn render
+                    renderItem={({ item }) => item.screen}
+                    keyExtractor={(item) => item.key}
+                />
             </View>
         );
     }
