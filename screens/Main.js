@@ -8,6 +8,7 @@ import TopProductScreen from './Product/TopProduct';
 import Header from './Header';
 import urls from '../urls';
 import global from '../global';
+import { TextInput } from 'react-native-paper';
 
 // localhost
 const URL = urls[0].url;
@@ -53,11 +54,14 @@ export default class Main extends Component{
         ];
         return(
             <View style={{flex:1}}>
-                <Header navigation={this.props.navigation}/>   
-                {/* <Button
-                    title='log'
-                    onPress={() => console.log(global.onSignIn)}
-                />  */}
+                <Header navigation={this.props.navigation}/>
+                <View style={{backgroundColor:'#608cd6'}}>
+                    <TextInput
+                        style={styles.inputSearch}
+                        placeholder='Bạn muốn mua điện thoại gì?'
+                        onFocus={()=> this.props.navigation.navigate("Search")}
+                    />
+                </View>
 
                 <FlatList
                     data={screens} // array muốn render
@@ -89,6 +93,12 @@ const styles = StyleSheet.create({
         marginRight: 40,
         marginLeft: 40,
         
-    }
+    },
+    inputSearch:{
+        margin: 5,
+        marginLeft: 30,
+        marginRight: 30,
+        height: 40
+    },
 });
   

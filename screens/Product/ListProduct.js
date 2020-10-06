@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet,Dimensions,FlatList } from "react-native";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TextInput } from 'react-native-paper';
 import Header from "../Header";
 import urls from '../../urls';
 
 const URL_imagesProduct = urls[2].url;
 const product_detail_URL = urls[3].url;
+const searchURL = urls[12].url;
 
 import {  TouchableOpacity } from "react-native-gesture-handler";
 
@@ -14,7 +16,27 @@ function formatPrice(price){
   return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
+
+
 export default class ListProduct extends Component {
+  
+  constructor(props){
+    super(props);
+    this.state = {
+      data: [],
+      text: ''
+    }
+  }
+
+  componentDidMount(){
+    this.getAllProduct();
+  }
+
+  getAllProduct(){
+    const {product} = this.props.route.params;
+    this.setState({data:product})
+  }
+
   gotoDetail(id){
     fetch(product_detail_URL+"?id="+id)
     .then(res => res.json())
@@ -25,9 +47,33 @@ export default class ListProduct extends Component {
         })
     })
   }
+
+  _onChangeText(val){
+    if(val == ''){
+        this.getAllProduct();
+    }
+    else{
+        this.setState({text : val})
+    }
+  }
+
+  onSearch(){
+    const {text} = this.state;
+    fetch(searchURL+'?key=' + text )
+    .then(res => res.json())
+    .then(data => {
+        if(data.result == 'NO_RESULT_FOUND'){
+            this.setState({data: []})
+        }
+        else{
+            this.setState({data: data.product})
+        }
+    })
+    .catch(err => console.log(err))
+  }
+
   renderListProduct(product, index){
     return(
-      
       <View style={styles.body}>
         <View >
           <TouchableOpacity 
@@ -49,26 +95,51 @@ export default class ListProduct extends Component {
     </View>
     );
   }
+
+  noResutlFound(){
+    return(
+      <View style={{justifyContent: 'center',alignContent:'center',alignItems:'center'}}>
+          <Text>Không tìm thấy kết quả</Text>
+      </View>
+    );
+  }
+
   render() {
-    const {product} = this.props.route.params;
+    // const {product} = this.props.route.params;
+    const {data} = this.state;
     return (
       <View style={styles.container}>
-        <Header navigation={this.props.navigation} />
-        <View style={styles.goBack}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <MaterialCommunityIcons name='backburger'size={35}/>
-          </TouchableOpacity>
-          <Text style={{fontSize: 20, marginLeft: 20}}>Danh mục sản phẩm</Text>
+        <View >
+          <Header navigation={this.props.navigation} />
+          <View style={{backgroundColor:'#608cd6'}}>
+            <TextInput
+              style={styles.inputSearch}
+              placeholder='Bạn muốn mua điện thoại gì?'
+              onChangeText={val => this._onChangeText(val)}
+              onSubmitEditing={()=>this.onSearch()}
+            />
+          </View>
+          <View style={styles.goBack}>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+              <MaterialCommunityIcons name="arrow-left" color='black' size={38} />
+            </TouchableOpacity>
+            <Text style={styles.screenTitle}>Danh mục sản phẩm</Text>
+          </View>
         </View>
 
-        <FlatList
-          horizontal={false}
-          numColumns={2}
-          data={product} // array muốn render
-          renderItem={({ item,index }) => this.renderListProduct(item,index)}
-          keyExtractor={(item) => item.id_product}
-        />
+        {data.length == 0 ? this.noResutlFound() : (
+          <View style={{marginBottom:140}}>
+            <FlatList
+              horizontal={false}
+              numColumns={2}
+              data={data} // array muốn render
+              renderItem={({ item,index }) => this.renderListProduct(item,index)}
+              keyExtractor={(item) => item.id_product}
+            />
+          </View>
+        )}
       </View>
+        
     );
   }
 }
@@ -79,18 +150,26 @@ const productHeight = (productWidth /500)*500;
 
 const styles = StyleSheet.create({
   container:{
-    marginBottom: 80
+    flex:1
   },
   body: {
     justifyContent: 'space-around',
-    flexWrap: 'wrap',
+    alignItems: 'center',
     flex:1
   },
   goBack: {
-    padding: 5,
+    paddingTop: 5,
     flexDirection: 'row',
     backgroundColor: '#b5b4b1',
-    marginBottom: 10
+    borderRadius: 5,
+    marginTop: 5,
+    marginBottom:5
+  },
+  screenTitle:{
+    fontSize: 24, 
+    marginLeft: 20, 
+    fontWeight:'bold', 
+    fontStyle:'italic'
   },
   productContainer:{
     width: productWidth,
@@ -116,14 +195,13 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#C21C70'
+    color: 'red'
   },
-  buttonDetail: {
-    marginTop:5,
-    marginRight: 5,
+
+  inputSearch:{
+    margin: 5,
+    marginLeft: 30,
+    marginRight: 30,
+    height: 40
   },
-  textDetail: {
-    fontStyle: 'italic',
-    color: 'blue',
-  }
 });

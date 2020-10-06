@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, ScrollView, View, Image, Dimensions, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, FlatList } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import Header from './Header';
 import urls from '../urls';
-import { TextInput } from 'react-native-paper';
 
 const list_productURL = urls[11].url;
 const images_product_URL = urls[2].url;
@@ -33,7 +33,6 @@ class Search extends Component {
     }
 
     constructor(props){
-        
         super(props);
         this.state = {
             data: [],
@@ -55,10 +54,6 @@ class Search extends Component {
         })
         .catch(err => console.log(err))
     }
-
-    // gotoDetail(){
-    //     console.log("abc");
-    // }
 
     _renderItem = ({ item, index}) => {
         const {
@@ -82,6 +77,14 @@ class Search extends Component {
         );
     }
 
+    noResutlFound(){
+        return(
+            <View style={{justifyContent: 'center',alignContent:'center',alignItems:'center'}}>
+                <Text>Không tìm thấy kết quả</Text>
+            </View>
+        );
+    }
+
     _onChangeText(val){
         if(val == ''){
             this.requestAPI();
@@ -96,13 +99,18 @@ class Search extends Component {
         fetch(searchURL+'?key=' + text )
         .then(res => res.json())
         .then(data => {
-            console.log(data);
-            this.setState({data: data.product})
+            if(data.result == 'NO_RESULT_FOUND'){
+                this.setState({data: []})
+            }
+            else{
+                this.setState({data: data.product})
+            }
         })
         .catch(err => console.log(err))
     }
 
     render() {
+        const {data} = this.state;
         return (
             <View style={{flex:1}}>
                 <Header navigation={this.props.navigation}/>
@@ -112,19 +120,22 @@ class Search extends Component {
                         placeholder='Bạn muốn mua điện thoại gì?'
                         onChangeText={val => this._onChangeText(val)}
                         onSubmitEditing={()=>this.onSearch()}
+                        autoFocus={true}
                     />
                 </View>
 
-                <FlatList
-                    data={this.state.data} // array muốn render
-                    renderItem={this._renderItem}
-                    keyExtractor={(item,index) => index.toString()}
-                />
+                {data.length == 0 ? this.noResutlFound() :(
+                    <FlatList
+                        data={data} // array muốn render
+                        renderItem={this._renderItem}
+                        keyExtractor={(item,index) => index.toString()}
+                    />
+                )}
+                
             </View>
         );
     }
 }
-
 export default Search;
 
 const { width } = Dimensions.get('window');

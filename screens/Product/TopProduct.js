@@ -31,7 +31,7 @@ export default class Test extends Component{
                         />
                         <Text style={styles.productName} > {product.name} </Text>
                         <Text style={styles.productDescription} > {product.small_description} </Text>
-                        <Text style={styles.productPrice} > {formatPrice(product.price)} 
+                        <Text style={styles.productPrice}> {formatPrice(product.price)} 
                             <Text style={{fontSize:14}}> vnd</Text>
                         </Text>
                     </TouchableOpacity>

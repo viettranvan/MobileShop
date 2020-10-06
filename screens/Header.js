@@ -13,7 +13,7 @@ export default class Header extends Component{
 
     render(){
         return(
-        <View style={{height: height/14, backgroundColor: '#608cd6'}}>
+        <View style={{height: height/18, backgroundColor: '#608cd6'}}>
             <View style={styles.container}>
                 <TouchableOpacity 
                     onPress={ () => this.props.navigation.openDrawer() }
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingTop: 6
+        paddingTop: 6,
     },
     title: {
         textAlign: 'center',

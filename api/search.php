@@ -3,7 +3,7 @@
 	include('connect/connect.php');
 	$mysqli= $conn;
 
-	if(isset($_GET['key']) && strlen($_GET['key'])>2){
+	if(isset($_GET['key']) && strlen($_GET['key'])>=2){
 		$keyword = $_GET['key'];
 
 		$product = $mysqli -> query("
@@ -12,22 +12,31 @@
 		WHERE p.name like '%$keyword%' group by p.id_product
 		");
 
-		while ($row = $product->fetch_object()){
-			$images = explode(',', $row->productImage);
-			$row->productImage = $images;
 
-			$descriptions = explode('^', $row->full_description);
-			$row->full_description = $descriptions;
-
-		    $productArr[] = $row;
+		$rowcount=mysqli_num_rows($product);
+		if($rowcount == 0){
+			$array = array('result'=>'NO_RESULT_FOUND');
+			echo json_encode($array);
+			// echo 'NO_RESULT_FOUND';
 		}
+		else{
+			while ($row = $product->fetch_object()){
+				$images = explode(',', $row->productImage);
+				$row->productImage = $images;
 
-		$array = array('product' => $productArr);
-		echo json_encode($array); // trả về dữ liệu dạng JSON
+				$descriptions = explode('^', $row->full_description);
+				$row->full_description = $descriptions;
+
+			    $productArr[] = $row;
+			}
+
+			$array = array('product' => $productArr);
+			echo json_encode($array); // trả về dữ liệu dạng JSON
+		}
 
 	}
 	else{
-		echo 'NHAP_TU_KHOA';
+		echo 'INPUT_KEY';
 	}
 ?>
 	
