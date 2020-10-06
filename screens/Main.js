@@ -10,6 +10,7 @@ import urls from '../urls';
 import global from '../global';
 import { TextInput } from 'react-native-paper';
 
+
 // localhost
 const URL = urls[0].url;
 export default class Main extends Component{
@@ -21,6 +22,7 @@ export default class Main extends Component{
             topProduct: [], // dữ liệu đổ vào topProduct
             user: global.onSignIn,
             token: global.token,
+            cartArray: []
         }
     }
 
@@ -62,7 +64,10 @@ export default class Main extends Component{
                         onFocus={()=> this.props.navigation.navigate("Search")}
                     />
                 </View>
-
+                <Button 
+                    title='log'
+                    onPress={() => console.log('Main',global.cartArray)}
+                />
                 <FlatList
                     data={screens} // array muốn render
                     renderItem={({ item }) => item.screen}

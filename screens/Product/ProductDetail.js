@@ -28,9 +28,13 @@ export default class ProductDetail extends Component{
   }
   addToCart(){
     const {product_detail} = this.props.route.params;
-    console.log(product_detail);
-    global.cart.push({data: product_detail});
+    const cartArray = global.cartArray;
+    console.log("add product");
+    global.cartArray =  cartArray.concat(product_detail);
+    console.log(global.cartArray);
   }
+
+
   renderProductDetail(product){
     return(
       <View style={styles.wrapper}>
@@ -113,7 +117,7 @@ export default class ProductDetail extends Component{
       <View style={{flex:1}}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={ () => this.props.navigation.goBack() }>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack() }>
               <MaterialCommunityIcons name="arrow-left" color='white' size={40} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Chi tiết sản phẩm</Text>

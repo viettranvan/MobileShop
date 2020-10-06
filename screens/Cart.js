@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions, StyleSheet, Image,Button } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Dimensions, StyleSheet, Image,Button,  FlatList } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import global from '../global';
+import urls from '../urls';
 
 import sp1 from '../Image/oppo-a11x_800x450.jpg';
+const URL_imagesProduct = urls[2].url;
 
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
+// format giá theo định dạng có dấu phẩy
+function formatPrice(price){
+    return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+const product_detail_URL = urls[3].url;
 
 class Cart extends Component{
+
     constructor(){
         super();
         this.state = {
-            numOfProduct: 1
+            numOfProduct: 1,
         }
     }
     
@@ -26,7 +34,65 @@ class Cart extends Component{
     increaseProduct(){
         this.setState({numOfProduct: this.state.numOfProduct + 1})
     }
+
+    renderProduct(product){
+        
+        return(
+            <View style={styles.product}>
+                <Image 
+                    source={{uri: URL_imagesProduct + product.productImage[0]}} 
+                    style={styles.productImage} 
+                />
+                <View style={styles.mainRight}>
+                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                        <Text style={styles.txtName}>{product.name}</Text>
+                        <TouchableOpacity>
+                            <Text style={{  color: '#969696' }}>X</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.txtSmallDescription}>{product.small_description} vnd</Text>
+                    <Text style={styles.txtPrice}>{formatPrice(product.price)} vnd</Text>
+                    <View style={styles.productController}>
+                        <View style={styles.numberOfProduct}>
+                            <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct()}>
+                                <Text>-</Text>
+                            </TouchableOpacity>
+                            <Text style={{fontSize:20}}>{this.state.numOfProduct}</Text>
+                            <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct()}>
+                                <Text>+</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity style={styles.showDetailContainer} onPress={()=> this.gotoDetail(product.id_product)}>
+                            <Text style={styles.txtShowDetail}>Chi tiết</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    totalPrice(){
+        const {cartArray} = this.props;
+        var kq = 0;
+        cartArray.map(e => {
+            kq += parseFloat(e.price) ;
+        })
+        return kq;
+    }
+
+    gotoDetail(id){
+        fetch(product_detail_URL+"?id="+id)
+        .then(res => res.json())
+        .then(data => {
+            const {product_detail} = data;
+            this.props.navigation.navigate('Detail',{ 
+                product_detail: product_detail
+            })
+        })
+    }
+
     render(){
+        const {cartArray} = this.props;
         return (
             <View style={styles.wrapper}>
                 <View style={styles.header}>
@@ -37,157 +103,16 @@ class Cart extends Component{
                     <View style={{paddingRight:15}}/>
                 </View>
 
-                <Button
-                    title='log'
-                    onPress={()=> { console.log(global.cart) } }
-                />
-
                 <View style={{flex:10}}>
-                    <ScrollView >
-                    <View style={styles.product}>
-                            <Image source={sp1} style={styles.productImage} />
-                            <View style={styles.mainRight}>
-                                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                    <Text style={styles.txtName}>{toTitleCase('black of the')}</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{  color: '#969696' }}>X</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={styles.txtPrice}>{100}$</Text>
-                                </View>
-                                <View style={styles.productController}>
-                                    <View style={styles.numberOfProduct}>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct()}>
-                                            <Text>-</Text>
-                                        </TouchableOpacity>
-                                        <Text style={{fontSize:20}}>{this.state.numOfProduct}</Text>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct()}>
-                                            <Text>+</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <TouchableOpacity style={styles.showDetailContainer}>
-                                        <Text style={styles.txtShowDetail}>SHOW DETAILS</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.product}>
-                            <Image source={sp1} style={styles.productImage} />
-                            <View style={styles.mainRight}>
-                                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                    <Text style={styles.txtName}>{toTitleCase('black of the')}</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{  color: '#969696' }}>X</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={styles.txtPrice}>{100}$</Text>
-                                </View>
-                                <View style={styles.productController}>
-                                    <View style={styles.numberOfProduct}>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct()}>
-                                            <Text>-</Text>
-                                        </TouchableOpacity>
-                                        <Text style={{fontSize:20}}>{this.state.numOfProduct}</Text>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct()}>
-                                            <Text>+</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <TouchableOpacity style={styles.showDetailContainer}>
-                                        <Text style={styles.txtShowDetail}>SHOW DETAILS</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.product}>
-                            <Image source={sp1} style={styles.productImage} />
-                            <View style={styles.mainRight}>
-                                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                    <Text style={styles.txtName}>{toTitleCase('black of the')}</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{  color: '#969696' }}>X</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={styles.txtPrice}>{100}$</Text>
-                                </View>
-                                <View style={styles.productController}>
-                                    <View style={styles.numberOfProduct}>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct()}>
-                                            <Text>-</Text>
-                                        </TouchableOpacity>
-                                        <Text style={{fontSize:20}}>{this.state.numOfProduct}</Text>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct()}>
-                                            <Text>+</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <TouchableOpacity style={styles.showDetailContainer}>
-                                        <Text style={styles.txtShowDetail}>SHOW DETAILS</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.product}>
-                            <Image source={sp1} style={styles.productImage} />
-                            <View style={styles.mainRight}>
-                                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                    <Text style={styles.txtName}>{toTitleCase('black of the')}</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{  color: '#969696' }}>X</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={styles.txtPrice}>{100}$</Text>
-                                </View>
-                                <View style={styles.productController}>
-                                    <View style={styles.numberOfProduct}>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct()}>
-                                            <Text>-</Text>
-                                        </TouchableOpacity>
-                                        <Text style={{fontSize:20}}>{this.state.numOfProduct}</Text>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct()}>
-                                            <Text>+</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <TouchableOpacity style={styles.showDetailContainer}>
-                                        <Text style={styles.txtShowDetail}>SHOW DETAILS</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.product}>
-                            <Image source={sp1} style={styles.productImage} />
-                            <View style={styles.mainRight}>
-                                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                    <Text style={styles.txtName}>{toTitleCase('black of the')}</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{  color: '#969696' }}>X</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={styles.txtPrice}>{100}$</Text>
-                                </View>
-                                <View style={styles.productController}>
-                                    <View style={styles.numberOfProduct}>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct()}>
-                                            <Text>-</Text>
-                                        </TouchableOpacity>
-                                        <Text style={{fontSize:20}}>{this.state.numOfProduct}</Text>
-                                        <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct()}>
-                                            <Text>+</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <TouchableOpacity style={styles.showDetailContainer}>
-                                        <Text style={styles.txtShowDetail}>SHOW DETAILS</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                        
-                    </ScrollView>
+                    <FlatList
+                        data={cartArray} // array muốn render
+                        renderItem={({ item }) => this.renderProduct(item)}
+                        keyExtractor={(item) => item.id_product}
+                    />
                     <TouchableOpacity style={styles.checkoutButton}>
-                        <Text style={styles.checkoutTitle}>TỔNG {1000}$ THANH TOÁN NGAY </Text>
+                        <Text style={styles.checkoutTitle}>TỔNG 
+                        <Text style={{color:'#c70c0c', fontSize: 16}}> {formatPrice(this.totalPrice())} </Text>
+                        vnd THANH TOÁN NGAY </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -263,19 +188,25 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         color: '#A7A7A7',
         fontSize: 20,
-        fontWeight: '400',
+        fontWeight: 'bold',
+    },
+    txtSmallDescription:{
+        paddingLeft: 20,
+        fontStyle:'italic',
+        fontSize: 10
     },
     txtPrice: {
         paddingLeft: 20,
-        color: '#C21C70',
+        color: 'red',
         fontSize: 20,
-        fontWeight: '400',
+        fontWeight: 'bold',
     },
     txtShowDetail: {
-        color: '#C21C70',
-        fontSize: 10,
-        fontWeight: '400',
+        color: 'blue',
+        fontSize: 18,
         textAlign: 'right',
+        fontStyle: 'italic'
+
     },
     showDetailContainer: {
         flex: 1,

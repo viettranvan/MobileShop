@@ -1,6 +1,6 @@
 export default global = {
     onSignIn: null,
     token: null,
-    cart: [],
-    searchArray: null
+    cartArray: [],
+    addProductToCart: null
 };

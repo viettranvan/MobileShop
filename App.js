@@ -45,7 +45,6 @@ const ListProductStack = createStackNavigator();
 const ListCategoryStack = createStackNavigator();
 
 
-
 const ListCollectionStackScreen = ({navigation,route}) => (
   <ListCollectionStack.Navigator >
     <ListCollectionStack.Screen name="List Collection Screen" component={ListCollectionScreen} />
@@ -78,6 +77,12 @@ const ChangePasswordScreen1 = ({navigation,route}) => {
 const ListProductkScreen1 = ({navigation,route}) => {
   return(
     <ListProductScreen navigation={navigation} route={route}/>
+  );
+}
+
+const MainTabScreen1 = ({navigation,route}) => {
+  return(
+    <MainTabScreen navigation={navigation} route={route} cartArray={global.cartArray}/>
   );
 }
 
@@ -160,7 +165,7 @@ const App = () => {
 
             {userToken != null ?(
             <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
-              <Drawer.Screen name='MainDrawer' component={MainTabScreen} />
+              <Drawer.Screen name='MainDrawer' component={MainTabScreen1} />
               <Drawer.Screen name='ListCollection' component={ListCollectionStackScreen}/>
               <Drawer.Screen name='ListProduct' component={ListProductkScreen1}/>
               <Drawer.Screen name='Detail' component={ProductDetailStackScreen}/>
