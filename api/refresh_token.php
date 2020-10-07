@@ -12,7 +12,7 @@
 	try{
 		$decoded = JWT::decode($token, $key, array('HS256'));
 		if($decoded->expire < time()){
-			echo 'HET_HAN';
+			echo 'EXPIRED_TOKEN'; // token hết hạn
 		}
 		else{
 			$jwt = getToken($decoded->email);
@@ -20,6 +20,6 @@
 		}
 	}
 	catch(Exception $e){
-		echo 'TOKEN_KHONG_HOP_LE';
+		echo 'INVALID_TOKEN'; // token không hợp lệ
 	}
 ?>

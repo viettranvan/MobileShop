@@ -9,6 +9,7 @@ import Header from './Header';
 import urls from '../urls';
 import global from '../global';
 import { TextInput } from 'react-native-paper';
+import refreshToken from '../api/js/refreshToken';
 
 
 // localhost
@@ -36,6 +37,9 @@ export default class Main extends Component{
                 topProduct:product
             }) 
         });
+
+        // sau 1 phut thi refreshToken
+        setInterval(refreshToken,1000*60);
     }
 
     render(){
