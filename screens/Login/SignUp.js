@@ -188,7 +188,6 @@ const SignUp = ({navigation}) => {
         })
         .then(res => res.text())
         .then(data => {
-            console.log(data)
             if(data == 'FAIL'){
                 ToastAndroid.show("Vui lòng điền đầy đủ thông tin",ToastAndroid.SHORT);
             }
@@ -252,7 +251,6 @@ const SignUp = ({navigation}) => {
                     blurOnSubmit={false}
                     onEndEditing={e => handleValidUser(e.nativeEvent.text)}
                     autoCapitalize='none'
-
                 />
                 {data.check_textInputChange ? 
                 <View>
@@ -468,14 +466,6 @@ const styles = StyleSheet.create({
     textSign: {
         fontSize: 18,
         fontWeight: 'bold'
-    },
-    textPrivate: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 20
-    },
-    color_textPrivate: {
-        color: 'grey'
     },
     errorMsg: {
         color: '#FF0000',

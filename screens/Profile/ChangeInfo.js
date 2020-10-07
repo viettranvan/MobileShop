@@ -209,11 +209,6 @@ const styles = StyleSheet.create({
     body: {
         flex:10,
     },
-    changeInfoContainer:{
-        backgroundColor: '#fff',
-        marginTop: 10,
-        padding: 10
-    },  
     text_footer: {
         color: '#05375a',
         fontSize: 18,
@@ -256,11 +251,5 @@ const styles = StyleSheet.create({
         paddingVertical: 30,
         margin:5,
         borderRadius:5
-    },
-    textInput: {
-        flex: 1,
-        marginTop: 0,
-        paddingLeft: 10,
-        color: '#05375a',
     },
 });

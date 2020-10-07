@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, Image, StyleSheet,Dimensions,FlatList } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from 'react-native-paper';
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Header from "../Header";
 import urls from '../../urls';
 
@@ -9,14 +10,11 @@ const URL_imagesProduct = urls[2].url;
 const product_detail_URL = urls[3].url;
 const searchURL = urls[12].url;
 
-import {  TouchableOpacity } from "react-native-gesture-handler";
 
 // format giá theo định dạng có dấu phẩy
 function formatPrice(price){
   return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
-
-
 
 export default class ListProduct extends Component {
   
@@ -105,7 +103,6 @@ export default class ListProduct extends Component {
   }
 
   render() {
-    // const {product} = this.props.route.params;
     const {data} = this.state;
     return (
       <View style={styles.container}>
@@ -139,7 +136,6 @@ export default class ListProduct extends Component {
           </View>
         )}
       </View>
-        
     );
   }
 }
@@ -197,7 +193,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'red'
   },
-
   inputSearch:{
     margin: 5,
     marginLeft: 30,

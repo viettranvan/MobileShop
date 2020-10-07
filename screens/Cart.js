@@ -3,12 +3,8 @@ import { View, Text, TouchableOpacity, ToastAndroid, Dimensions, StyleSheet, Ima
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import global from '../global';
 import urls from '../urls';
-
-import sp1 from '../Image/oppo-a11x_800x450.jpg';
-import { createIconSetFromFontello } from 'react-native-vector-icons';
-import { TextInput } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
 import getToken from '../api/js/getToken';
+
 const URL_imagesProduct = urls[2].url;
 const cartURL = urls[14].url;  
 
@@ -56,7 +52,6 @@ class Cart extends Component{
     }
 
     renderProduct(product){
-        const {soluong} = this.state;
         return(
             <View style={styles.product}>
                 <Image 
@@ -70,7 +65,6 @@ class Cart extends Component{
                     </TouchableOpacity>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                         <Text style={styles.txtName}>{product.name}</Text>
-                        
                     </View>
                     <Text style={styles.txtSmallDescription}>{product.small_description} vnd</Text>
                     <Text style={styles.txtPrice}>{formatPrice(product.price)} vnd</Text>
@@ -97,14 +91,12 @@ class Cart extends Component{
     }
 
     async onPayment(){
-
         try {
             const token = await getToken();
             const arrayDetail = this.props.cartArray.map((e,index) => ({
                 id_product: e.id_product,
                 quantity: 1
             }))
-            console.log(token,arrayDetail);
             const result = await fetch(cartURL,
             {   
                 method: 'POST',
@@ -117,7 +109,6 @@ class Cart extends Component{
             .then(res => res.text())
 
             if(result === 'INSERT_SUCCESSFULLY'){
-                console.log("thêm thành công");
                 this.setState({clearData:true,isEmptyPrice:true});
                 global.cartArray = [];
                 ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
@@ -128,8 +119,6 @@ class Cart extends Component{
         } catch (error) {
             console.log(error);
         }
-        
-
     }
 
     totalPrice(){
@@ -153,11 +142,6 @@ class Cart extends Component{
                     <Text style={styles.headerTitle}>Giỏ hàng</Text>
                     <View style={{paddingRight:15}}/>
                 </View>
-
-                <Button
-                    title='log'
-                    onPress={()=> console.log(this.state.soluong)}
-                />
             
                 <View style={{flex:10}}>
                     <FlatList
@@ -236,11 +220,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginLeft: 20,
     },
-    numberOfProduct: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly'
-    },
     txtName: {
         paddingLeft: 20,
         color: '#A7A7A7',
@@ -271,31 +250,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginLeft: width/2 -30
     },
-    border: {
-        borderWidth: 0.5,
-        height: 20,
-        width: 20,
-        justifyContent:'center',
-        alignSelf: 'center',
-        alignItems:  'center'
-    },
     deleteToCart:{
         alignItems:'flex-end',
         marginLeft: width/2 + 20
     }
 });
-
-            // quantity: soluong.length - 1 == this.props.cartArray.length ? (parseInt(soluong[index+1].quantity) > 1 ? parseInt(soluong[index+1].quantity) : 1) : 1
-
-{/* <View style={styles.numberOfProduct}> */}
-                            {/* <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct(product.id_product)}> */}
-                                {/* giảm số lượng */}
-                                {/* <Text>-</Text>  */}
-                            {/* </TouchableOpacity> */}
-                            {/* số lượng sản phẩm */}
-                            {/* <Text style={{fontSize:20}}>1</Text> */}
-                            {/* <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct(product.id_product)}> */}
-                                {/* Tăng số lượng */}
-                                {/* <Text>+</Text> */}
-                            {/* </TouchableOpacity> */}
-                        {/* </View> */}

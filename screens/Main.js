@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
-import {ScrollView, View,StyleSheet,Dimensions, Button, FlatList} from 'react-native';
+import { View,StyleSheet,Dimensions, Button, FlatList} from 'react-native';
+import { TextInput } from 'react-native-paper';
 
 import CollectionScreen from './Product/Collection';
 import CategoryScreen from './Product/Category';
 import TopProductScreen from './Product/TopProduct';
-
 import Header from './Header';
 import urls from '../urls';
 import global from '../global';
-import { TextInput } from 'react-native-paper';
 import refreshToken from '../api/js/refreshToken';
-
 
 // localhost
 const URL = urls[0].url;
@@ -37,7 +35,6 @@ export default class Main extends Component{
                 topProduct:product
             }) 
         });
-
         // sau 1 phut thi refreshToken
         setInterval(refreshToken,1000*60);
     }
@@ -68,10 +65,6 @@ export default class Main extends Component{
                         onFocus={()=> this.props.navigation.navigate("Search")}
                     />
                 </View>
-                <Button 
-                    title='log'
-                    onPress={() => console.log('Main',global.cartArray)}
-                />
                 <FlatList
                     data={screens} // array muốn render
                     renderItem={({ item }) => item.screen}

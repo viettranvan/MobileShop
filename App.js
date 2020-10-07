@@ -1,5 +1,5 @@
 
-import React,{Component,useEffect} from 'react';
+import React,{useEffect} from 'react';
 import { StyleSheet, View,StatusBar, Button} from 'react-native';
 import {
   NavigationContainer, 
@@ -101,16 +101,13 @@ const App = () => {
   const [userToken, setUserToken] = React.useState(null);
 
   useEffect(()=>{
-    console.log('APP');
     getToken()
     .then(token => checkLogin(token))
     .then(res => {
-      console.log(res.token);
-      console.log(res.user);
       global.onSignIn = res.user;
       setUserToken(res.token)
     })
-    .catch(err => console.log('LOI:::',err))
+    .catch(err => console.log(err))
   })
 
   const initialLoginState = {

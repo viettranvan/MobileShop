@@ -1,4 +1,4 @@
-import React, {Component,useEffect} from 'react';
+import React from 'react';
 import {View,  Text, StyleSheet, TouchableOpacity, TextInput ,ToastAndroid} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -12,10 +12,8 @@ const login_URL = urls[5].url;
 
 
 const SignIn = ( {navigation} ) =>{
-
     
     const { signIn } = React.useContext(AuthContext);
-
     const [data, setData] = React.useState({
         username: '',
         password: '',
@@ -49,7 +47,6 @@ const SignIn = ( {navigation} ) =>{
     }
 
     const handlePasswordChange = (val) => {
-        
         if(val.length >= 8 ){
             setData({
                 ...data,
@@ -161,7 +158,6 @@ const SignIn = ( {navigation} ) =>{
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             const {user,fail,token} = data;
             if(fail == 'LOGIN_FAIL'){
                 ToastAndroid.show("Tên đăng nhập hoặc mật khẩu không chính xác!",ToastAndroid.SHORT);
@@ -172,10 +168,8 @@ const SignIn = ( {navigation} ) =>{
                 saveToken(token);
                 return signIn();
             }
-
         })
         .catch(err => console.log(err))
-
     }
     
 
@@ -300,13 +294,6 @@ const styles = StyleSheet.create({
         borderBottomColor: '#f2f2f2',
         paddingBottom: 5
     },
-    actionError: {
-        flexDirection: 'row',
-        marginTop: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#FF0000',
-        paddingBottom: 5
-    },
     textInput: {
         flex: 1,
         marginTop: 0,
@@ -333,15 +320,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
-    textSignUp: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'blue',
-        textDecorationLine: 'underline',
-    },
-    singUp:{
-        flexDirection: 'row',
-        marginTop: 20,
-    },
+ 
 
   });

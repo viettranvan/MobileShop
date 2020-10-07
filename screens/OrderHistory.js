@@ -50,11 +50,6 @@ export default class OrderHistory extends Component {
           <View style={{paddingRight:15}}/>
         </View>
 
-        <Button
-          title='log'
-          onPress={() => console.log(order_history)}
-        />
-
         <View style={styles.body}>
           <ScrollView>
             {order_history.map(data => (
@@ -93,7 +88,6 @@ const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
   wrapper: { 
     flex: 1, 
-    // backgroundColor: "#fff" 
   },
   header: {
     flex: 1,
@@ -113,7 +107,6 @@ const styles = StyleSheet.create({
   },
   body: { 
     flex: 10, 
-    // backgroundColor: "red" 
   },
   orderRow: {
     height: width / 3,
@@ -127,59 +120,3 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
 });
-{/* <View style={styles.orderRow}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>ID đơn hàng:</Text>
-                  <Text style={{ color: '#2ABB9C' }}>ORD001</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Thời gian đặt:</Text>
-                  <Text style={{ color: '#C21C70' }}>2017-04-19 08:30:08</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Trạng thái:</Text>
-                  <Text style={{ color: '#2ABB9C' }}>Pending</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Tổng:</Text>
-                  <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>4.000.000 vnd</Text>
-              </View>
-            </View>
-
-            <View style={styles.orderRow}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>ID đơn hàng:</Text>
-                  <Text style={{ color: '#2ABB9C' }}>ORD001</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Thời gian đặt:</Text>
-                  <Text style={{ color: '#C21C70' }}>2017-04-19 08:30:08</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Trạng thái:</Text>
-                  <Text style={{ color: '#2ABB9C' }}>Pending</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Tổng:</Text>
-                  <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>4.000.000 vnd</Text>
-              </View>
-            </View>
-
-            <View style={styles.orderRow}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>ID đơn hàng:</Text>
-                  <Text style={{ color: '#2ABB9C' }}>ORD001</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Thời gian đặt:</Text>
-                  <Text style={{ color: '#C21C70' }}>2017-04-19 08:30:08</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Trạng thái:</Text>
-                  <Text style={{ color: '#2ABB9C' }}>Pending</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#9A9A9A', fontWeight: 'bold' }}>Tổng:</Text>
-                  <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>4.000.000 vnd</Text>
-              </View>
-            </View> */}

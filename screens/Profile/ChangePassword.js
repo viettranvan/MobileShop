@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView, TextInput, ToastAndroid} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, ToastAndroid} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -64,7 +64,6 @@ export default class ChangeInfo extends Component{
                     })
                     .then(res => res.text())
                     .then(data => {
-                        console.log(data);
                         if(data == 'INCORRECT_PASSWORD'){
                             ToastAndroid.show('Mật khẩu không chính xác',ToastAndroid.SHORT);
                         }
@@ -187,7 +186,6 @@ export default class ChangeInfo extends Component{
 const styles = StyleSheet.create({
     wrapper: { 
         flex: 1, 
-        // backgroundColor: "#fff" 
     },
     header: {
     flex: 1,
