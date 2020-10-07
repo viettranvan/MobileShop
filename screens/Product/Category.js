@@ -8,32 +8,21 @@ const images_type_URL = urls[1].url;
 const list_productURL = urls[11].url;
 
 export default class Category extends Component{
-    gotoListProduct(){
-        fetch(list_productURL)
-        .then(res => res.json())
-        .then(data => {
-            const {product} = data;
-            this.props.navigation.navigate('ListProduct',{product: product});
-        })
-        
-    }
+    
 
     render(){
         const {types} = this.props;
         return(
             <View style={styles.wrapper}>
-                <View style={{flex: 1,justifyContent: 'center'}}>
-                    <Text style={styles.textStyle}>Danh mục sản phẩm</Text>
-                </View>
                 <View style={{flex:6}}>
                     <Swiper showsPagination width={imageWidth} height={imageHeight}>
                         {types.map( e => (
-                            <TouchableOpacity onPress={() => this.gotoListProduct()} key={e.id_type}>
+                            <View key={e.id_type}>
                                 <Image 
                                     style={styles.imageStyle}
                                     source={{uri: images_type_URL + e.image}} // đổ dữ liệu trả về từ server vào swiper
                                 />
-                            </TouchableOpacity>
+                            </View>
                         ))}
                     </Swiper>
                 </View>

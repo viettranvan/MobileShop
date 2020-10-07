@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View,StyleSheet,Dimensions, Button, FlatList} from 'react-native';
+import { View,StyleSheet,Dimensions, FlatList,  Button} from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 import CollectionScreen from './Product/Collection';
@@ -65,6 +65,7 @@ export default class Main extends Component{
                         onFocus={()=> this.props.navigation.navigate("Search")}
                     />
                 </View>
+                
                 <FlatList
                     data={screens} // array muốn render
                     renderItem={({ item }) => item.screen}

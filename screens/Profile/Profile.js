@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import { Avatar } from 'react-native-paper'; 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import avatar from '../../Image/avartar.jpg';
+import avatar from '../../Image/main-logo.jpg';
 import global from '../../global';
 
 function formatBirthday(birthday){

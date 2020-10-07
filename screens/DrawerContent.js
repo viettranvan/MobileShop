@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switch, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import avatar from '../Image/avartar.jpg';
+import avatar from '../Image/main-logo.jpg';
 import global from '../global';
 import saveToken from '../api/js/saveToken';
 
@@ -30,24 +30,11 @@ export default function DrawerContent(props){
                                 size= {50}
                             />
                             <View style={{marginLeft: 15,flexDirection: 'column'}}>
-                                <Title style={styles.title}>Củ Chuối</Title>
-                                <Caption style={styles.caption}>Bé xíu</Caption>
+                                <Title style={styles.title}>{global.onSignIn.fullname}</Title>
+                                <Caption style={styles.caption}>{global.onSignIn.username}</Caption>
                             </View>
                         </View>
                         {/* end avarar */}
-
-                        {/* theo dõi đăng ký */}
-                        <View style={styles.row}>
-                            <View style={styles.section}>
-                                <Paragraph style={styles.paragraph, styles.caption}>80</Paragraph>
-                                <Caption style={styles.caption}> thoe dỗi</Caption>    
-                            </View>
-                            <View style={styles.section}>
-                                <Paragraph style={styles.paragraph, styles.caption}>100</Paragraph>
-                                <Caption style={styles.caption}> Đăng ký</Caption>    
-                            </View>
-                        </View>
-                        {/* end theo dõi đăng ký */}
                     </View>
                     {/* end User */}
 
@@ -74,13 +61,13 @@ export default function DrawerContent(props){
                             label="Lịch sử mua hàng"
                             onPress={() => {props.navigation.navigate("OrderHistory")}}
                         />
-                        <DrawerItem
+                        {/* <DrawerItem
                             icon={ ({color, size}) => (
                                 <Icon name="settings-outline" color = {color} size = {size} />
                             )}
                             label="Setting"
                             onPress={() => {}}
-                        />
+                        /> */}
                         <DrawerItem
                             icon={ ({color, size}) => (
                                 <Icon name="account-check-outline" color = {color} size = {size} />
@@ -124,6 +111,7 @@ const styles = StyleSheet.create({
     },
     userInfoSection: {
         paddingLeft: 20,
+        marginBottom: 50
     },
     title: {
         fontSize: 16,

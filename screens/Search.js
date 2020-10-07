@@ -120,7 +120,6 @@ class Search extends Component {
                         placeholder='Bạn muốn mua điện thoại gì?'
                         onChangeText={val => this._onChangeText(val)}
                         onSubmitEditing={()=>this.onSearch()}
-                        autoFocus={true}
                     />
                 </View>
 
