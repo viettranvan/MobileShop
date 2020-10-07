@@ -14,21 +14,32 @@ $token = $obj['token'];
 try{
 	$decoded = JWT::decode($token, $key, array('HS256'));
 	if($decoded->expire < time()){
-		echo 'HET_HAN';
+		echo 'EXPIRED_TOKEN';
 	}
 	else{
 		$username = $decoded->email;
-		$sql = "SELECT b.id_bill, b.date_order, b.status, b.total FROM bill b INNER JOIN users u ON u.id_user=b.id_user where u.username ='$username'";
+		$sql = "SELECT ord.id_bill, ord.date_order, ord.status, ord.total
+				FROM order_history ord INNER JOIN users u ON u.id_user=ord.id_user 
+				where u.username ='$username'";
 		$result = $mysqli->query($sql);
-		while ($row = $result->fetch_object()){
-		    $bill[] = $row;
+
+		$rowcount=mysqli_num_rows($result);
+		if($rowcount == 0){
+			// echo '';
+			$none = 'EMPTY';
+			print_r(json_encode($none));
 		}
-		print_r(json_encode($bill));
+		else{
+			while ($row = $result->fetch_object()){
+		   		$bill[] = $row;
+			}
+			print_r(json_encode($bill));
+		}
 	}
 }
 
 catch(Exception $e){
-	echo 'LOI';
+	echo 'FAIL';
 }
 
 

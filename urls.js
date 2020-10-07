@@ -65,6 +65,16 @@ const urls = [
         index: 12,
         name: 'searchURL',
         url: localhost + 'MobileShop/api/search.php'
+    },
+    {
+        index: 13,
+        name: 'order_historyURL',
+        url: localhost + 'MobileShop/api/order_history.php'
+    },
+    {
+        index: 14,
+        name: 'cartURL',
+        url: localhost + 'MobileShop/api/cart.php'
     }
 ]
 

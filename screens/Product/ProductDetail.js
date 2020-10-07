@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,  Text, Dimensions, StyleSheet, Image,TouchableOpacity, Picker, FlatList} from 'react-native';
+import {View,  Text, Dimensions, StyleSheet, Image,TouchableOpacity, Picker, FlatList, ToastAndroid} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 import urls from '../../urls';
@@ -20,18 +20,21 @@ export default class ProductDetail extends Component{
     }
   }
 
-  showColor = (value) =>{
-    // alert(value);
-    this.setState({
-      selectedColor: value
-    });
-  }
   addToCart(){
+    var flag = false;
     const {product_detail} = this.props.route.params;
     const cartArray = global.cartArray;
-    console.log("add product");
-    global.cartArray =  cartArray.concat(product_detail);
-    console.log(global.cartArray);
+    {global.cartArray.map(e=>{
+      if(e.id_product == product_detail[0].id_product){
+        flag = true; // sản phẩm đã có trong giỏ hàng r thì k thêm nữa
+      }
+      return flag;
+    })}
+
+    if(!flag){
+      global.cartArray =  cartArray.concat(product_detail);  
+    }
+    ToastAndroid.show("Thêm sản phẩm vào giỏ hàng thành công",ToastAndroid.SHORT);
   }
 
 

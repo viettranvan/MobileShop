@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions, StyleSheet, Image,Button,  FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, ToastAndroid, Dimensions, StyleSheet, Image,Button, FlatList,Alert } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import global from '../global';
 import urls from '../urls';
 
 import sp1 from '../Image/oppo-a11x_800x450.jpg';
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+import { TextInput } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
+import getToken from '../api/js/getToken';
 const URL_imagesProduct = urls[2].url;
+const cartURL = urls[14].url;  
 
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -15,28 +20,43 @@ function formatPrice(price){
     return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 const product_detail_URL = urls[3].url;
-
+var n = 2;
 class Cart extends Component{
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            numOfProduct: 1,
+            data: [],
+            clearData: false,
+            isEmptyPrice: false,
         }
     }
     
-    reduceProduct(){
-        if(this.state.numOfProduct > 1){
-            this.setState({numOfProduct: this.state.numOfProduct - 1})
-        }
-    }
-
-    increaseProduct(){
-        this.setState({numOfProduct: this.state.numOfProduct + 1})
+    onDelete(id){
+        var {cartArray} = this.props;
+        Alert.alert(
+            'Thông báo',
+            'Xác nhận xóa sản phẩm khỏi giỏ hàng ?',
+            [
+                { text: 'Không', style: 'cancel' },
+                { text: 'Đồng ý', onPress: () => {
+                    var n;
+                    cartArray.map((e,index) => {
+                        if(e.id_product == id){
+                            n = index;
+                            return n;
+                        }
+                    })
+                    cartArray.splice(n,1);
+                    this.props.navigation.navigate('Cart');
+                    ToastAndroid.show("Xóa thành công",ToastAndroid.SHORT);
+                }}
+            ]
+        );
     }
 
     renderProduct(product){
-        
+        const {soluong} = this.state;
         return(
             <View style={styles.product}>
                 <Image 
@@ -44,24 +64,18 @@ class Cart extends Component{
                     style={styles.productImage} 
                 />
                 <View style={styles.mainRight}>
+                    <TouchableOpacity onPress={() => this.onDelete(product.id_product)} style={styles.deleteToCart}>
+                        {/* Xóa khỏi giỏ hàng */}
+                        <Text style={{  color: '#969696', fontSize:20,fontWeight:'bold' }}>X</Text>
+                    </TouchableOpacity>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                         <Text style={styles.txtName}>{product.name}</Text>
-                        <TouchableOpacity>
-                            <Text style={{  color: '#969696' }}>X</Text>
-                        </TouchableOpacity>
+                        
                     </View>
                     <Text style={styles.txtSmallDescription}>{product.small_description} vnd</Text>
                     <Text style={styles.txtPrice}>{formatPrice(product.price)} vnd</Text>
+                    
                     <View style={styles.productController}>
-                        <View style={styles.numberOfProduct}>
-                            <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct()}>
-                                <Text>-</Text>
-                            </TouchableOpacity>
-                            <Text style={{fontSize:20}}>{this.state.numOfProduct}</Text>
-                            <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct()}>
-                                <Text>+</Text>
-                            </TouchableOpacity>
-                        </View>
                         <TouchableOpacity style={styles.showDetailContainer} onPress={()=> this.gotoDetail(product.id_product)}>
                             <Text style={styles.txtShowDetail}>Chi tiết</Text>
                         </TouchableOpacity>
@@ -69,15 +83,6 @@ class Cart extends Component{
                 </View>
             </View>
         );
-    }
-
-    totalPrice(){
-        const {cartArray} = this.props;
-        var kq = 0;
-        cartArray.map(e => {
-            kq += parseFloat(e.price) ;
-        })
-        return kq;
     }
 
     gotoDetail(id){
@@ -91,8 +96,54 @@ class Cart extends Component{
         })
     }
 
-    render(){
+    async onPayment(){
+
+        try {
+            const token = await getToken();
+            const arrayDetail = this.props.cartArray.map((e,index) => ({
+                id_product: e.id_product,
+                quantity: 1
+            }))
+            console.log(token,arrayDetail);
+            const result = await fetch(cartURL,
+            {   
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({ token, arrayDetail })
+            })
+            .then(res => res.text())
+
+            if(result === 'INSERT_SUCCESSFULLY'){
+                console.log("thêm thành công");
+                this.setState({clearData:true,isEmptyPrice:true});
+                global.cartArray = [];
+                ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
+            }
+            else{
+                console.log("Thêm thất bại");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        
+
+    }
+
+    totalPrice(){
         const {cartArray} = this.props;
+        var kq = 0;
+        cartArray.map(e => {
+            kq += parseFloat(e.price) ;
+        })
+        return kq;
+    }
+    
+    render(){
+        var {cartArray} = this.props;
+        const {clearData,data,isEmptyPrice} = this.state;
         return (
             <View style={styles.wrapper}>
                 <View style={styles.header}>
@@ -103,16 +154,21 @@ class Cart extends Component{
                     <View style={{paddingRight:15}}/>
                 </View>
 
+                <Button
+                    title='log'
+                    onPress={()=> console.log(this.state.soluong)}
+                />
+            
                 <View style={{flex:10}}>
                     <FlatList
-                        data={cartArray} // array muốn render
+                        data={clearData ? data : cartArray} // array muốn render
                         renderItem={({ item }) => this.renderProduct(item)}
                         keyExtractor={(item) => item.id_product}
                     />
-                    <TouchableOpacity style={styles.checkoutButton}>
-                        <Text style={styles.checkoutTitle}>TỔNG 
+                    <TouchableOpacity style={styles.checkoutButton} onPress={() => this.onPayment()}>
+                    <Text style={styles.checkoutTitle}>TỔNG 
                         <Text style={{color:'#c70c0c', fontSize: 16}}> {formatPrice(this.totalPrice())} </Text>
-                        vnd THANH TOÁN NGAY </Text>
+                        vnd ĐẶT HÀNG NGAY </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -123,8 +179,8 @@ class Cart extends Component{
 export default Cart;
 
 const { width } = Dimensions.get('window');
-const imageWidth = width / 4;
-const imageHeight = (imageWidth * 452) / 361;
+const imageWidth = width / 3;
+const imageHeight = (imageWidth * 500) / 500;
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -177,7 +233,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     productController: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginLeft: 20,
     },
     numberOfProduct: {
         flex: 1,
@@ -211,7 +268,8 @@ const styles = StyleSheet.create({
     showDetailContainer: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        marginLeft: width/2 -30
     },
     border: {
         borderWidth: 0.5,
@@ -220,5 +278,24 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignSelf: 'center',
         alignItems:  'center'
+    },
+    deleteToCart:{
+        alignItems:'flex-end',
+        marginLeft: width/2 + 20
     }
 });
+
+            // quantity: soluong.length - 1 == this.props.cartArray.length ? (parseInt(soluong[index+1].quantity) > 1 ? parseInt(soluong[index+1].quantity) : 1) : 1
+
+{/* <View style={styles.numberOfProduct}> */}
+                            {/* <TouchableOpacity style={styles.border} onPress={() => this.reduceProduct(product.id_product)}> */}
+                                {/* giảm số lượng */}
+                                {/* <Text>-</Text>  */}
+                            {/* </TouchableOpacity> */}
+                            {/* số lượng sản phẩm */}
+                            {/* <Text style={{fontSize:20}}>1</Text> */}
+                            {/* <TouchableOpacity style={styles.border} onPress={() => this.increaseProduct(product.id_product)}> */}
+                                {/* Tăng số lượng */}
+                                {/* <Text>+</Text> */}
+                            {/* </TouchableOpacity> */}
+                        {/* </View> */}
