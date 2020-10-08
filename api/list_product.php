@@ -9,9 +9,7 @@
 	  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
 	  exit();
 	}
-	
-	// SELECT p.id_product,p.name as name, p.id_type as idType, t.name as nameType, p.price, p.small_description,p.full_description, i.link as productImage
-	// Perform query
+
 	$product = $mysqli -> query('
 		SELECT p.id_product,p.name as name, p.id_type as idType, t.name as nameType, p.price, p.small_description,p.full_description, i.link as productImage
 		FROM product p left join images i on p.id_product = i.id_product inner join product_type t on t.id_type = p.id_type

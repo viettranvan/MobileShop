@@ -8,7 +8,7 @@
 	// $id = 21;
 	$order_detail = $mysqli -> query('
 		SELECT *
-		FROM bill_detail b left join product p on b.id_product = p.id_product inner join images i on p.id_product = i.id_product 
+		FROM bill_detail b left join product p on b.id_product = p.id_product inner join images i on p.id_product = i.id_product inner join order_history o on b.id_bill = o.id_bill
 		WHERE b.id_bill = '.$id.'
 	');
 

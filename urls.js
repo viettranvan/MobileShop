@@ -75,7 +75,17 @@ const urls = [
         index: 14,
         name: 'cartURL',
         url: localhost + 'MobileShop/api/cart.php'
-    }
+    },
+    {
+        index: 15,
+        name: 'order_detailURL',
+        url: localhost + 'MobileShop/api/order_detail.php'
+    },
+    {
+        index: 16,
+        name: 'delete_orderURL',
+        url: localhost + 'MobileShop/api/delete_order.php'
+    },
 ]
 
 export default urls;

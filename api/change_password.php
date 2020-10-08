@@ -16,8 +16,8 @@
 		}
 		else{
 			$username = $decoded->email;
-			$password = $obj['password'];
-			$new_password = $obj['new_password'];
+			$password = md5($obj['password']);
+			$new_password = md5($obj['new_password']);
 
 			$get_password = $mysqli->query("SELECT * FROM users  WHERE username = '$username' AND password ='$password'");
 			$rowcount=mysqli_num_rows($get_password);

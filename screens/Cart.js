@@ -151,7 +151,7 @@ class Cart extends Component{
                     />
                     <TouchableOpacity style={styles.checkoutButton} onPress={() => this.onPayment()}>
                     <Text style={styles.checkoutTitle}>TỔNG 
-                        <Text style={{color:'#c70c0c', fontSize: 16}}> {formatPrice(this.totalPrice())} </Text>
+                        <Text style={{color:'#c70c0c', fontSize: 16}}> {isEmptyPrice ? 0 : formatPrice(this.totalPrice())} </Text>
                         vnd ĐẶT HÀNG NGAY </Text>
                     </TouchableOpacity>
                 </View>
@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'right',
         fontStyle: 'italic'
-
     },
     showDetailContainer: {
         flex: 1,

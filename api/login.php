@@ -10,7 +10,7 @@
 	$obj = json_decode($json, true);
 
 	$username = $obj['username'];
-	$password = $obj['password'];
+	$password = md5($obj['password']);
 	$sql = "SELECT * FROM users WHERE username='$username' and password = '$password'";
 	// $sql = "SELECT * FROM users WHERE username='bocapquyen' and password = 'vanquyen123'";
 

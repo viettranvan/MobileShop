@@ -28,8 +28,8 @@ $obj = json_decode($json, true);
 
 $fullname = formatName($obj['fullname']);
 $username = validData($obj['username']);
-$password = validData($obj['password']);
-$repass = validData($obj['confirm_password']);
+$password = validData(md5($obj['password']));
+$repass = validData(md5($obj['confirm_password']));
 $birthday = formatBirthday($obj['birthday']);
 // $birthday = $obj['birthday'];
 $address = $obj['address'];

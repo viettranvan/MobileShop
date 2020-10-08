@@ -20,6 +20,7 @@ import ListProductScreen from './screens/Product/ListProduct';
 import ChangeInfoScreen from './screens/Profile/ChangeInfo';
 import ChangePasswordScreen from './screens/Profile/ChangePassword';
 
+import OrderDetailScreen from './screens/OrderDetail';
 import SupportScreen from './screens/Support';
 import RootStackScreen from './screens/RootStack';
 
@@ -60,6 +61,7 @@ const MainTabScreenComponent = ({navigation,route}) => {
     <MainTabScreen navigation={navigation} route={route} cartArray={global.cartArray}/>
   );
 }
+
 
 const App = () => {
   const  [isDarkTheme, setIsDarkTheme] = React.useState(false);
@@ -129,9 +131,10 @@ const App = () => {
               <Drawer.Screen name='MainDrawer' component={MainTabScreenComponent} />
               <Drawer.Screen name='ListProduct' component={ListProductkScreenComponent}/>
               <Drawer.Screen name='Detail' component={ProductDetailkScreenComponent}/>
-              <Drawer.Screen name='Support' component={SupportScreen} />
               <Drawer.Screen name='ChangeInfo' component={ChangeInfoScreenComponent} />
               <Drawer.Screen name='ChangePassword' component={ChangePasswordScreenComponent} />
+              <Drawer.Screen name='Support' component={SupportScreen} />
+              <Drawer.Screen name='OrderDetail' component={OrderDetailScreen} />
 
             </Drawer.Navigator>
             ):

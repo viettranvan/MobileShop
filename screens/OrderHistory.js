@@ -5,6 +5,8 @@ import urls from '../urls';
 import getToken from '../api/js/getToken';
 
 const order_historyURL = urls[13].url;
+const order_detailURL = urls[15].url;
+
 
 // format giá theo định dạng có dấu phẩy
 function formatPrice(price){
@@ -15,11 +17,15 @@ export default class OrderHistory extends Component {
   constructor(props){
     super(props);
     this.state= {
-      order_history: []
+      order_history: [],
     }
   }
 
   componentDidMount(){
+    this.getData();
+  }
+
+  getData(){
     getToken()
     .then(token => {
       fetch(order_historyURL,
@@ -67,6 +73,29 @@ export default class OrderHistory extends Component {
       ))
   }
 
+  gotoOrederDetail(id){
+    console.log(id);
+    fetch(order_detailURL+"?id="+id)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      const {bill_detail} = data;
+      this.props.navigation.navigate("OrderDetail",{bill_detail: bill_detail});
+    })
+  }
+  
+  totalPrice(){
+    const {cartArray} = this.props;
+    var kq = 0;
+    cartArray.map(e => {
+        kq += parseFloat(e.price) ;
+    })
+    return kq;
+  }
+  reLoadData(){
+    console.log("reload data");
+    this.getData();
+  }
   render() {
     const {order_history} = this.state;
     return (
@@ -76,7 +105,9 @@ export default class OrderHistory extends Component {
                 <MaterialCommunityIcons name="menu-open" color='white' size={40} />
             </TouchableOpacity>
           <Text style={styles.headerTitle}>Lịch sử đặt hàng</Text>
-          <View style={{paddingRight:15}}/>
+          <TouchableOpacity onPress={() => this.reLoadData()}>
+            <MaterialCommunityIcons name="reload" color='white' size={40} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.body}>
@@ -105,7 +136,7 @@ export default class OrderHistory extends Component {
                       <Text style={{ color: '#C21C70', fontWeight: 'bold' }}>{formatPrice(data.total)} vnd</Text>
                   </View>
                   <View style={{alignSelf:'flex-end'}}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.gotoOrederDetail(data.id_bill)}>
                       <Text style={{color:'blue', fontStyle:'italic'}}>Chi Tiết</Text>
                     </TouchableOpacity>
                   </View>

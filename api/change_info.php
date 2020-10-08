@@ -43,15 +43,10 @@
 			else{
 				echo 'KHONG_THANH_CONG';
 			}
-
-
 		}
 	}
 
 	catch(Exception $e){
 		echo 'LOI';
 	}
-
-
-
 ?>
