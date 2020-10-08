@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity,Button,FlatList,Image, ToastAndroid} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity,Button,FlatList,Image, ToastAndroid, Alert} from 'react-native';
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import urls from '../urls';
 
@@ -46,21 +46,30 @@ class OrderDetail extends Component {
         return kq;
     }
     deleteOrder(id){
-        fetch(delete_orderURL,{
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            },
-            body: JSON.stringify({ id })
-        })
-        .then(res => res.text())
-        .then(data => {
-            if(data == "DELETE_SUCCESS"){
-                this.props.navigation.navigate("OrderHistory");
-                ToastAndroid.show("Hủy đơn hàng thành công",ToastAndroid.SHORT);
-            }
-        })
+        Alert.alert(
+            'Thông báo',
+            'Xác nhận hủy đơn hàng ?',
+            [
+                { text: 'Không', style: 'cancel' },
+                { text: 'Đồng ý', onPress: () => {
+                    fetch(delete_orderURL,{
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json'
+                        },
+                        body: JSON.stringify({ id })
+                    })
+                    .then(res => res.text())
+                    .then(data => {
+                        if(data == "DELETE_SUCCESS"){
+                            this.props.navigation.navigate("OrderHistory");
+                            ToastAndroid.show("Hủy đơn hàng thành công",ToastAndroid.SHORT);
+                        }
+                    })
+                }}
+            ]
+        );
     }
     gotoDetail(id){
         fetch(product_detail_URL+"?id="+id)
@@ -87,10 +96,6 @@ class OrderDetail extends Component {
               <Text style={styles.headerTitle}>Chi tiết đơn hàng</Text>
               <View/>
             </View>
-                <Button
-                    title='log'
-                    onPress={() => console.log(bill_detail[0].date_order)}
-                />
             <View style={{flex:10}}>  
                 <FlatList
                     data={bill_detail} // array muốn render

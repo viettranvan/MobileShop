@@ -74,11 +74,9 @@ export default class OrderHistory extends Component {
   }
 
   gotoOrederDetail(id){
-    console.log(id);
     fetch(order_detailURL+"?id="+id)
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       const {bill_detail} = data;
       this.props.navigation.navigate("OrderDetail",{bill_detail: bill_detail});
     })
@@ -93,7 +91,6 @@ export default class OrderHistory extends Component {
     return kq;
   }
   reLoadData(){
-    console.log("reload data");
     this.getData();
   }
   render() {

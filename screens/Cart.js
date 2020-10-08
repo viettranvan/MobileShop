@@ -91,6 +91,8 @@ class Cart extends Component{
     }
 
     async onPayment(){
+        
+
         try {
             const token = await getToken();
             const arrayDetail = this.props.cartArray.map((e,index) => ({
@@ -107,15 +109,25 @@ class Cart extends Component{
                 body: JSON.stringify({ token, arrayDetail })
             })
             .then(res => res.text())
-
-            if(result === 'INSERT_SUCCESSFULLY'){
-                this.setState({clearData:true,isEmptyPrice:true});
-                global.cartArray = [];
-                ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
-            }
-            else{
-                console.log("Thêm thất bại");
-            }
+            
+            Alert.alert(
+                'Thông báo',
+                'Xác nhận xóa sản phẩm khỏi giỏ hàng ?',
+                [
+                    { text: 'Không', style: 'cancel' },
+                    { text: 'Đồng ý', onPress: () => {
+                        if(result === 'INSERT_SUCCESSFULLY'){
+                            this.setState({clearData:true,isEmptyPrice:true});
+                            global.cartArray = [];
+                            ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
+                        }
+                        else{
+                            console.log("Thêm thất bại");
+                        }
+                    }}
+                ]
+            );
+            
         } catch (error) {
             console.log(error);
         }
@@ -143,17 +155,28 @@ class Cart extends Component{
                     <View style={{paddingRight:15}}/>
                 </View>
             
+
                 <View style={{flex:10}}>
+                {cartArray.length > 0 ? (
                     <FlatList
                         data={clearData ? data : cartArray} // array muốn render
                         renderItem={({ item }) => this.renderProduct(item)}
                         keyExtractor={(item) => item.id_product}
                     />
-                    <TouchableOpacity style={styles.checkoutButton} onPress={() => this.onPayment()}>
-                    <Text style={styles.checkoutTitle}>TỔNG 
-                        <Text style={{color:'#c70c0c', fontSize: 16}}> {isEmptyPrice ? 0 : formatPrice(this.totalPrice())} </Text>
-                        vnd ĐẶT HÀNG NGAY </Text>
-                    </TouchableOpacity>
+                ):(
+                    <View style={{justifyContent:'center', alignContent:'center',alignItems:'center'}}>
+                        <Text>Giỏ hàng rỗng</Text>
+                    </View>
+                )}
+                    
+                    {cartArray.length > 0 ? (
+                        <TouchableOpacity style={styles.checkoutButton} onPress={() => this.onPayment()}>
+                        <Text style={styles.checkoutTitle}>TỔNG 
+                            <Text style={{color:'#c70c0c', fontSize: 16}}> {isEmptyPrice ? 0 : formatPrice(this.totalPrice())} </Text>
+                            vnd ĐẶT HÀNG NGAY </Text>
+                        </TouchableOpacity>
+                    ):null}
+                    
                 </View>
             </View>
         );
