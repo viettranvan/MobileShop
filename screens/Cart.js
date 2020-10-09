@@ -91,8 +91,6 @@ class Cart extends Component{
     }
 
     async onPayment(){
-        
-
         try {
             const token = await getToken();
             const arrayDetail = this.props.cartArray.map((e,index) => ({
@@ -108,18 +106,19 @@ class Cart extends Component{
                 },
                 body: JSON.stringify({ token, arrayDetail })
             })
-            .then(res => res.text())
+            .then(res => res.json())
             
             Alert.alert(
                 'Thông báo',
-                'Xác nhận xóa sản phẩm khỏi giỏ hàng ?',
+                'Xác nhận đặt hàng ?',
                 [
                     { text: 'Không', style: 'cancel' },
                     { text: 'Đồng ý', onPress: () => {
-                        if(result === 'INSERT_SUCCESSFULLY'){
+                        if(result.message === 'INSERT_SUCCESSFULLY'){
                             this.setState({clearData:true,isEmptyPrice:true});
                             global.cartArray = [];
                             ToastAndroid.show("Đặt hàng thành công", ToastAndroid.SHORT);
+                            this.props.navigation.navigate("Cart");
                         }
                         else{
                             console.log("Thêm thất bại");
@@ -164,7 +163,7 @@ class Cart extends Component{
                         keyExtractor={(item) => item.id_product}
                     />
                 ):(
-                    <View style={{justifyContent:'center', alignContent:'center',alignItems:'center'}}>
+                    <View style={{justifyContent:'center', alignContent:'center',alignItems:'center', backgroundColor:'#fff'}}>
                         <Text>Giỏ hàng rỗng</Text>
                     </View>
                 )}

@@ -62,12 +62,12 @@ export default class ChangeInfo extends Component{
                         },
                         body: JSON.stringify({ token, password, new_password, confirm_password })
                     })
-                    .then(res => res.text())
+                    .then(res => res.json())
                     .then(data => {
-                        if(data == 'INCORRECT_PASSWORD'){
+                        if(data.message == 'INCORRECT_PASSWORD'){
                             ToastAndroid.show('Mật khẩu không chính xác',ToastAndroid.SHORT);
                         }
-                        else if(data == 'SUCCESS'){
+                        else if(data.message == 'SUCCESS'){
                             ToastAndroid.show('Đổi mật khẩu thành công',ToastAndroid.SHORT);
                             this.props.navigation.navigate('Profile');
                         }

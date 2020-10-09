@@ -70,7 +70,7 @@ export default class Test extends Component{
     }
 }
 
-const {width,height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const productWidth = (width - 50) / 2;
 const productHeight = (productWidth /500)*500;
 

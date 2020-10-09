@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity, ScrollView} from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import urls from '../urls';
 import getToken from '../api/js/getToken';
@@ -13,7 +13,6 @@ function formatPrice(price){
   return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 export default class OrderHistory extends Component {
-
   constructor(props){
     super(props);
     this.state= {
@@ -113,7 +112,7 @@ export default class OrderHistory extends Component {
               <View style ={{justifyContent: 'center',alignContent:'center',alignItems:'center', backgroundColor:'#fff'}}>
                 <Text>Lịch sử đặt hàng rỗng</Text>
               </View>
-            ) :(
+              ) :(
               order_history.map(data => (
                 <View style={styles.orderRow} key={data.id_bill}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -139,9 +138,7 @@ export default class OrderHistory extends Component {
                   </View>
                 </View>
                 ))
-            )
-            }
-            
+            )}
           </ScrollView>
         </View>
       </View>

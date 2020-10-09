@@ -31,7 +31,6 @@ $username = validData($obj['username']);
 $password = validData(md5($obj['password']));
 $repass = validData(md5($obj['confirm_password']));
 $birthday = formatBirthday($obj['birthday']);
-// $birthday = $obj['birthday'];
 $address = $obj['address'];
 $phoneNumber = $obj['phoneNumber'];
 $gender = $obj['gender'] == 0 ? "Nam" : "Nữ";
@@ -42,31 +41,37 @@ if($fullname != '' && $username != '' && $password != '' && $repass != ''){
 		$user_query = $mysqli->query($sql_user);
 		$rowcount=mysqli_num_rows($user_query);
 		if($rowcount == 1){
-			echo 'ACCOUNT_ALREADY_EXISTS';
+			// echo 'ACCOUNT_ALREADY_EXISTS';
+			$array = array('message'=>'ACCOUNT_ALREADY_EXISTS');
+			echo json_encode($array);
 		}
 		else{
 			if($password === $repass){
-			$sql = "INSERT INTO users(username, password, fullname,birthday ,phone_number, address, gender)
-					VALUES('$username', '$password', '$fullname', '$birthday', '$phoneNumber', '$address', '$gender')";
-			$result = $mysqli->query($sql);
-			if($result){
-				echo 'SUCCESS';
+				$sql = "INSERT INTO users(username, password, fullname,birthday ,phone_number, address, gender)
+						VALUES('$username', '$password', '$fullname', '$birthday', '$phoneNumber', '$address', '$gender')";
+				$result = $mysqli->query($sql);
+				if($result){
+					$array = array('message'=>'SUCCESS');
+					echo json_encode($array);
+				}
+				else{
+					$array = array('message'=>'FAIL_REGISTER');
+					echo json_encode($array);
+				}
 			}
 			else{
-				echo 'FAIL';
-			}
-			}
-			else{
-				echo 'CONFIRM_PASSWORD_FAIL';
+				$array = array('message'=>'CONFIRM_PASSWORD_FAIL');
+				echo json_encode($array);		
 			}
 		}
 	}
 	else{
-		echo 'FAIL';
+		$array = array('message'=>'FAIL');
+		echo json_encode($array);
 	}
-	
 }
 else{
-	echo 'FAIL';
+	$array = array('message'=>'FAIL');
+	echo json_encode($array);
 }	
 ?>

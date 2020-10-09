@@ -5,11 +5,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import{ AuthContext } from '../../components/context';
 import urls from '../../urls';
 import global from '../../global';
-
 import saveToken from '../../api/js/saveToken';
 
 const login_URL = urls[5].url;
-
 
 const SignIn = ( {navigation} ) =>{
     
@@ -171,7 +169,6 @@ const SignIn = ( {navigation} ) =>{
         })
         .catch(err => console.log(err))
     }
-    
 
     const eye = <Feather name='eye' size={25} color='grey' />
     const eye_off = <Feather name='eye-off' size={25} color='grey' />
@@ -320,6 +317,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
- 
-
   });

@@ -20,7 +20,6 @@ const product_detail_URL = urls[3].url;
 const searchURL = urls[12].url;
 
 class Search extends Component {
-
     gotoDetail(id){
         fetch(product_detail_URL+"?id="+id)
         .then(res => res.json())
@@ -130,7 +129,6 @@ class Search extends Component {
                         keyExtractor={(item,index) => index.toString()}
                     />
                 )}
-                
             </View>
         );
     }

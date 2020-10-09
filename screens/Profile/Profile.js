@@ -13,7 +13,6 @@ function formatBirthday(birthday){
     return result;
 }
 export default class Profile extends Component{
-
     constructor(props){
         super(props);
         const user = global.onSignIn;
@@ -92,7 +91,6 @@ export default class Profile extends Component{
                             <View style={styles.profile}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontWeight: 'bold' }}>Chỉnh sửa thông tin</Text>
-                                    {/* <Text style={{ color: '#2ABB9C' }}> ) </Text> */}
                                     <MaterialCommunityIcons name='chevron-right' size={16}/>
                                 </View>
                             </View>
@@ -101,7 +99,6 @@ export default class Profile extends Component{
                             <View style={styles.profile}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontWeight: 'bold' }}>Thay đổi mật khẩu</Text>
-                                    {/* <Text style={{ color: '#2ABB9C' }}> ) </Text> */}
                                     <MaterialCommunityIcons name='chevron-right' size={16}/>
                                 </View>
                             </View>

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity,Button,FlatList,Image, ToastAndroid, Alert} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity,FlatList,Image, ToastAndroid, Alert} from 'react-native';
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import urls from '../urls';
 
@@ -52,17 +52,12 @@ class OrderDetail extends Component {
             [
                 { text: 'Không', style: 'cancel' },
                 { text: 'Đồng ý', onPress: () => {
-                    fetch(delete_orderURL,{
+                    fetch(delete_orderURL+'?id=' + id,{
                         method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Accept: 'application/json'
-                        },
-                        body: JSON.stringify({ id })
                     })
-                    .then(res => res.text())
+                    .then(res => res.json())
                     .then(data => {
-                        if(data == "DELETE_SUCCESS"){
+                        if(data.message == "DELETE_SUCCESS"){
                             this.props.navigation.navigate("OrderHistory");
                             ToastAndroid.show("Hủy đơn hàng thành công",ToastAndroid.SHORT);
                         }

@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import {View,  Text, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Dimensions, Image} from 'react-native';
 import Swiper from 'react-native-swiper';
 import urls from '../../urls';
 
 const {width,height} = Dimensions.get("window");
 const images_type_URL = urls[1].url;
-const list_productURL = urls[11].url;
 
 export default class Category extends Component{
-    
-
     render(){
         const {types} = this.props;
         return(

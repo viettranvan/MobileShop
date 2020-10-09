@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import { View,StyleSheet,Dimensions, FlatList,  Button} from 'react-native';
+import { View,StyleSheet, FlatList} from 'react-native';
 import { TextInput } from 'react-native-paper';
-
 import CollectionScreen from './Product/Collection';
 import CategoryScreen from './Product/Category';
 import TopProductScreen from './Product/TopProduct';
@@ -13,7 +12,6 @@ import refreshToken from '../api/js/refreshToken';
 // localhost
 const URL = urls[0].url;
 export default class Main extends Component{
-    
     constructor(props){
         super(props);
         this.state = {
@@ -75,7 +73,6 @@ export default class Main extends Component{
         );
     }
 }
-const {height} = Dimensions.get("window");
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -95,7 +92,6 @@ const styles = StyleSheet.create({
         height: 40,
         marginRight: 40,
         marginLeft: 40,
-        
     },
     inputSearch:{
         margin: 5,

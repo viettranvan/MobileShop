@@ -10,14 +10,12 @@ const URL_imagesProduct = urls[2].url;
 const product_detail_URL = urls[3].url;
 const searchURL = urls[12].url;
 
-
 // format giá theo định dạng có dấu phẩy
 function formatPrice(price){
   return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 export default class ListProduct extends Component {
-  
   constructor(props){
     super(props);
     this.state = {
@@ -60,12 +58,12 @@ export default class ListProduct extends Component {
     fetch(searchURL+'?key=' + text )
     .then(res => res.json())
     .then(data => {
-        if(data.result == 'NO_RESULT_FOUND'){
-            this.setState({data: []})
-        }
-        else{
-            this.setState({data: data.product})
-        }
+      if(data.result == 'NO_RESULT_FOUND'){
+        this.setState({data: []})
+      }
+      else{
+        this.setState({data: data.product})
+      }
     })
     .catch(err => console.log(err))
   }
@@ -140,9 +138,8 @@ export default class ListProduct extends Component {
   }
 }
 
-const {width,height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const productWidth = (width -20) / 2;
-const productHeight = (productWidth /500)*500;
 
 const styles = StyleSheet.create({
   container:{

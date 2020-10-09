@@ -1,16 +1,9 @@
 import React, {Component} from 'react';
-import {View,Text,TouchableOpacity, Dimensions, StyleSheet,Button} from 'react-native';
+import {View,Text,TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TextInput } from 'react-native-paper';
-import urls from '../urls';
-import global from '../global';
-
-const searchURL = urls[12].url;
-
 
 const {height} = Dimensions.get("window");
 export default class Header extends Component{
-
     render(){
         return(
         <View style={{height: height/18, backgroundColor: '#608cd6'}}>

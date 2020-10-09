@@ -12,7 +12,8 @@
 	try{
 		$decoded = JWT::decode($token, $key, array('HS256'));
 		if($decoded->expire < time()){
-			echo 'HET_HAN';
+			$array = array('message'=>'EXPPIRED_TOKEN');
+			echo json_encode($array);	
 		}
 		else{
 			$username = $decoded->email;
@@ -23,21 +24,26 @@
 			$rowcount=mysqli_num_rows($get_password);
 			
 			if($rowcount == 0){
-				echo 'INCORRECT_PASSWORD';
+				$array = array('message'=>'INCORRECT_PASSWORD');
+				echo json_encode($array);
 			}
 			else{
 				$sql = "UPDATE users SET password='$new_password' WHERE username ='$username'";
 				$user = $mysqli->query($sql);
 				if($user){
-					echo 'SUCCESS';
+					$array = array('message'=>'SUCCESS');
+					echo json_encode($array);
 				}
 				else{
-					echo 'FAIL1';
+					// echo 'FAIL1';
+					$array = array('message'=>'FAIL1');
+					echo json_encode($array);
 				}
 			}
 		}
 	}
 	catch(Exception $e){
-		echo 'FAIL2';
+		$array = array('message'=>'FAIL2');
+		echo json_encode($array);
 	}
 ?>

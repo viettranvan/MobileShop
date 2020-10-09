@@ -61,7 +61,7 @@ export default class ChangeInfo extends Component{
         getToken()
         .then(token => {
             fetch(change_infoURL,{
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json'

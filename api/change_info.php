@@ -21,7 +21,8 @@
 	try{
 		$decoded = JWT::decode($token, $key, array('HS256'));
 		if($decoded->expire < time()){
-			echo 'HET_HAN';
+			$array = array('message'=>"EXPIRED_TOKEN");
+			echo json_encode($array);
 		}
 		else{
 			$username = $decoded->email;
@@ -41,12 +42,14 @@
 				print_r(json_encode($user));
 			}
 			else{
-				echo 'KHONG_THANH_CONG';
+				$array = array('message'=>"UPDATE_FAIL");
+				echo json_encode($array);
 			}
 		}
 	}
 
 	catch(Exception $e){
-		echo 'LOI';
+		$array = array('message'=>"FAIL");
+		echo json_encode($array);
 	}
 ?>

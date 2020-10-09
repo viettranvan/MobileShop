@@ -1,6 +1,5 @@
 import urls from '../../urls';
 const check_loginURL = urls[7].url;
-
 const checkLogin = (token) => (
     fetch(check_loginURL,
     {   

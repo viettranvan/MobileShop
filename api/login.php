@@ -12,7 +12,6 @@
 	$username = $obj['username'];
 	$password = md5($obj['password']);
 	$sql = "SELECT * FROM users WHERE username='$username' and password = '$password'";
-	// $sql = "SELECT * FROM users WHERE username='bocapquyen' and password = 'vanquyen123'";
 
 
 	$result = $mysqli->query($sql);

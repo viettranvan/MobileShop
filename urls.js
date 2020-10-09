@@ -1,4 +1,4 @@
-const localhost = 'http://192.168.2.105:8888/';
+const localhost = 'http://192.168.2.104:8888/';
 
 const urls = [
     {
@@ -85,7 +85,7 @@ const urls = [
         index: 16,
         name: 'delete_orderURL',
         url: localhost + 'MobileShop/api/delete_order.php'
-    },
+    }
 ]
 
 export default urls;

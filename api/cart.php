@@ -43,21 +43,13 @@ try{
 			$sql = "INSERT INTO bill_detail(id_bill,id_product, quantity, price) VALUES ($id_bill, $value[id_product], $value[quantity], $price)";
 			$mysqli->query($sql);
 		}
-		echo 'INSERT_SUCCESSFULLY';
+		// echo 'INSERT_SUCCESSFULLY';
+		$array = array('message'=>'INSERT_SUCCESSFULLY');
+		echo json_encode($array);
 	}
 }
 catch(Exception $e){
 	echo 'INVALID_TOKEN'; // token không hợp lệ
 }
 
-
-	/*
-	$array = json_decode('{
-			"idUser":1,
-			"arrayDetail": [
-				{ "id_product": 10, "quantity": 3 },
-				{ "id_product": 11, "quantity": 3 }
-			]
-		}');
-	*/
 ?>

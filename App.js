@@ -125,7 +125,6 @@ const App = () => {
           <StatusBar barStyle='light-content' hidden={false} />
           {/* <Header /> */}
           <NavigationContainer theme={theme}>
-
             {userToken != null ?(
             <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
               <Drawer.Screen name='MainDrawer' component={MainTabScreenComponent} />

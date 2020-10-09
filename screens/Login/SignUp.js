@@ -186,15 +186,15 @@ const SignUp = ({navigation}) => {
             },
             body: JSON.stringify({username,password,confirm_password,fullname,birthday,address,phoneNumber,gender})
         })
-        .then(res => res.text())
+        .then(res => res.json())
         .then(data => {
-            if(data == 'FAIL'){
+            if(data.message == 'FAIL'){
                 ToastAndroid.show("Vui lòng điền đầy đủ thông tin",ToastAndroid.SHORT);
             }
-            else if(data == 'CONFIRM_PASSWORD_FAIL'){
+            else if(data.message == 'CONFIRM_PASSWORD_FAIL'){
                 ToastAndroid.show("Mật khẩu không trùng khớp",ToastAndroid.SHORT);
             }
-            else if(data == 'SUCCESS'){
+            else if(data.message == 'SUCCESS'){
                 ToastAndroid.show("Đăng ký tài khoản thành công",ToastAndroid.SHORT);
                 Alert.alert(
                     'Thông báo',
@@ -205,7 +205,7 @@ const SignUp = ({navigation}) => {
                     ]
                 );
             }
-            else if(data == 'ACCOUNT_ALREADY_EXISTS'){
+            else if(data.message == 'ACCOUNT_ALREADY_EXISTS'){
                 ToastAndroid.show("Tài khoản đã tồn tại",ToastAndroid.SHORT);
             }
         });

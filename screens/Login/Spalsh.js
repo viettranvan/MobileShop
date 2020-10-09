@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 
@@ -27,7 +27,6 @@ const Splash = ({ navigation }) =>{
                     </TouchableOpacity>
                 </View>
             </View>
-            
         </View>
     );
 }

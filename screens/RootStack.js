@@ -1,6 +1,4 @@
-import React,{Component} from 'react';
-import {View, Text} from 'react-native';
-
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import SplashScreen from './Login/Spalsh';

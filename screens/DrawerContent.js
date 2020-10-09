@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { Avatar, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switch, useTheme } from 'react-native-paper';
+import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import avatar from '../Image/main-logo.jpg';
 import global from '../global';
 import saveToken from '../api/js/saveToken';
-
 import{ AuthContext } from '../components/context';
 
 export default function DrawerContent(props){
@@ -61,13 +60,6 @@ export default function DrawerContent(props){
                             label="Lịch sử mua hàng"
                             onPress={() => {props.navigation.navigate("OrderHistory")}}
                         />
-                        {/* <DrawerItem
-                            icon={ ({color, size}) => (
-                                <Icon name="settings-outline" color = {color} size = {size} />
-                            )}
-                            label="Setting"
-                            onPress={() => {}}
-                        /> */}
                         <DrawerItem
                             icon={ ({color, size}) => (
                                 <Icon name="account-check-outline" color = {color} size = {size} />

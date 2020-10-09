@@ -5,7 +5,6 @@ import urls from '../../urls';
 const {width,height} = Dimensions.get("window");
 const list_productURL = urls[11].url;
 export default class Collection extends Component{
-
     gotoListProduct(){
         fetch(list_productURL)
         .then(res => res.json())

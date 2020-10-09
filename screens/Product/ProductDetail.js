@@ -12,7 +12,6 @@ function formatPrice(price){
   return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 export default class ProductDetail extends Component{
-
   constructor(props){
     super(props);
     this.state = {
@@ -36,7 +35,6 @@ export default class ProductDetail extends Component{
     }
     ToastAndroid.show("Thêm sản phẩm vào giỏ hàng thành công",ToastAndroid.SHORT);
   }
-
 
   renderProductDetail(product){
     return(
@@ -131,7 +129,6 @@ export default class ProductDetail extends Component{
         {/* End Header */}
         {/* Body */}
         <View style={styles.body}>
-        
 
         <FlatList
             data={product_detail} // array muốn render
@@ -139,7 +136,6 @@ export default class ProductDetail extends Component{
             keyExtractor={(item) => item.id_product}
             key='Detail'
         />
-        
 
         {/* Button thêm vào giỏ hàng */}
         <View style={styles.addToCartContainer}>
@@ -150,7 +146,6 @@ export default class ProductDetail extends Component{
         {/*End Button thêm vào giỏ hàng */}
         </View>
         {/* End Body */}
-        
       </View>
     );
   }
@@ -160,7 +155,6 @@ const imageWidth = width - 40;
 const imageHeight = (imageWidth/500)*500;
 
 const styles = StyleSheet.create({
-  
 header: {
   flex: 1,
   backgroundColor: "#2ABB9C",
@@ -235,7 +229,6 @@ textDescription:{
   padding: 5,
   paddingBottom:10
 },
-
 addToCartContainer:{
   padding: 20,
   paddingTop:0,
